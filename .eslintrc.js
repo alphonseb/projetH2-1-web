@@ -17,5 +17,14 @@ module.exports = {
     'vue'
   ],
   // add your custom rules here
-  rules: {}
+  rules: {
+    "indent": ["error", 4],
+    "brace-style": ["error","stroustrup"],
+    "curly": ["warn", "multi"],
+    "no-unused-vars": ["error", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
+    "space-before-function-paren": ["error", { "anonymous": "always", "named": "always", "asyncArrow": "always" }],
+    "block-spacing": "error",
+    "semi": "off",
+    "eqeqeq": "error"
+  }
 }
