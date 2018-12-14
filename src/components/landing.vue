@@ -4,6 +4,7 @@
             <img class="logo" src="../assets/logo.png" alt="">
         </div>
         <main>
+            <img class="background_tree" src="../assets/bg-tree.jpg" alt="">
             <div class="top">
                 <img src="#" alt="">
                 <div class="top_text">
@@ -16,6 +17,14 @@
                     <input class="sign_email" type="text" placeholder="e-mail">
                     <div class="border_bottom"></div>
                     <input type="text" placeholder="mot de passe">
+                </div>
+                <div class="sign_buttons">
+                    <div><a>Se connecter</a></div>
+                    <div class="fb_button">
+                        <img src="../assets/fb-logo.png" alt="">
+                        <a>S'inscrire avec Facebook</a>
+                    </div>
+                    <div><a>S'inscrire</a></div>
                 </div>
             </div>
         </main>
@@ -51,8 +60,17 @@ export default {
         }
 
         main {
+            position: relative;
             color: white;
             height: 80%;
+
+            .background_tree {
+                position: absolute;
+                top : -15%;
+                right: 10%;
+                opacity: 0.2;
+                transform: scaleX(-1);
+            }
 
             .top {
                 width: 100%;
@@ -68,16 +86,18 @@ export default {
                         height : 100%;
                         margin : 0;
                         margin-left: 60%;
-                        font-size : 14px;
+                        font-size : 1em;
                         position : absolute;
+                        font-weight: 100;
                     }
 
                     .fisrt_line {
-                        left: -10%; 
+                        top : -15%;
+                        left: -15%; 
                     }
 
                     .second_line {
-                        top : 30%;
+                        top : 25%;
                     }
                 }
             }
@@ -85,12 +105,15 @@ export default {
             .sign {
                 height : 70%;
                 width : 100%;
+                position: relative;
+                z-index: 1;
+
                 .id_field {
                     width: 100%;
                     height: 20%;
                     display: flex;
                     flex-direction: column;
-                    opacity: 0.86;
+                    background-color: rgba(255, 255, 255, 0.86);
                     position: relative;
                     
 
@@ -99,8 +122,7 @@ export default {
                         padding-left: 7%;
                         border : none;
                         display: block;
-
-                        
+                        background-color: transparent;         
                     }
 
                     .border_bottom {
@@ -111,6 +133,49 @@ export default {
                         left: 5%;
                         background: rgba(0, 0, 0, 0.22);
                     }
+                }
+
+                .sign_buttons {
+                    width: 100%;
+                    height: 80%;
+                    margin: auto;
+                    color: white;
+                    font-size: 1.5em;
+                    display: flex;
+                    flex-direction: column;
+                    align-content: space-around;
+                    align-items: center;
+                    z-index: 1000;
+
+                    div {
+                        height: 20%;
+                        display: flex;
+                        align-items: center;
+                        margin-top: 5%;
+                    }
+
+                    .fb_button {
+                        width: 90%;
+                        position: relative;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: #4267B2;
+                        border-radius: 1em;
+                        font-size: 18px;   
+
+                        img {
+                            position: absolute;
+                            left: 2%;
+                            width: 14%;
+                        }
+                    }
+
+                    .fb_button + div {
+                        font-size: 0.8em;
+                    }
+                                                  
                 }
 
             }
