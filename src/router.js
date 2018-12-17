@@ -7,7 +7,7 @@ Vue.use(Router)
 
 /*
 Ici on ajoute nos route, c'est la que la navigation ce se fait en fonction du composant
-pour les routes: path: 
+pour les routes: path:
   ce qu'il y aura dans l'url
   name: nom de la route (= non du composant en gros)
   component: vous importez votr component,
