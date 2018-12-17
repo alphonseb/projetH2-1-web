@@ -1,22 +1,27 @@
 <template>
     <div id="app">
-        <Landing/>
+        <Tree/>
     </div>
 </template>
 
 <script>
-import Landing from './components/landing.vue'
+import Tree from "./components/Tree.vue";
 
 export default {
-    name: 'app',
+    name: "app",
     components: {
-        Landing
+        Tree
     }
-}
+};
 </script>
 
 <style lang="scss">
-    body {
-        margin: 0;
-    }
+#app {
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+}
 </style>
