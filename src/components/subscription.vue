@@ -14,11 +14,11 @@
             </div>
             <div class="gender">
                 <div class="checkbox_container">
-                    <div class="checkbox"></div>
+                    <input type="radio" name="" id="">
                     <span>Femme</span>
                 </div>
                 <div class="checkbox_container">
-                    <div class="checkbox"></div>
+                    <input type="radio" name="" id="">
                     <span>Homme</span>
                 </div>
             </div>
@@ -34,6 +34,21 @@
             <div class="logins">
                 <input type="text" placeholder="E-mail">
                 <input type="text" placeholder="Mot de passe">
+            </div>
+
+            <div class="family_choice">
+                <div>
+                    <input type="radio" name="" id="">
+                    <span>Je rejoins une famille</span>
+                </div>
+                <div>
+                    <input type="radio" name="" id="">
+                    <span>Je créé ma famille</span>
+                </div>
+            </div>
+
+            <div class="next_button">
+                <span>Suivant</span>
             </div>
         </main>
     </div>
@@ -116,14 +131,15 @@ export default {
                 width: 45%;
                 margin-top: 5%;
             }
-            .checkbox {
-                display: inline-block;
-                margin-right: 5%;
-                width: 0.6em;
-                height: 0.6em;
-                border: 1px solid white;
-                border-radius: 2em;
-            }
+
+            // .checkbox {
+            //     display: inline-block;
+            //     margin-right: 5%;
+            //     width: 0.6em;
+            //     height: 0.6em;
+            //     border: 1px solid white;
+            //     border-radius: 2em;
+            // }
         }
 
         .birth {
@@ -152,6 +168,40 @@ export default {
             input {
                 @include input_style;
                 margin-top: 7%;
+            }
+        }
+
+        .family_choice {
+            width: 100%;
+            height: 10vh;
+            margin-top: 8%;            
+
+            div {
+                width: 70%;
+                height: 30%;
+                margin-top: 3%;
+
+                span {
+                    margin-left: 7%;
+                }
+            }    
+
+        }
+
+        .next_button {
+            width: 100%;
+            height: 3em;
+            margin-top: 5%;
+            border: 1px solid white;
+            border-radius: 0.8em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            span {
+                height: 1.5em;
+                font-size: 1.5em;
+                font-weight: 400;
             }
         }
 
