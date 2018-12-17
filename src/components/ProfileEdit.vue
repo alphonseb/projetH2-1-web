@@ -1,15 +1,13 @@
 <template>
-    <div class="profile">
+    <div class="profileEdit">
         <div class="profileHeader">
             <div class="goBack">
                 <div class="arrow"></div>
                 <p>Editez votre profil</p>
             </div>
-            
             <img class="profilePic" src="../assets/profilePic.jpeg" alt="profilePic">
         </div>
         <div class="profileContent">
-            <div class="gradient"></div>
             <div class="profileEditable">
                 <div class="flexContainer">
                     <p class="customPic"><a href="#">Modifiez la photo</a></p>
@@ -57,7 +55,7 @@
 
 <script>
 export default {
-    name : 'profile', 
+    name : 'profileEdit', 
 }
 </script>
 
@@ -69,7 +67,7 @@ export default {
         align-items: center;
     }
 
-    .profile{
+    .profileEdit{
         width : 100%;
         height: 100vh;
         overflow: hidden;
