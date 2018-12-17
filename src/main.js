@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
-import store from './store'
+
+import env from '@/../env.json'
+
 import VueApollo from 'vue-apollo'
 import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
@@ -9,28 +11,32 @@ import { onError } from 'apollo-link-error'
 import { ApolloLink } from 'apollo-link'
 import { createUploadLink } from 'apollo-upload-client'
 
+const link = ApolloLink.from([
+    onError(({ graphQLErrors, networkError }) => {
+        if (graphQLErrors) {
+            graphQLErrors.map(({
+                message,
+                locations,
+                path
+            }) => console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`))
+        }
+        if (networkError) console.log(`[Network error]: ${networkError}`)
+    }),
+    createUploadLink({
+        uri: 'http://julesguesnon.com:4000/graphql',
+        headers: {
+            authorization: window.localStorage.getItem(env.APP_TOKEN_PATH)
+        },
+        async fetch (input, init) {
+            init.headers.authorization = await window.localStorage.getItem(env.APP_TOKEN_PATH)
+            const res = await fetch(input, init)
+            return res
+        }
+    })
+])
+
 const client = new ApolloClient({
-    link: ApolloLink.from([
-        onError(({
-            graphQLErrors,
-            networkError
-        }) => {
-            if (graphQLErrors) {
-                graphQLErrors.map(({
-                    message,
-                    locations,
-                    path
-                }) => console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`))
-            }
-            if (networkError) console.log(`[Network error]: ${networkError}`)
-        }),
-        createUploadLink({
-            uri: 'http://julesguesnon.com:4000/graphql',
-            headers: {
-                Authorization: window.localStorage.getItem('@Shelf/token')
-            }
-        })
-    ]),
+    link,
     cache: new InMemoryCache()
 })
 
@@ -39,7 +45,6 @@ Vue.config.productionTip = false
 
 new Vue({
     router,
-    store,
     apolloProvider: new VueApollo({
         defaultClient: client
     }),

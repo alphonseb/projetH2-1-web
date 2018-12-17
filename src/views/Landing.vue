@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import jwt from 'jsonwebtoken'
+import env from '@/../env.json'
 import LOGIN from '@/graphql/login.graphql'
 
 export default {
@@ -55,8 +57,21 @@ export default {
                 return
             }
 
-            window.localStorage.setItem('@Shelf/token', data.login.token)
+            await window.localStorage.setItem(env.APP_TOKEN_PATH, data.login.token)
+            this.$router.push('/me')
         }
+    },
+   async mounted () {
+       const token = window.localStorage.getItem(env.APP_TOKEN_PATH)
+
+        if (token === 'undefined' || token === 'null')
+            return
+
+        const isVerify = await jwt.verify(token, env.APP_SECRET)
+        if (!isVerify)
+            return
+        
+        this.$router.push('/me')        
     }
 }    
 </script>
