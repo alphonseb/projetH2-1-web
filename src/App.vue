@@ -1,16 +1,16 @@
 <template>
     <div id="app">
-        <Landing/>
+        <subscription/>
     </div>
 </template>
 
 <script>
-import Landing from './components/landing.vue'
+import subscription from './components/subscription.vue'
 
 export default {
     name: 'app',
     components: {
-        Landing
+        subscription,
     }
 }
 </script>

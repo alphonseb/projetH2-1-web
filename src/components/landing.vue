@@ -1,5 +1,5 @@
 <template>
-    <div class="landing_page">
+    <div class="page">
         <div class="header">
             <img class="logo" src="../assets/logo.png" alt="">
         </div>
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .landing_page {
+    .page {
         width : 100vw;
         height: 100vh;
         overflow: hidden;
