@@ -1,22 +1,20 @@
 <template>
-    <div id="app">
-        <Landing/>
-    </div>
+    <profile></profile>
 </template>
 
 <script>
-import Landing from './components/landing.vue'
+import profile from './components/Profile.vue'
 
 export default {
     name: 'app',
     components: {
-        Landing
+        profile
     }
 }
 </script>
 
 <style lang="scss">
-    body {
-        margin: 0;
+    body{
+        margin: 0
     }
 </style>
