@@ -85,7 +85,7 @@ export default {
 
     .profileEdit{
         width : 100%;
-        height: 170vh;
+        height: 150vh;
         overflow: hidden;
         margin : 0;
         font-family: Roboto;
