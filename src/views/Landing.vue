@@ -13,18 +13,15 @@
                 </div>
             </div>
             <div class="sign">
+                <p class="error" v-show="error" >Votre email ou mot de passe est incorrect</p>
                 <div class="idField">
-                    <input type="text" placeholder="e-mail">
+                    <input type="email" placeholder="e-mail" ref="mail">
                     <div class="borderBottom"></div>
-                    <input type="text" placeholder="mot de passe">
+                    <input type="password" placeholder="mot de passe" ref="password">
                 </div>
                 <div class="signButtons">
-                    <div><a>Se connecter</a></div>
-                    <div class="facebookButton">
-                        <img src="../assets/fb-logo.png" alt="">
-                        <a>S'inscrire avec Facebook</a>
-                    </div>
-                    <div><a>S'inscrire</a></div>
+                    <div><a @click="login" href="#" title="Se connecter">Se connecter</a></div>
+                    <div><router-link to="/signin" title="S'inscrire" >S'inscrire</router-link></div>
                 </div>
             </div>
         </main>
@@ -32,9 +29,35 @@
 </template>
 
 <script>
+import LOGIN from '@/graphql/login.graphql'
+
 export default {
     name: 'landing',
-    
+    data () {
+        return {
+            error: false
+        }
+    },
+    methods: {
+        async login () {
+            if (this.$refs.mail.value === '' || this.$refs.password.value === '')
+                return
+
+            const { data } = await this.$apollo.mutate({
+                mutation: LOGIN,
+                variables: {
+                    mail: this.$refs.mail.value,
+                    password: this.$refs.password.value
+                }
+            })
+            if (!data.login) {
+                this.error = true
+                return
+            }
+
+            window.localStorage.setItem('@Shelf/token', data.login.token)
+        }
+    }
 }    
 </script>
 
@@ -74,7 +97,7 @@ export default {
             position: relative;
             color: white;
             height: 80%;
-
+            font-family: Roboto;
             .backgroundTree {
                 position: absolute;
                 top : -15%;
@@ -117,7 +140,17 @@ export default {
                 height : 70%;
                 width : 100%;
                 position: relative;
+                transform: translateY(40px);
                 z-index: 1;
+
+                .error {
+                    color: red;
+                    font-size: .8rem;
+                    position: absolute;
+                    top: 0;
+                    left: 35px;
+                    transform: translateY(-225%);
+                }
 
                 .idField {
                     width: 90%;

@@ -1,7 +1,13 @@
 query {
-    me {
-        name
-        mail
-        gender
+  me {
+    name
+    phone
+    mail
+    birth {
+      date
     }
+    books (order: DATE_ASC){
+        title
+    }
+  }
 }

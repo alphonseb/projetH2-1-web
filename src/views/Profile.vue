@@ -8,43 +8,44 @@
             </div>
         </div>
         <img class="mainProfilePic" src="../assets/profilePic.jpeg" alt="profilePicMain">
-        <div class="profileContent">
-            <div class="container">
-                <h2><span class="firstName">{{firstName}}</span> {{lastName}}, <span class="age">{{age}}ans</span> </h2>
-                <div class="loc">
-                    <img src="../assets/locIcon.png" alt="localisation">
-                    <p>{{city}}</p>
+        <ApolloQuery :query="require('@/graphql/user.graphql')">
+            <template slot-scope="{ result: { data, loading }}">
+                <div v-if="loading" >WTF LES AMIS</div>
+                <div class="profileContent" v-else>
+                    <div class="container">
+                        <h2><span class="firstName">{{ data.me.name.split(' ')[0] }}</span> {{ data.me.name.split(' ')[1] }}, <span class="age">{{ age(data.me.birth.date) }}ans</span> </h2>
+                        <div class="loc">
+                            <img src="../assets/locIcon.png" alt="localisation">
+                            <p>{{ 'city' }}</p>
+                        </div>
+                        <div class="phone" v-if="data.me.phone !== null">
+                            <img src="../assets/phoneIcon.png" alt="phone number">
+                            <p>{{ data.me.phone }}</p>
+                        </div>
+                        <div class="mail">
+                            <img src="../assets/mailIcon.png" alt="localisation">
+                            <p>{{ data.me.mail }}</p>
+                        </div>
+                        <h3>Ma bibiothèque</h3>
+                        <h4>Mes livres</h4>
+                        <p class="tellStory">Racontez votre histoire, un événement marquant, un voyage, ou simplement le quotidien...</p>
+                    </div>
                 </div>
-                <div class="phone">
-                    <img src="../assets/phoneIcon.png" alt="phone number">
-                    <p>{{phone}}</p>
-                </div>
-                <div class="mail">
-                    <img src="../assets/mailIcon.png" alt="localisation">
-                    <p>{{email}}</p>
-                </div>
-                <h3>Ma bibiothèque</h3>
-                <h4>Mes livres</h4>
-                <p class="tellStory">Racontez votre histoire, un événement marquant, un voyage, ou simplement le quotidien...</p>
-            </div>
-        </div>
+            </template>
+        </ApolloQuery>
     </div>
 </template>
 
 <script>
 export default {
     name : 'profile',
-
-    data () {
-        return {
-            firstName : 'Julien',
-            lastName : 'Dupont',
-            age : '27',
-            city : 'Paris',
-            phone : '06 29 61 45 35',
-            email : 'juliendupont@gmail.com'
+    methods: {
+        age (_date) {
+            const diff = Date.now() - new Date(_date)
+            const ageDate = new Date(diff)
+            return Math.abs(ageDate.getUTCFullYear() - 1970)
         }
-    },
+    }
 }
 </script>
 
