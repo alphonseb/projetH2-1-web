@@ -1,26 +1,26 @@
 <template>
-    <div class="landing_page">
+    <div class="landing">
         <div class="header">
-            <img class="logo" src="../assets/logo.png" alt="">
+            <img class="logo" src="../assets/logo.png" alt="shelf logo">
         </div>
         <main>
-            <img class="background_tree" src="../assets/bg-tree.jpg" alt="">
+            <img class="backgroundTree" src="../assets/bg-tree.jpg" alt="">
             <div class="top">
                 <img src="#" alt="">
-                <div class="top_text">
-                    <p class="fisrt_line">Votre famille a une <strong>histoire unique,</strong></p>
-                    <p class="second_line">écrivez, consultez, conservez l'histoire de votre famille avec <strong>Shelf</strong></p>
+                <div class="topText">
+                    <p class="firstLine">Votre famille a une <strong>histoire unique,</strong></p>
+                    <p class="secondLine">écrivez, consultez, conservez l'histoire de votre famille avec <strong>Shelf</strong></p>
                 </div>
             </div>
             <div class="sign">
-                <div class="id_field">
-                    <input class="sign_email" type="text" placeholder="e-mail">
-                    <div class="border_bottom"></div>
+                <div class="idField">
+                    <input type="text" placeholder="e-mail">
+                    <div class="borderBottom"></div>
                     <input type="text" placeholder="mot de passe">
                 </div>
-                <div class="sign_buttons">
+                <div class="signButtons">
                     <div><a>Se connecter</a></div>
-                    <div class="fb_button">
+                    <div class="facebookButton">
                         <img src="../assets/fb-logo.png" alt="">
                         <a>S'inscrire avec Facebook</a>
                     </div>
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .landing_page {
+    .landing {
         width : 100vw;
         height: 100vh;
         overflow: hidden;
@@ -75,7 +75,7 @@ export default {
             color: white;
             height: 80%;
 
-            .background_tree {
+            .backgroundTree {
                 position: absolute;
                 top : -15%;
                 right: 10%;
@@ -87,7 +87,7 @@ export default {
                 width: 100%;
                 height : 30%;
 
-                .top_text {
+                .topText {
                     width: 100%;
                     height: 100%;
                     position: relative;
@@ -102,12 +102,12 @@ export default {
                         font-weight: 100;
                     }
 
-                    .fisrt_line {
+                    .firstLine {
                         top : -15%;
                         left: -15%; 
                     }
 
-                    .second_line {
+                    .secondLine {
                         top : 25%;
                     }
                 }
@@ -119,7 +119,7 @@ export default {
                 position: relative;
                 z-index: 1;
 
-                .id_field {
+                .idField {
                     width: 90%;
                     height: 20%;
                     margin: auto;
@@ -138,7 +138,7 @@ export default {
                         background-color: transparent;         
                     }
 
-                    .border_bottom {
+                    .borderBottom {
                         position: absolute;
                         width: 90%;
                         height: 1px;
@@ -148,7 +148,7 @@ export default {
                     }
                 }
 
-                .sign_buttons {
+                .signButtons {
                     width: 100%;
                     height: 80%;
                     margin: auto;
@@ -167,7 +167,7 @@ export default {
                         margin-top: 5%;
                     }
 
-                    .fb_button {
+                    .facebookButton {
                         width: 90%;
                         position: relative;
                         display: flex;
@@ -185,7 +185,7 @@ export default {
                         }
                     }
 
-                    .fb_button + div {
+                    .facebookButton + div {
                         font-size: 0.8em;
                     }
                                                   
