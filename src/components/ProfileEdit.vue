@@ -19,18 +19,18 @@
                         <input type="text" id="name" name="name" required minlength="4" maxlength="28" size="10" placeholder="Nom">
                     </div>
                     <div class="genders">
-                        <div class="checkbox_container">
+                        <div class="checkboxContainer">
                             <input type="radio" name="gender" id="man">
                             <label for="man">Homme</label> 
                         </div>
-                        <div class="checkbox_container">
+                        <div class="checkboxContainer">
                             <input type="radio" name="gender" id="woman">
                             <label for="woman">Femme</label> 
                         </div>
                     </div>
                     <div class="birth">
                         <p>Date de naissance</p>
-                        <div class="birth_inputs">
+                        <div class="birthInputs">
                             <input class="birthDate" type="text" maxlength="2" placeholder="JJ">
                             <input class="birthDate" type="text" maxlength="2" placeholder="MM">
                             <input class="birthDate" type="text" maxlength="4" placeholder="AAAA">
@@ -188,7 +188,7 @@ export default {
                     .genders {
                         @include flex_style; 
                         
-                        .checkbox_container {
+                        .checkboxContainer {
                             width: 45%;
                             margin-top: 5%;
                         }
@@ -197,7 +197,7 @@ export default {
                     .birth {
                         margin-top: 10%;
 
-                        .birth_inputs {
+                        .birthInputs {
                             width: 35%;
                             display: flex;
                             align-items: left;
