@@ -1,14 +1,14 @@
 <template>
-    <profile></profile>
+    <profileEdit></profileEdit>
 </template>
 
 <script>
-import profile from './components/Profile.vue'
+import profileEdit from './components/ProfileEdit.vue'
 
 export default {
     name: 'app',
     components: {
-        profile
+        profileEdit
     }
 }
 </script>
