@@ -1,22 +1,22 @@
 <template>
     <div id="app">
-        <subscription/>
+        <profile/>
     </div>
 </template>
 
 <script>
-import subscription from './components/subscription.vue'
+import profile from './components/ProfileEdit.vue'
 
 export default {
     name: 'app',
     components: {
-        subscription,
+        profile,
     }
 }
 </script>
 
 <style lang="scss">
-    body {
-        margin: 0;
+    body{
+        margin: 0
     }
 </style>

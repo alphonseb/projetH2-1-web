@@ -95,6 +95,7 @@ export default {
 
         ::placeholder {
             color: white;
+            opacity: 0.5;
         }
 
         @mixin flex_style{
