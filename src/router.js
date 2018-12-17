@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Landing from './views/Landing.vue'
+import familyJoin from './views/FamilyJoin.vue'
 
 Vue.use(Router)
 
@@ -22,8 +23,8 @@ export default new Router({
     {
       // Pour dev mettez votre composant dans le path / (la racine du site)
       path: '/',
-      name: 'landing',
-      component: Landing
+      name: 'familyJoin',
+      component: familyJoin
     }
   ]
 })
