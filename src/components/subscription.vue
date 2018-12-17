@@ -13,6 +13,25 @@
                 <input type="text" placeholder="Nom de famille">
             </div>
             <div class="gender">
+                <div class="checkbox_container">
+                    <div class="checkbox"></div>
+                    <span>Femme</span>
+                </div>
+                <div class="checkbox_container">
+                    <div class="checkbox"></div>
+                    <span>Homme</span>
+                </div>
+            </div>
+            <div class="birth">
+                <p>Date de naissance</p>
+                <div class="birth_inputs">
+                    <input type="text">
+                    <input type="text">
+                    <input type="text">
+                </div>
+            </div>
+            
+            <div>
                 
             </div>
         </main>
@@ -48,6 +67,11 @@ export default {
             }
         }
 
+        main {
+            width: 90%;
+            margin: auto;
+        }
+
         .inscription {
             width: 100%;
             text-align: center;
@@ -58,32 +82,69 @@ export default {
             color: white;
         }
 
-        @mixin perso{
-            width: 90%;
+        @mixin flex_style{
+            width: 100%;
             height: 10%;
             display: flex;
             align-items: center;
-            justify-content: space-around;
+            justify-content: space-between;
             margin-top: 3%;
         }
 
+        @mixin input_style {
+            color: white;
+            border: 2px solid white;
+            border-width: 0 0 1px 0;
+            background: transparent;
+            font-size: 1.2em;
+        }
+
         .name {
-            @include perso;
+            @include flex_style;
 
             input {
-                width: 30%;
-                color: white;
-                border: 2px solid white;
-                border-width: 0 0 1px 0;
-                background: transparent;
-                font-size: 0.9em;
+                width: 45%;
+                @include input_style
 
             }
         }
 
         .gender {
-            @include perso; 
+            @include flex_style; 
+            
+            .checkbox_container {
+                width: 45%;
+                margin-top: 5%;
+            }
+            .checkbox {
+                display: inline-block;
+                margin-right: 5%;
+                width: 0.6em;
+                height: 0.6em;
+                border: 1px solid white;
+                border-radius: 2em;
+            }
         }
+
+        .birth {
+            margin-top: 10%;
+
+            .birth_inputs {
+                width: 35%;
+                display: flex;
+                align-items: left;
+                justify-content: space-between;
+            }
+
+            input {
+                width: 28%;
+                height: 1.5em;
+                border: none;
+                border-radius: 0.3em;
+                text-align: center;
+            }
+        }
+        
     }
 
 </style>
