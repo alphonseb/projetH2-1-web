@@ -13,8 +13,7 @@ export default {
         firstName: String,
         lastName: String,
         profileImgUrl: String
-    },
-    methods:
+    }
 };
 </script>
 
