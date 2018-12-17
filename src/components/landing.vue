@@ -48,7 +48,18 @@ export default {
         font-family: Roboto;
     }
 
-    @media screen and (max-width: 380px) {
+    .header {
+        height: 10vh;
+
+        .logo {
+            width: 10%;
+            margin: 1%;
+        }
+    }
+
+    
+
+    @media screen and (max-width: 450px) {
         .header {
             height: 20%;
             text-align: center;
@@ -109,8 +120,10 @@ export default {
                 z-index: 1;
 
                 .id_field {
-                    width: 100%;
+                    width: 90%;
                     height: 20%;
+                    margin: auto;
+                    border-radius: 10px;
                     display: flex;
                     flex-direction: column;
                     background-color: rgba(255, 255, 255, 0.86);
@@ -162,7 +175,7 @@ export default {
                         justify-content: center;
                         align-items: center;
                         background-color: #4267B2;
-                        border-radius: 1em;
+                        border-radius: 15px;
                         font-size: 18px;   
 
                         img {
