@@ -31,8 +31,9 @@
                 </div>
             </div>
             
-            <div>
-                
+            <div class="logins">
+                <input type="text" placeholder="E-mail">
+                <input type="text" placeholder="Mot de passe">
             </div>
         </main>
     </div>
@@ -41,7 +42,6 @@
 <script>
 export default {
     name: 'subscription',
-    
 }    
 </script>
 
@@ -145,6 +145,16 @@ export default {
             }
         }
         
+        .logins {
+            width: 100%;
+
+
+            input {
+                @include input_style;
+                margin-top: 7%;
+            }
+        }
+
     }
 
 </style>
