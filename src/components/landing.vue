@@ -1,7 +1,7 @@
 <template>
     <div class="landing">
         <div class="header">
-            <img class="logo" src="../assets/logo.png" alt="">
+            <img class="logo" src="../assets/logo.png" alt="shelf logo">
         </div>
         <main>
             <img class="backgroundTree" src="../assets/bg-tree.jpg" alt="">

@@ -1,16 +1,16 @@
 <template>
     <div id="app">
-        <profileEdit/>
+        <familyJoin/>
     </div>
 </template>
 
 <script>
-import profileEdit from './components/ProfileEdit.vue'
+import familyJoin from './components/FamilyJoin.vue'
 
 export default {
     name: 'app',
     components: {
-        profileEdit,
+        familyJoin,
     }
 }
 </script>
