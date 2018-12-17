@@ -1,20 +1,22 @@
 <template>
-    <profile></profile>
+    <div id="app">
+        <Tree/>
+    </div>
 </template>
 
 <script>
-import profile from './components/Profile.vue'
+import Tree from "./components/Tree.vue";
 
 export default {
-    name: 'app',
+    name: "app",
     components: {
-        profile
+        Tree
     }
-}
+};
 </script>
 
 <style lang="scss">
-    body{
-        margin: 0
-    }
+body {
+    margin: 0;
+}
 </style>
