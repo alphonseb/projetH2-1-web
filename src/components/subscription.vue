@@ -8,48 +8,51 @@
                 <div class="arrow"></div>
                 <h3>Inscription</h3>
             </div>
-            <div class="name">
-                <input type="text" placeholder="Prénom">
-                <input type="text" placeholder="Nom de famille">
-            </div>
-            <div class="gender">
-                <div class="checkbox_container">
-                    <input type="radio" name="" id="">
-                    <span>Femme</span>
-                </div>
-                <div class="checkbox_container">
-                    <input type="radio" name="" id="">
-                    <span>Homme</span>
-                </div>
-            </div>
-            <div class="birth">
-                <p>Date de naissance</p>
-                <div class="birth_inputs">
-                    <input type="text">
-                    <input type="text">
-                    <input type="text">
-                </div>
-            </div>
-            
-            <div class="logins">
-                <input type="text" placeholder="E-mail">
-                <input type="text" placeholder="Mot de passe">
-            </div>
 
-            <div class="family_choice">
-                <div>
-                    <input type="radio" name="" id="">
-                    <span>Je rejoins une famille</span>
-                </div>
-                <div>
-                    <input type="radio" name="" id="">
-                    <span>Je créé ma famille</span>
-                </div>
-            </div>
+            <form action="submit">
+                    <div class="names">
+                        <input type="text" id="name" name="name" required minlength="4" maxlength="28" size="10" placeholder="Prénom">
+                        <input type="text" id="name" name="name" required minlength="4" maxlength="28" size="10" placeholder="Nom">
+                    </div>
+                    <div class="genders">
+                        <div class="checkbox_container">
+                            <input type="radio" name="gender" id="man">
+                            <label for="man">Homme</label> 
+                        </div>
+                        <div class="checkbox_container">
+                            <input type="radio" name="gender" id="woman">
+                            <label for="woman">Femme</label> 
+                        </div>
+                    </div>
+                    <div class="birth">
+                        <p>Date de naissance</p>
+                        <div class="birth_inputs">
+                            <input class="birthDate" type="text" maxlength="2" placeholder="JJ">
+                            <input class="birthDate" type="text" maxlength="2" placeholder="MM">
+                            <input class="birthDate" type="text" maxlength="4" placeholder="AAAA">
+                        </div>
+                    </div>
 
-            <div class="next_button">
-                <span>Suivant</span>
-            </div>
+                    <div class="logins">
+                        <input type="text" placeholder="E-mail">
+                        <input type="text" placeholder="Mot de passe">
+                    </div>
+
+                    <div class="family_choice">
+                        <div>
+                            <input type="radio" name="" id="">
+                            <span>Je rejoins une famille</span>
+                        </div>
+                        <div>
+                            <input type="radio" name="" id="">
+                            <span>Je créé ma famille</span>
+                        </div>
+                    </div>
+
+                    <div class="next_button">
+                        <span>Suivant</span>
+                    </div>                 
+                </form>
         </main>
     </div>
 </template>
@@ -87,6 +90,10 @@ export default {
             margin: auto;
         }
 
+        form {
+            width: 100%;
+        }
+
         .inscription {
             width: 100%;
             text-align: center;
@@ -115,7 +122,7 @@ export default {
             font-size: 1.2em;
         }
 
-        .name {
+        .names {
             @include flex_style;
 
             input {
@@ -125,22 +132,13 @@ export default {
             }
         }
 
-        .gender {
+        .genders {
             @include flex_style; 
             
             .checkbox_container {
                 width: 45%;
                 margin-top: 5%;
             }
-
-            // .checkbox {
-            //     display: inline-block;
-            //     margin-right: 5%;
-            //     width: 0.6em;
-            //     height: 0.6em;
-            //     border: 1px solid white;
-            //     border-radius: 2em;
-            // }
         }
 
         .birth {
