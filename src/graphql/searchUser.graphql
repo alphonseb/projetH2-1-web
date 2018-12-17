@@ -1,0 +1,9 @@
+query ($name: String!) {
+  searchUser (name: $name) {
+    id
+    name
+    profilePicture {
+      src
+    }
+  }
+}

@@ -1,0 +1,7 @@
+mutation ($file: Upload!) {
+  updateMe (data: {profilePicture: $file}) {
+    profilePicture {
+      src
+    }
+  }
+}
