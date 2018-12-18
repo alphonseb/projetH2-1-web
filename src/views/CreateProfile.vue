@@ -2,10 +2,6 @@
     <div class="createProfile">
         <div class="header">
             <img class="logo" src="../assets/logo.png" alt="">
-            <div class="goBack">
-                <div class="arrow"></div>
-                <span>Retour</span>
-            </div>
             <h2>Créer mon profil</h2>
         </div>
         <main>            
@@ -19,30 +15,34 @@
                 <p class="fillFieldsLine">Veuillez remplir au moins un champs :</p>
                 <div class="familyRelation">
                     <div>
-                        <p>Je suis l'enfant de :</p>
-                        <search/>
+                        <p>Mon père est :</p>
+                        <search familyType="father" @updateFather="''"/>
                     </div>
                     <div>
-                        <p>Je suis le parent de :</p>
-                        <search/>
+                        <p>Ma mère est :</p>
+                        <search familyType="mother" @updateMother="''"/>
                     </div>
                     <div>
                         <p>Je suis le/la frère/soeur de :</p>
-                        <search/>
+                        <search familyType="fratery"/>
                     </div>
                     <div>
                         <p>Je suis le/la conjoint(e) de :</p>
-                        <search/>
+                        <search familyType="partner" @updatePartner="''"/>
+                    </div>
+                    <div>
+                        <p>Mes enfants sont:</p>
+                        <search familyType="children"/>
                     </div>
                 </div>
 
-                <input class="infoInputs" type="text" placeholder="Numero de téléphone">
-                <input class="infoInputs" type="text" placeholder="Lieu de naissance">
-                <input class="infoInputs" type="text" placeholder="Où habitez vous ?">
-                <input class="infoInputs" type="text" placeholder="Où étudiez/travaillez vous?">
+                <input class="infoInputs" type="tel" v-model="phone" placeholder="Numero de téléphone">
+                <input class="infoInputs" type="text" v-model="birth.place" placeholder="Lieu de naissance">
+                <input class="infoInputs" type="text" v-model="city" placeholder="Où habitez vous ?">
+                <input class="infoInputs" type="text" v-model="work" placeholder="Où étudiez/travaillez vous?">
 
 
-                <input class="infoInputs" type="text" placeholder="Vos hobbies">
+                <input class="infoInputs" type="text" placeholder="Avez-vous des hobbies ?">
                 <input class="infoInputs" type="text" placeholder="Quel(s) sport(s) pratiquez vous ?">
 
                 <router-link to="/me" class="bottomButton">Enregistrer</router-link>
@@ -53,24 +53,39 @@
 
 
 <script>
+import TagInput from '@johmun/vue-tags-input'
 import Search from '@/components/search'
+
 export default {
     name: 'createProfile',
     data () {
         return {
-
+            phone: '',
+            birth: {
+                place: ''
+            },
+            city: '',
+            work: '',
+            mother: {},
+            father: {},
+            fratery: [],
+            partner: {},
+            children: {},
+            hobbyTag: '',
+            hobbies: []
         }
     },
     components: {
-        Search
-    }
+        Search,
+        TagInput
+    },
+    mounted () {console.log(this)}
 }    
 </script>
 
 <style lang="scss" scoped>
 .createProfile {
     width: 100vw;
-    height: 170vh;
     overflow: hidden;
     margin: 0;
     background: linear-gradient(
@@ -142,7 +157,6 @@ export default {
 
     .profilCreation{
         width: 90vw;
-        height: 200vh;
         margin: auto;
 
         ::placeholder {
@@ -167,7 +181,6 @@ export default {
 
         .familyRelation {
             width: 100%;
-            height: 25%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -234,6 +247,7 @@ export default {
             
             margin: auto;
             margin-top: 20px;
+            margin-bottom: 20px;
 
             border: 1px solid white;
             border-radius: 100px;

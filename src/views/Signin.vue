@@ -20,7 +20,7 @@
                         maxlength="28"
                         size="10"
                         placeholder="Prénom"
-                        v-model="firstName"
+                        v-model="datas.firstName"
                     >
                     <input
                         type="text"
@@ -31,54 +31,107 @@
                         maxlength="28"
                         size="10"
                         placeholder="Nom"
-                        v-model="lastName"
+                        v-model="datas.lastName"
                     >
                 </div>
                 <div class="genders">
                     <div class="checkboxContainer">
-                        <input type="radio" name="gender" id="man">
+                        <input type="radio" name="gender" value="Homme" id="man" v-model="datas.gender">
                         <label for="man">Homme</label>
                     </div>
                     <div class="checkboxContainer">
-                        <input type="radio" name="gender" id="woman">
+                        <input type="radio" name="gender" value="Femme" id="woman" v-model="datas.gender">
                         <label for="woman">Femme</label>
                     </div>
                 </div>
                 <div class="birth">
                     <p>Date de naissance</p>
                     <div class="birthInputs">
-                        <input class="birthDate" type="text" maxlength="2" placeholder="JJ" v-model="birth.day">
-                        <input class="birthDate" type="text" maxlength="2" placeholder="MM" v-model="birth.month">
-                        <input class="birthDate" type="text" maxlength="4" placeholder="AAAA" v-model="birth.year">
+                        <input class="birthDate" type="text" maxlength="2" placeholder="JJ" v-model="datas.birth.day">
+                        <input class="birthDate" type="text" maxlength="2" placeholder="MM" v-model="datas.birth.month">
+                        <input class="birthDate" type="text" maxlength="4" placeholder="AAAA" v-model="datas.birth.year">
                     </div>
                 </div>
 
                 <div class="logins">
-                    <input type="email" placeholder="E-mail" v-model="mail">
-                    <input type="password" placeholder="Mot de passe" v-model="password">
+                    <input type="email" placeholder="E-mail" v-model="datas.mail">
+                    <input type="password" placeholder="Mot de passe" v-model="datas.password">
                 </div>
-                <router-link to="/createProfile" class="nextButton">Suivant</router-link>
+                <p class="error" v-if="error">Veuillez remplir tous les champs</p>
+                <a class="nextButton" href="" title="Créer son compte" @click.prevent="createAccount" >Créer mon compte</a>
             </form>
         </main>
     </div>
 </template>
 
 <script>
+import SIGNIN from '@/graphql/signin.graphql'
+import { APP_TOKEN_PATH } from '../../env.json'
+
 export default {
     name: 'subscription',
     data () {
         return {
-            firstName: '',
-            lastName: '',
-            isMale: false,
-            isFemale: false,
-            birth: {
-                day: '',
-                month: '',
-                year: ''
-            },
-            mail: '',
-            password: ''
+            error: false,
+            datas: {
+                firstName: '',
+                lastName: '',
+                gender: '',
+                birth: {
+                    day: '',
+                    month: '',
+                    year: ''
+                },
+                mail: '',
+                password: ''
+            }
+        }
+    },
+    methods: {
+        async createAccount () {
+            const isValid = await this.checkFields()
+
+            if (!isValid)
+                return this.error = true
+
+            const variables = {
+                name: this.datas.firstName + this.datas.lastName,
+                mail: this.datas.mail,
+                password: this.datas.password,
+                birthDate: `${this.datas.birth.day}/${this.datas.birth.month}/${this.datas.birth.year}`,
+                gender: this.datas.gender
+            }
+
+            const { data: { signup: { token } } } = await this.$apollo.mutate({
+                mutation: SIGNIN,
+                variables
+            })
+
+            if (!token)
+                return this.error = true
+
+            window.localStorage.setItem(APP_TOKEN_PATH, token)
+            this.$router.push('/createProfile')
+        },
+        async checkFields () {
+            let isValid = true
+
+            const keys = Object.keys(this.datas)
+            await keys.forEach(_key => {
+                if (typeof this.datas[_key] === 'object') {
+                    if (this.datas[_key].day === '')
+                        isValid = false
+                    else if (this.datas[_key].month === '')
+                        isValid = false
+                    else if (this.datas[_key].year === '')
+                        isValid = false
+                }
+                else if (this.datas[_key] === '') {
+                    isValid = false
+                }
+            })
+
+            return isValid
         }
     }
 }
@@ -202,10 +255,14 @@ export default {
         }
     }
 
+    .error {
+        color: red;
+    }
+
     .nextButton {
         display: inline-block;
-        width: 150px;
-        height: 2em;
+        width: 200px;
+        height: 1.5em;
         
         position: absolute;
         bottom: 2em;
@@ -216,9 +273,9 @@ export default {
         border-radius: 100px;
 
         text-align: center;
-        font-size: 1.5em;
+        font-size: 1.2em;
         font-weight: 400;
-        line-height: 2em;
+        line-height: 1.5em;
     }
 }
 </style>
