@@ -65,7 +65,7 @@ export default {
     .profileHeader {
         display: flex;
         position: absolute;
-        top: 20px;
+        top: 2%;
         width: 100%;
         justify-content: space-around;
         align-items: center;
@@ -97,6 +97,8 @@ export default {
                 border: none;
                 width: 200px;
                 height: 22px;
+                color: white;
+                padding-left: 5%;
             }
 
             img {
@@ -109,20 +111,14 @@ export default {
             }
         }
     }
-    .mainProfilePic {
-        position: absolute;
-        width: 100%;
-        z-index: -2;
-        top: 0;
-    }
-    .profileContent {
-        background: linear-gradient(
-            180deg,
-            #7abed300 2.19%,
-            #79bdd2 24.36%,
-            #476fb5 100%
-        );
-        height: 800px;
+    .mainProfilePic{
+            position: fixed;
+            width: 100%;
+            z-index: -2;
+            top:0
+        }
+    .profileContent{
+        background: linear-gradient(180deg, #7ABED300 2.19%, #79BDD2 24.36%, #476FB5 100%);
         width: 100%;
         position: absolute;
         top: 100px;
@@ -175,7 +171,50 @@ export default {
                 margin-top: 0;
                 color: white;
             }
-        }
+            .shelf, .goldenBook{
+                display: flex;
+                justify-content: space-around;
+                flex-wrap: wrap;
+
+                .book0{
+                    // background-color: white;
+                    height:140px!important;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    opacity: 1;
+                    border: white dashed 2px;
+                    border-radius: 3px;
+
+                    a{
+                        color: white;
+                        text-decoration: none;
+                        font-size: 0.65em;
+                    }
+                }
+
+                div[class*="book"]{
+                    position: relative;
+                    width: 35%;
+                    height: 35%;
+
+                    img{
+                        width: 100%;
+                        height: 100%;
+                    }
+                    h5{
+                        position: absolute;
+                        top: 0%;
+                        left: 50%;
+                        transform: translateX(-40%);
+                        width: 60%;
+                        color: white;
+                        font-family: 'Dancing Script', cursive;
+                        font-size: 1em;
+                    }
+                }
+            }
+        }    
     }
 }
 </style>

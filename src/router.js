@@ -7,6 +7,7 @@ import Landing from './views/Landing'
 import Signin from './views/Signin'
 import Profile from './views/Profile'
 import CreateProfile from './views/CreateProfile'
+import NotifCenter from './views/NotifCenter.vue'
 
 Vue.use(Router)
 
@@ -29,7 +30,11 @@ const router = new Router({
         component: Profile,
         meta: {
             auth: true
-        }
+        },
+      // Pour dev mettez votre composant dans le path / (la racine du site)
+      path: '/',
+      name: 'NotifCenter',
+      component: NotifCenter
     }
     ]
 })
