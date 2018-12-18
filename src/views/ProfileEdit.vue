@@ -1,11 +1,12 @@
 <template>
     <div class="profileEdit">
         <div class="profileHeader">
+            <img class="profilePic" src="../assets/profilePic.jpeg" alt="profilePic">
             <div class="goBack">
                 <div class="arrow"></div>
+                <span>Retour</span>
             </div>
             <h2>Editez votre profil</h2>
-            <img class="profilePic" src="../assets/profilePic.jpeg" alt="profilePic">
         </div>
         <div class="profileContent">
             <div class="profileEditable">
@@ -113,11 +114,14 @@ export default {
         .goBack {
             box-sizing: border-box;
             position: absolute;
-            width: 80%;
+            top: 5%;
+            left: 5%;
+            width: 90%;
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            margin: 3% 8%;
+            margin: auto;
+            margin-top: 3%;
 
             .arrow {
                 width: 15px;
@@ -126,12 +130,18 @@ export default {
                 border-left: solid white 3px;
                 transform: rotate(-45deg);
             }
+        }
 
         h2 {
-                color: white;
-                margin-left: 6%;
-            }
-
+            width: 80vw;
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translate(-50%);
+            margin-top: 7%;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
         }
 
         .profilePic {

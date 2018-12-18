@@ -70,9 +70,8 @@ export default {
    async mounted () {
        const token = window.localStorage.getItem(env.APP_TOKEN_PATH)
 
-        if (token === 'undefined' || token === 'null')
+        if (token === 'undefined' || token === 'null' || token === null)
             return
-
         const isVerify = await jwt.verify(token, env.APP_SECRET)
         if (!isVerify)
             return
