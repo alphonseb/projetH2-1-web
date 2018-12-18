@@ -1,7 +1,7 @@
 <template>
     <div class="editor">
         <header>
-            <input type="text" ref="title" placeholder="Titre" class="title"/>
+            <input type="text" v-model="title" placeholder="Titre" class="title"/>
         </header>
         <main class="container">
             <router-view/>
@@ -21,16 +21,42 @@
 </template>
 
 <script>
+import CREATE_BOOK from '@/graphql/createBook.graphql'
+import ADD_MEDIA from '@/graphql/addMedia.graphql'
+
 export default {
     name: 'WriteBook',
     data () {
         return {
-            type: 'create'
+            type: 'create',
+            imagesFile: [],
+            imagesSources: [],
+            title: '',
+            content: ''
         }
     },
     methods: {
-        publishBook () {
-            console.log('SUCE LA SAUCE')
+        async publishBook () {
+            if (this.title === '' || this.content === '')
+                return
+            const { data: { createBook : { id } } } = await this.$apollo.mutate({
+                mutation: CREATE_BOOK,
+                variables: {
+                    title: this.title,
+                    content: this.content
+                }
+            })
+            
+            await this.imagesFile.forEach(_img => {
+                this.$apollo.mutate({
+                    mutation: ADD_MEDIA, 
+                    variables: {
+                        bookId: id,
+                        file: _img.file,
+                        description: _img.description                    
+                    }
+                })
+            })
         }
     }
 }

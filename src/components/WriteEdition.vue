@@ -1,6 +1,6 @@
 <template>
     <div class="editContainer">
-        <textarea ref="textEdit" @keypress.enter="insertLineBreak" placeholder="Votre histoire débute ici"></textarea>
+        <textarea ref="textEdit" @keypress.enter="insertLineBreak" placeholder="Votre histoire débute ici" v-model="$parent.content"></textarea>
     </div>
 </template>
 

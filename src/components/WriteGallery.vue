@@ -2,7 +2,7 @@
     <div class="gallery">
         <div class="pictures">
             <a class="showAddPicture" href="" title="ajouter une image" @click.prevent="toggleUpload">+</a>
-            <div class="picture" v-for="(img, i) in imagesSources" :key="i">
+            <div class="picture" v-for="(img, i) in $parent.imagesSources" :key="i">
                 <img :src="img.src" alt="image">
                 <p>{{ img.description }}</p>
             </div>
@@ -29,14 +29,12 @@ export default {
         return {
             showUpload: false,
             previewReader: new FileReader(),
-            addReader: new FileReader(),
-            imagesFile: [],
-            imagesSources: []
+            addReader: new FileReader()
         }
     },
     methods: {
         addImage () {
-            this.imagesFile.push({
+            this.$parent.imagesFile.push({
                 file: this.$refs.image.files[0],
                 description: this.$refs.description.value
             })
@@ -55,7 +53,7 @@ export default {
         })
 
         this.addReader.addEventListener('load', _e => {
-            this.imagesSources.push({
+            this.$parent.imagesSources.push({
                 src: _e.target.result,
                 description: this.$refs.description.value
             })

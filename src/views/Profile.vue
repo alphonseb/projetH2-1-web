@@ -31,6 +31,7 @@
                             </div>
                             <h3>Ma bibiothèque</h3>
                             <h4>Mes livres</h4>
+                            {{ data.me.books }}
                             <p class="tellStory">Racontez votre histoire, un événement marquant, un voyage, ou simplement le quotidien...</p>
                         </div>
                     </div>

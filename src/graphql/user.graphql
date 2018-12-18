@@ -11,6 +11,9 @@ query {
     }
     books (order: DATE_ASC){
         title
+        medias {
+          src
+        }
     }
   }
 }
