@@ -47,10 +47,10 @@
 </template>
 
 <script>
-import FamilyMember from './FamilyMember.vue';
+import FamilyMember from "./FamilyMember.vue";
 
 export default {
-    name: 'Tree',
+    name: "Tree",
     components: {
         FamilyMember
     },
@@ -59,44 +59,49 @@ export default {
             isMounted: false,
             translateValueX: 0,
             user: {
-                firstName: 'User',
+                firstName: "User",
+                lastName: "Test",
                 age: 14,
                 father: {
-                    firstName: 'Father'
+                    firstName: "Father",
+                    lastName: "Father"
                 },
                 mother: {
-                    firstName: 'Mother'
+                    firstName: "Mother"
                 },
                 partner: {
-                    firstName: 'Partner'
+                    firstName: "Partner"
                 },
                 siblings: [
                     {
-                        firstName: 'Brother',
+                        firstName: "Brother",
                         age: 12
                     },
                     {
-                        firstName: 'Little Brother',
+                        firstName: "Little Brother",
                         age: 10
                     },
                     {
-                        firstName: 'Older Sister',
+                        firstName: "Older Sister",
                         age: 18
                     },
                     {
-                        firstName: 'Sister',
+                        firstName: "Sister",
                         age: 15
                     }
                 ],
                 children: [
                     {
-                        firstName: 'Child1'
+                        firstName: "Child1"
                     },
                     {
-                        firstName: 'Child 2'
+                        firstName: "Child 2"
                     },
                     {
-                        firstName: 'Child 3'
+                        firstName: "Child 3"
+                    },
+                    {
+                        firstName: "Child 4"
                     }
                 ]
             },
@@ -104,7 +109,7 @@ export default {
         };
     },
     computed: {
-        youngerSiblings () {
+        youngerSiblings() {
             const youngerSiblings = [];
 
             for (const sibling of this.user.siblings) {
@@ -115,7 +120,7 @@ export default {
             youngerSiblings.sort((a, b) => a.age - b.age);
             return youngerSiblings;
         },
-        olderSiblings () {
+        olderSiblings() {
             const olderSiblings = [];
 
             for (const sibling of this.user.siblings) {
@@ -126,26 +131,30 @@ export default {
             olderSiblings.sort((a, b) => a.age - b.age);
             return olderSiblings;
         },
-        isOldest () {
+        isOldest() {
             return (
                 this.olderSiblings.length === 0 &&
                 this.user.siblings.length !== 0
             );
         },
-        isOnlyChild () {
+        isOnlyChild() {
             return this.user.siblings.length === 0;
         },
-        noPartner () {
+        noPartner() {
             return !this.user.partner;
         },
-        childrenLinkHeight () {
+        childrenLinkHeight() {
             if (this.isMounted) {
-                return this.$refs.children.offsetTop - this.$refs.link.offsetTop
+                return (
+                    this.$refs.children.offsetTop -
+                    this.$refs.link.offsetTop -
+                    30
+                );
             }
         }
     },
     methods: {
-        moveTree () {
+        moveTree() {
             if (this.$refs.children && this.$refs.siblings) {
                 const childrenBoundingRect = this.$refs.children.getBoundingClientRect();
                 const siblingsBoundingRect = this.$refs.siblings.getBoundingClientRect();
@@ -163,11 +172,11 @@ export default {
                 } else if (siblingsBoundingRect.left < 0) {
                     this.translateValueX = -siblingsBoundingRect.left;
                 }
-                console.log(this.translateValueX, 'test');
+                console.log(this.translateValueX, "test");
                 if (this.translateValueX !== 0) {
                     this.$refs.tree.style.transform = `translateX(${
                         this.translateValueX
-                        }px)`;
+                    }px)`;
                 }
             } else if (this.$refs.children) {
                 const childrenBoundingRect = this.$refs.children.getBoundingClientRect();
@@ -175,7 +184,7 @@ export default {
                     this.translateValueX = -childrenBoundingRect.left;
                     this.$refs.tree.style.transform = `translateX(${
                         this.translateValueX
-                        }px)`;
+                    }px)`;
                 }
             } else if (this.$refs.siblings) {
                 const siblingsBoundingRect = this.$refs.siblings.getBoundingClientRect();
@@ -183,11 +192,11 @@ export default {
                     this.translateValueX = -siblingsBoundingRect.left;
                     this.$refs.tree.style.transform = `translateX(${
                         this.translateValueX
-                        }px)`;
+                    }px)`;
                 }
             }
         },
-        focusUser () {
+        focusUser() {
             const userBoundingRect = this.$refs.user.getBoundingClientRect();
             const scrollDistanceX =
                 userBoundingRect.left > window.screen.availWidth / 2
@@ -197,25 +206,26 @@ export default {
                 window.scrollTo(scrollDistanceX, 0);
             }, 700);
         },
-        updateUser () {
+        updateUser() {
             // this.translateValueX = 0;
-            this.$refs.tree.style.transform = 'translateX(0)';
+            this.$refs.tree.style.transform = "translateX(0)";
 
             this.user = {
-                firstName: 'User',
+                firstName: "User",
                 age: 14,
                 father: {
-                    firstName: 'Updated Father'
+                    firstName: "Updated",
+                    lastName: "father"
                 },
                 mother: {
-                    firstName: 'Updated Mother'
+                    firstName: "Updated Mother"
                 },
                 partner: {
-                    firstName: 'Updated Partner'
+                    firstName: "Updated Partner"
                 },
                 siblings: [
                     {
-                        firstName: 'Brother',
+                        firstName: "Brother",
                         age: 12
                     },
                     // {
@@ -227,13 +237,13 @@ export default {
                     //     age: 18
                     // },
                     {
-                        firstName: 'Sister',
+                        firstName: "Sister",
                         age: 15
                     }
                 ],
                 children: [
                     {
-                        firstName: 'Child 1'
+                        firstName: "Child 1"
                     }
                     // {
                     //     firstName: "Child 2"
@@ -244,62 +254,62 @@ export default {
                 ]
             };
         },
-        updateParent () {
+        updateParent() {
             // console.log(this.translateValueX);
             this.$refs.tree.style.transform = `translateX(${
                 this.translateValueX
-                }px) translateY(175px)`;
+            }px) translateY(175px)`;
             window.setTimeout(() => {
-                this.$refs.tree.style.opacity = '0';
+                this.$refs.tree.style.opacity = "0";
             }, 200);
             window.setTimeout(() => {
                 this.updateUser();
             }, 500);
             window.setTimeout(() => {
                 this.moveTree();
-                this.$refs.tree.style.opacity = '1';
+                this.$refs.tree.style.opacity = "1";
             }, 800);
             // this.updateUser();
             // window.setTimeout(() => {
             // }, 300);
             this.focusUser();
         },
-        updateChild () {
+        updateChild() {
             this.$refs.tree.style.transform = `translateX(${
                 this.translateValueX
-                }px) translateY(-200px)`;
+            }px) translateY(-200px)`;
             window.setTimeout(() => {
-                this.$refs.tree.style.opacity = '0';
+                this.$refs.tree.style.opacity = "0";
             }, 200);
             window.setTimeout(() => {
                 this.updateUser();
             }, 500);
             window.setTimeout(() => {
                 this.moveTree();
-                this.$refs.tree.style.opacity = '1';
+                this.$refs.tree.style.opacity = "1";
             }, 800);
             this.focusUser();
         },
-        updateSibling () {
+        updateSibling() {
             window.setTimeout(() => {
-                this.$refs.tree.style.opacity = '0';
+                this.$refs.tree.style.opacity = "0";
             }, 200);
             window.setTimeout(() => {
                 this.updateUser();
             }, 500);
             window.setTimeout(() => {
                 this.moveTree();
-                this.$refs.tree.style.opacity = '1';
+                this.$refs.tree.style.opacity = "1";
             }, 800);
             this.focusUser();
         }
     },
-    mounted () {
+    mounted() {
         this.moveTree();
         this.focusUser();
-        this.isMounted = true
+        this.isMounted = true;
     },
-    updated () {
+    updated() {
         // this.moveTree();
         // this.focusUser();
     }
@@ -309,11 +319,21 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .tree-container {
+    overflow: scroll;
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 100%;
+        width: 50px;
+        height: 100%;
+    }
 }
 .tree {
     display: flex;
@@ -321,32 +341,33 @@ export default {
     align-items: center;
     position: relative;
     transition: transform 0.3s ease-in-out, opacity 0.3s ease;
+    color: #fff;
     .parent-1 {
         position: absolute;
-        top: -200px;
+        top: -220px;
         right: 25px;
         &::after {
-            content: '';
+            content: "";
             position: absolute;
-            top: 50px;
+            top: 48px;
             left: 100%;
             width: 50px;
-            height: 2px;
-            background: #000;
+            height: 4px;
+            background: #fff;
         }
     }
     .parent-2 {
         position: absolute;
-        top: -200px;
+        top: -220px;
         left: 25px;
         &::after {
-            content: '';
+            content: "";
             position: absolute;
-            top: 50px;
+            top: 48px;
             right: 100%;
             width: 50px;
-            height: 2px;
-            background: #000;
+            height: 4px;
+            background: #fff;
         }
     }
     .siblings {
@@ -355,14 +376,14 @@ export default {
         display: flex;
         justify-content: space-between;
         &::before {
-            content: '';
+            content: "";
             position: absolute;
-            top: -10px;
+            top: -30px;
             left: 50%;
             transform: translateX(-50%);
             width: calc(100% - 100px);
-            height: 2px;
-            background: #000;
+            height: 4px;
+            background: #fff;
         }
         &.is-oldest::before {
             width: calc(100% - 210px);
@@ -385,14 +406,14 @@ export default {
             }
         }
         &::after {
-            content: '';
+            content: "";
             position: absolute;
-            top: -125px;
+            top: -145px;
             left: 50%;
             transform: translateX(-50%);
-            width: 2px;
+            width: 4px;
             height: 115px;
-            background: #000;
+            background: #fff;
         }
         & > div {
             margin-right: 20px;
@@ -401,14 +422,14 @@ export default {
             }
         }
         .family-member:not(.user-partner)::before {
-            content: '';
+            content: "";
             position: absolute;
             bottom: 100%;
             left: 50%;
             transform: translateX(-50%);
-            width: 2px;
-            height: 10px;
-            background: #000;
+            width: 4px;
+            height: 30px;
+            background: #fff;
         }
         .user {
             position: relative;
@@ -417,23 +438,23 @@ export default {
             .link {
                 position: absolute;
                 top: 50px;
-                left: 104px;
-                width: 2px;
+                left: 103px;
+                width: 4px;
                 height: 40px;
-                background: #000;
+                background: #fff;
             }
             .family-member {
                 margin-right: 10px;
                 &.user-partner {
                     margin-right: 0;
                     &::before {
-                        content: '';
+                        content: "";
                         position: absolute;
-                        top: 50px;
+                        top: 48px;
                         right: 100%;
-                        height: 2px;
+                        height: 4px;
                         width: 10px;
-                        background: #000;
+                        background: #fff;
                     }
                 }
             }
@@ -445,14 +466,14 @@ export default {
                 display: flex;
                 justify-content: space-between;
                 &::before {
-                    content: '';
+                    content: "";
                     position: absolute;
-                    top: -10px;
+                    top: -30px;
                     left: 50%;
                     transform: translateX(-50%);
                     width: calc(100% - 100px);
-                    height: 2px;
-                    background: #000;
+                    height: 4px;
+                    background: #fff;
                 }
                 // &::after {
                 //     content: '';
@@ -462,7 +483,7 @@ export default {
                 //     transform: translateX(-50%);
                 //     width: 2px;
                 //     height: 142px;
-                //     background: #000;
+                //     background: #FFF;
                 // }
                 .family-member {
                     margin-right: 15px;

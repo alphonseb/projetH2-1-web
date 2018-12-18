@@ -11,7 +11,7 @@
 
 <script>
 export default {
-    name: 'FamilyMember',
+    name: "FamilyMember",
     props: {
         member: Object
     }
@@ -22,6 +22,28 @@ export default {
 <style lang="scss" scoped>
 .family-member {
     position: relative;
+    &.connected-user {
+        img {
+            box-shadow: 0 0 3pt 2pt #77ffce;
+        }
+    }
+    &.selected-user {
+        img {
+            box-shadow: 0 0 3pt 2pt #bf51e5;
+        }
+    }
+    &.has-notifications {
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0px;
+            left: 75px;
+            width: 20px;
+            height: 20px;
+            background: #cf0000;
+            border-radius: 100%;
+        }
+    }
     img {
         width: 100px;
         height: 100px;
