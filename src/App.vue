@@ -1,8 +1,5 @@
 <template>
     <div id="app">
-<<<<<<< HEAD
-        <router-view />
-=======
         <div id="nav">
             <!-- La navigation se faire avec des router-link, c'est comme des a, mais pour vue -->
             <!-- on met dans le to le path renseigner dans le fichier router.js -->
@@ -13,7 +10,6 @@
             <router-link to="/about">About</router-link>
         </div>
         <router-view/>
->>>>>>> b38b5acee062226dc684803eb43bbf2e96425feb
     </div>
 </template>
 

@@ -6,6 +6,7 @@ import env from '@/../env.json'
 import Landing from './views/Landing'
 import Signin from './views/Signin'
 import Profile from './views/Profile'
+import CreateProfile from './views/CreateProfile'
 
 Vue.use(Router)
 
@@ -15,7 +16,7 @@ const router = new Router({
     routes: [{
         path: '/',
         name: 'landing',
-        component: Landing
+        component: CreateProfile
     },
     {
         path: '/signin',

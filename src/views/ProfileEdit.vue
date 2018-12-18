@@ -3,8 +3,8 @@
         <div class="profileHeader">
             <div class="goBack">
                 <div class="arrow"></div>
-                <p>Editez votre profil</p>
             </div>
+            <h2>Editez votre profil</h2>
             <img class="profilePic" src="../assets/profilePic.jpeg" alt="profilePic">
         </div>
         <div class="profileContent">
@@ -127,10 +127,11 @@ export default {
                 transform: rotate(-45deg);
             }
 
-            p {
+        h2 {
                 color: white;
                 margin-left: 6%;
             }
+
         }
 
         .profilePic {
