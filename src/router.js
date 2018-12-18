@@ -6,6 +6,7 @@ import env from '@/../env.json'
 import Landing from './views/Landing'
 import Signin from './views/Signin'
 import Profile from './views/Profile'
+import Write from './components/WriteBook'
 
 Vue.use(Router)
 

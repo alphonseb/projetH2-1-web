@@ -1,25 +1,19 @@
 <template>
     <div id="app">
-<<<<<<< HEAD
         <router-view />
-=======
-        <div id="nav">
-            <!-- La navigation se faire avec des router-link, c'est comme des a, mais pour vue -->
-            <!-- on met dans le to le path renseigner dans le fichier router.js -->
-            <!-- les composants changeront dans le router view, donc on met le footer et nav autour  -->
-            <!-- comme c'est le cas ici si ce n'est qu'il faut adapter -->
-            <!-- quand le nav/footer devra ne pas appraitre, on mettra des v-if en fonction de la route -->
-            <router-link to="/">Home</router-link>|
-            <router-link to="/about">About</router-link>
-        </div>
-        <router-view/>
->>>>>>> b38b5acee062226dc684803eb43bbf2e96425feb
     </div>
 </template>
 
 <style lang="scss">
 body {
     margin: 0;
+    background: linear-gradient(
+        180deg,
+        #7abed3 2.19%,
+        #79bdd2 13.36%,
+        #476fb5 100%
+    );
+    font-family: Roboto;
 }
 
 a {

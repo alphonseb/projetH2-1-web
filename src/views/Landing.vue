@@ -21,9 +21,9 @@
             <div class="sign">
                 <p class="error" v-show="error" >Votre email ou mot de passe est incorrect</p>
                 <div class="idField">
-                    <input type="email" placeholder="e-mail" ref="mail">
+                    <input type="email" placeholder="e-mail" ref="mail" @keypress.enter="login">
                     <div class="borderBottom"></div>
-                    <input type="password" placeholder="mot de passe" ref="password">
+                    <input type="password" placeholder="mot de passe" ref="password" @keypress.enter="login">
                 </div>
                 <div class="signButtons">
                     <div><a @click="login" href="#" title="Se connecter">Se connecter</a></div>
@@ -51,20 +51,21 @@ export default {
             if (this.$refs.mail.value === '' || this.$refs.password.value === '')
                 return
 
-            const { data } = await this.$apollo.mutate({
+            this.$apollo.mutate({
                 mutation: LOGIN,
                 variables: {
                     mail: this.$refs.mail.value,
                     password: this.$refs.password.value
                 }
-            })
-            if (!data.login) {
-                this.error = true
-                return
-            }
+            }).then(async ({ data }) => {
+                if (!data.login) {
+                    this.error = true
+                    return
+                }
 
-            await window.localStorage.setItem(env.APP_TOKEN_PATH, data.login.token)
-            this.$router.push('/me')
+                await window.localStorage.setItem(env.APP_TOKEN_PATH, data.login.token)
+                this.$router.push('/me')
+            }).catch( err => this.error = true)
         }
     },
    async mounted () {
@@ -84,51 +85,41 @@ export default {
 
 <style lang="scss" scoped>
 .landing {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    margin: 0;
-    background: linear-gradient(
-        180deg,
-        #7abed3 2.19%,
-        #79bdd2 13.36%,
-        #476fb5 100%
-    );
-    font-family: Roboto;
-}
-.header {
-    height: 10vh;
-    .logo {
-        width: 10%;
-        margin: 1%;
+        width : 100vw;
+        height: 100vh;
+        overflow: hidden;
+        margin : 0;
+        background: linear-gradient(180deg, #7ABED3 2.19%, #79BDD2 13.36%, #476FB5 100%);
+        font-family: Roboto;
     }
-}
-@media screen and (max-width: 450px) {
+
     .header {
-        height: 20%;
-        text-align: center;
+        height: 10vh;
+
         .logo {
-            margin-top: 5%;
-            width: 50%;
+            width: 10%;
+            margin: 1%;
         }
     }
-    main {
-        position: relative;
-        color: white;
-        height: 80%;
-        .backgroundTree {
-            position: absolute;
-            top: -15%;
-            right: 10%;
-            opacity: 0.2;
-            transform: scaleX(-1);
+
+    
+
+    @media screen and (max-width: 450px) {
+        .header {
+            height: 20%;
+            text-align: center;
+
+            .logo{
+                margin-top : 5%;
+                width : 50%;
+            }
         }
 
         main {
             position: relative;
             color: white;
             height: 80%;
-            font-family: Roboto;
+
             .backgroundTree {
                 position: absolute;
                 top : -15%;
@@ -139,42 +130,40 @@ export default {
 
             .top {
                 width: 100%;
-                height: 100%;
-                position: relative;
-                p {
-                    width: 35%;
+                height : 30%;
+
+                .topText {
+                    width: 100%;
                     height: 100%;
-                    margin: 0;
-                    margin-left: 60%;
-                    font-size: 1em;
-                    position: absolute;
-                    font-weight: 100;
-                }
-                .firstLine {
-                    top: -15%;
-                    left: -15%;
-                }
-                .secondLine {
-                    top: 25%;
+                    position: relative;
+
+                    p {                    
+                        width : 35%;
+                        height : 100%;
+                        margin : 0;
+                        margin-left: 60%;
+                        font-size : 1em;
+                        position : absolute;
+                        font-weight: 100;
+                    }
+
+                    .firstLine {
+                        top : -15%;
+                        left: -15%; 
+                    }
+
+                    .secondLine {
+                        top : 25%;
+                    }
                 }
             }
-        }
-        .sign {
-            height: 70%;
-            width: 100%;
-            position: relative;
-            z-index: 1;
-            .idField {
-                width: 90%;
-                height: 20%;
-                margin: auto;
-                border-radius: 10px;
-                display: flex;
-                flex-direction: column;
-                background-color: rgba(255, 255, 255, 0.86);
+
+            .sign {
+                height : 70%;
+                width : 100%;
                 position: relative;
-                transform: translateY(40px);
                 z-index: 1;
+                
 
                 .error {
                     color: red;
@@ -184,53 +173,80 @@ export default {
                     left: 35px;
                     transform: translateY(-225%);
                 }
-
                 .idField {
                     width: 90%;
-                    height: 1px;
-                    bottom: 50%;
-                    left: 5%;
-                    background: rgba(0, 0, 0, 0.22);
-                }
-            }
-            .signButtons {
-                width: 100%;
-                height: 80%;
-                margin: auto;
-                color: white;
-                font-size: 1.5em;
-                display: flex;
-                flex-direction: column;
-                align-content: space-around;
-                align-items: center;
-                z-index: 1000;
-                div {
                     height: 20%;
+                    margin: auto;
+                    border-radius: 10px;
                     display: flex;
-                    align-items: center;
-                    margin-top: 5%;
-                }
-                .facebookButton {
-                    width: 90%;
+                    flex-direction: column;
+                    background-color: rgba(255, 255, 255, 0.86);
                     position: relative;
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: center;
-                    align-items: center;
-                    background-color: #4267b2;
-                    border-radius: 15px;
-                    font-size: 18px;
-                    img {
+                    
+
+                    input {
+                        height : 50%;
+                        padding-left: 7%;
+                        border : none;
+                        display: block;
+                        background-color: transparent;         
+                    }
+
+                    .borderBottom {
                         position: absolute;
-                        left: 2%;
-                        width: 14%;
+                        width: 90%;
+                        height: 1px;
+                        bottom: 50%;
+                        left: 5%;
+                        background: rgba(0, 0, 0, 0.22);
                     }
                 }
-                .facebookButton + div {
-                    font-size: 0.8em;
+
+                .signButtons {
+                    width: 100%;
+                    height: 80%;
+                    margin: auto;
+                    color: white;
+                    font-size: 1.5em;
+                    display: flex;
+                    flex-direction: column;
+                    align-content: space-around;
+                    align-items: center;
+                    z-index: 1000;
+
+                    div {
+                        height: 20%;
+                        display: flex;
+                        align-items: center;
+                        margin-top: 5%;
+                    }
+
+                    .facebookButton {
+                        width: 90%;
+                        position: relative;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        background-color: #4267B2;
+                        border-radius: 15px;
+                        font-size: 18px;   
+
+                        img {
+                            position: absolute;
+                            left: 2%;
+                            width: 14%;
+                        }
+                    }
+
+                    .facebookButton + div {
+                        font-size: 0.8em;
+                    }
+                                                  
                 }
+
             }
         }
     }
-}
+
 </style>
