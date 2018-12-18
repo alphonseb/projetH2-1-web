@@ -31,8 +31,13 @@
                             </div>
                             <h3>Ma bibiothèque</h3>
                             <h4>Mes livres</h4>
-                            {{ data.me.books }}
                             <p class="tellStory">Racontez votre histoire, un événement marquant, un voyage, ou simplement le quotidien...</p>
+                            <div class="books">
+                                <div class="book" v-for="(book, i) in data.me.books" :key="i">
+                                    <img src="../assets/book.png" alt="livre">
+                                    <span> {{book.title}} </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -175,6 +180,33 @@ export default {
                 font-size: 0.6em;
                 margin-top: 0;
                 color: white;
+            }
+
+            .books {
+                height: 150px;
+                width: 100%;
+                display: flex;
+
+                .book {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;
+                    height: 100%;
+
+                    img {
+                        height: 100%;
+                        width: auto;
+                    }
+
+                    span {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        color: white;
+                    }
+                }
             }
         }
     }
