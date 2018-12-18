@@ -1,7 +1,11 @@
 <template>
     <div class="family-member">
         <img src="../assets/testImages/pexels-photo-220453.jpeg" alt="Photo de profil">
-        <h4>{{firstName}} {{lastName}}</h4>
+        <h4>
+            <span class="first-name">{{member.firstName}}</span>
+            <br>
+            <span class="last-name">{{member.lastName}}</span>
+        </h4>
     </div>
 </template>
 
@@ -9,10 +13,7 @@
 export default {
     name: "FamilyMember",
     props: {
-        relation: String,
-        firstName: String,
-        lastName: String,
-        profileImgUrl: String
+        member: Object
     }
 };
 </script>
@@ -29,7 +30,14 @@ export default {
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     }
     h4 {
+        margin-top: 0.5em;
         text-align: center;
+        .first-name {
+            font-weight: 400;
+        }
+        .last-name {
+            font-weight: 600;
+        }
     }
 }
 </style>
