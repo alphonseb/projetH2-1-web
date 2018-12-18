@@ -7,6 +7,8 @@ import Landing from './views/Landing'
 import Signin from './views/Signin'
 import Profile from './views/Profile'
 import Write from './components/WriteBook'
+import WriteEdition from './components/WriteEdition'
+import WriteGallery from './components/WriteGallery'
 
 Vue.use(Router)
 
@@ -30,6 +32,20 @@ const router = new Router({
         meta: {
             auth: true
         }
+    },
+    {
+        path: '/book',
+        component: Write,
+        children: [
+            {
+                path: 'edit',
+                component: WriteEdition
+            },
+            {
+                path: 'galerie',
+                component: WriteGallery
+            }
+        ]
     }
     ]
 })
