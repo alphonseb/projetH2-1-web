@@ -95,15 +95,18 @@ export default {
             height: 50vh;
             position: fixed;
             .goBack{
+                position: relative;
                 box-sizing: border-box;
                 position: absolute;
                 width: 80%;
-                display: flex;
                 align-items: center;
                 justify-content: flex-start;
                 margin: 3% 8%;
 
                 .arrow{
+                    position: absolute;
+                    margin-top: 5.5%;
+                    left: 3%;
                     width: 15px;
                     height: 15px;
                     border-top: solid white 3px;
@@ -112,8 +115,10 @@ export default {
                 }
 
                 p{
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
                     color : white;
-                    margin-left: 6%;
                 }
             }
 

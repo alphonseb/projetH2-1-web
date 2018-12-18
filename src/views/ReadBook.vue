@@ -1,9 +1,9 @@
 <template>
     <div class="readBook">
         <div class="readHeader">
-            <div class="arrow"></div>
+            <a href="#"><div class="arrow"></div></a> <!-- retour en arrière -->
             <div class="imgContainer">
-                <img src="../assets/logoIcon.png" alt="">
+                <img src="../assets/logoIcon.png" alt="Icone votre profil">
             </div>
         </div>
         <div class="addText">
@@ -22,8 +22,16 @@
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora, quod rem. Fugit voluptate repellendus, totam a unde ab libero laboriosam, maiores possimus alias hic repudiandae obcaecati. Mollitia et error saepe?
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora, quod rem. Fugit voluptate repellendus, totam a unde ab libero laboriosam, maiores possimus alias hic repudiandae obcaecati. Mollitia et error saepe?
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora, quod rem. Fugit voluptate repellendus, totam a unde ab libero laboriosam, maiores possimus alias hic repudiandae obcaecati. Mollitia et error saepe?
-
             </p>
+            <div class="border borderBottom"></div>
+            <div class="bottomBar">
+                <div class="arrowRight"></div>
+                <a href="#"><img class="addImage" src="../assets/addImage.png" alt="Ajoutez une image"></a><!-- Ajouter une image -->
+                <span>12/16</span>
+                <a href="#"><img class="addNote" src="../assets/addNote.png" alt="Ajoutez un post-it"></a><!-- Ajouter un commentaire -->
+                <div class="arrowLeft"></div>
+            </div>
+            
         </div>
     </div>
 </template>
@@ -34,7 +42,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .readBook{
     width : 100%;
     height: 100vh;
@@ -71,18 +79,19 @@ export default {
     }
 
     .addText{
+        position: relative;
         margin: 0 auto;
         width: 88%;
         background: white;
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        box-shadow: 0px 5px 5px rgba(0,0,0,0.3);
+        box-shadow: 0px 5px 20px rgba(0,0,0,0.3);
 
 
         .textHeader{
             display: flex;
-            
+            margin-top: 2%;
             align-items: center;
             justify-content: space-between;
             width: 85%;
@@ -102,6 +111,7 @@ export default {
                 justify-content: flex-start;
                 align-items: center;
                 margin-left: 30px;
+
                 h2{
                     margin: 3px 0;
                 }
@@ -109,38 +119,62 @@ export default {
             
         }
 
-
-
-        
-
-        .inputTitle{
-            margin-top: 10px;
-            height: 25px;
-            width: 90%;
-            font-family: 'Playfair Display', serif;
-            border: none;
-        }
-        
-        .inputTitle::placeholder{
-            color: black;
-            opacity: 0.5;
-        }
-
         .border{
             width: 90%;
             height: 1px;
             background-color: rgba(0,0,0,0.3);
-            margin: 15px 0;
+            margin: 2% 0;
         }
 
         p{
             width: 90%;
             background-color: white;
             border: none;
-            height: 62vh;
-            margin-bottom: 20px
+            height: 60vh;
+            margin-bottom: 2%
         }
     }
+
+    .borderBottom{
+        position: absolute;
+        bottom: 8%;
+    }
+
+    .bottomBar{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 90%;
+        margin-bottom:2%;
+
+        .addImage, .addNote{
+            position: relative;
+            width: 30px;
+        }
+
+        .arrowLeft{
+            width: 6px;
+            height: 6px;
+            border-top: solid black 3px;
+            border-left : solid black 3px;
+            transform: rotate(135deg);
+        }
+        
+        .arrowRight{
+            width: 6px;
+            height: 6px;
+            border-top: solid black 3px;
+            border-left : solid black 3px;
+            transform: rotate(-45deg);
+        }
+
+        span{
+            font-size: 0.8em;
+        }
+
+    }
+
+    
 
 }
 </style>

@@ -2,7 +2,7 @@
     <div class="profile">
         <div class="profileHeader">
             <div class="imgContainer">
-                <img  id="profilePic" src="../assets/profilePic.jpeg" alt="profile pic">
+                <img class="profilePic" src="../assets/profilePic.jpeg" alt="profile pic">
             </div>  
             <div class="searchBar">
                 <input type="text">
@@ -115,7 +115,7 @@ export default {
     .profileHeader{
         display: flex;
         position: absolute;
-        top: 20px;
+        top: 2%;
         width: 100%;
         justify-content: space-around;
         align-items: center;
@@ -126,7 +126,7 @@ export default {
             border-radius: 50%;
             overflow: hidden;
 
-            #profilePic{
+            .profilePic{
                 width: 100%;
                 
             }
@@ -143,6 +143,8 @@ export default {
                 border: none;
                 width: 200px;
                 height: 22px;
+                color: white;
+                padding-left: 5%;
             }
 
             img{
@@ -230,7 +232,7 @@ export default {
                     border-radius: 3px;
 
                     a{
-                        color: black;
+                        color: white;
                         text-decoration: none;
                         font-size: 0.65em;
                     }
@@ -252,6 +254,8 @@ export default {
                         transform: translateX(-40%);
                         width: 60%;
                         color: white;
+                        font-family: 'Dancing Script', cursive;
+                        font-size: 1em;
                     }
                 }
             }

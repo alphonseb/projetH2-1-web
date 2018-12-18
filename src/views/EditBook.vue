@@ -2,10 +2,7 @@
     <div class="editBook">
         <div class="editHeader">
             <div class="arrow"></div>
-            <div class="settings">
-                <span>Sauver</span>
-                <span>Publier</span>
-            </div>
+            <span><a href="#">Publier</a></span>
         </div>
         <div class="addText">
             <input class="inputTitle" type="text" placeholder="Titre du livre">
@@ -45,11 +42,9 @@ export default {
             transform: rotate(-45deg);
         }
 
-        .settings{
-            display: flex;
-            justify-content: space-between;
-            width: 35%;
+        span a{
             color: white;
+            text-decoration: none;
         }
     }
 
@@ -87,7 +82,9 @@ export default {
             background-color: white;
             border: none;
             height: 72vh;
-            margin-bottom: 20px
+            margin-bottom: 20px;
+            font-family: roboto;
+            color: black;
         }
     }
 
