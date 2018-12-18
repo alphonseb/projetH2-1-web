@@ -19,22 +19,15 @@
                 </div>
             </div>
             <div class="sign">
+                <p class="error" v-show="error" >Votre email ou mot de passe est incorrect</p>
                 <div class="idField">
-                    <input type="text" placeholder="e-mail">
+                    <input type="email" placeholder="e-mail" ref="mail">
                     <div class="borderBottom"></div>
-                    <input type="text" placeholder="mot de passe">
+                    <input type="password" placeholder="mot de passe" ref="password">
                 </div>
                 <div class="signButtons">
-                    <div>
-                        <a>Se connecter</a>
-                    </div>
-                    <div class="facebookButton">
-                        <img src="../assets/fb-logo.png" alt>
-                        <a>S'inscrire avec Facebook</a>
-                    </div>
-                    <div>
-                        <a>S'inscrire</a>
-                    </div>
+                    <div><a @click="login" href="#" title="Se connecter">Se connecter</a></div>
+                    <div><router-link to="/signin" title="S'inscrire" >S'inscrire</router-link></div>
                 </div>
             </div>
         </main>
@@ -42,9 +35,51 @@
 </template>
 
 <script>
+import jwt from 'jsonwebtoken'
+import env from '@/../env.json'
+import LOGIN from '@/graphql/login.graphql'
+
 export default {
-    name: "landing"
-};
+    name: 'landing',
+    data () {
+        return {
+            error: false
+        }
+    },
+    methods: {
+        async login () {
+            if (this.$refs.mail.value === '' || this.$refs.password.value === '')
+                return
+
+            const { data } = await this.$apollo.mutate({
+                mutation: LOGIN,
+                variables: {
+                    mail: this.$refs.mail.value,
+                    password: this.$refs.password.value
+                }
+            })
+            if (!data.login) {
+                this.error = true
+                return
+            }
+
+            await window.localStorage.setItem(env.APP_TOKEN_PATH, data.login.token)
+            this.$router.push('/me')
+        }
+    },
+   async mounted () {
+       const token = window.localStorage.getItem(env.APP_TOKEN_PATH)
+
+        if (token === 'undefined' || token === 'null')
+            return
+
+        const isVerify = await jwt.verify(token, env.APP_SECRET)
+        if (!isVerify)
+            return
+        
+        this.$router.push('/me')        
+    }
+}    
 </script>
 
 <style lang="scss" scoped>
@@ -88,10 +123,21 @@ export default {
             opacity: 0.2;
             transform: scaleX(-1);
         }
-        .top {
-            width: 100%;
-            height: 30%;
-            .topText {
+
+        main {
+            position: relative;
+            color: white;
+            height: 80%;
+            font-family: Roboto;
+            .backgroundTree {
+                position: absolute;
+                top : -15%;
+                right: 10%;
+                opacity: 0.2;
+                transform: scaleX(-1);
+            }
+
+            .top {
                 width: 100%;
                 height: 100%;
                 position: relative;
@@ -127,15 +173,19 @@ export default {
                 flex-direction: column;
                 background-color: rgba(255, 255, 255, 0.86);
                 position: relative;
-                input {
-                    height: 50%;
-                    padding-left: 7%;
-                    border: none;
-                    display: block;
-                    background-color: transparent;
-                }
-                .borderBottom {
+                transform: translateY(40px);
+                z-index: 1;
+
+                .error {
+                    color: red;
+                    font-size: .8rem;
                     position: absolute;
+                    top: 0;
+                    left: 35px;
+                    transform: translateY(-225%);
+                }
+
+                .idField {
                     width: 90%;
                     height: 1px;
                     bottom: 50%;

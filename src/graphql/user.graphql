@@ -1,7 +1,16 @@
 query {
-    me {
-        name
-        mail
-        gender
+  me {
+    name
+    phone
+    mail
+    profilePicture {
+        src
     }
+    birth {
+      date
+    }
+    books (order: DATE_ASC){
+        title
+    }
+  }
 }
