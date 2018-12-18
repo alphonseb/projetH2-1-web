@@ -20,19 +20,19 @@
                 <div class="familyRelation">
                     <div>
                         <p>Je suis l'enfant de :</p>
-                        <select name="" id=""></select>
+                        <search/>
                     </div>
                     <div>
                         <p>Je suis le parent de :</p>
-                        <select name="" id=""></select>
+                        <search/>
                     </div>
                     <div>
                         <p>Je suis le/la frère/soeur de :</p>
-                        <select name="" id=""></select>
+                        <search/>
                     </div>
                     <div>
                         <p>Je suis le/la conjoint(e) de :</p>
-                        <select name="" id=""></select>
+                        <search/>
                     </div>
                 </div>
 
@@ -45,9 +45,7 @@
                 <input class="infoInputs" type="text" placeholder="Vos hobbies">
                 <input class="infoInputs" type="text" placeholder="Quel(s) sport(s) pratiquez vous ?">
 
-                <div class="bottomButton">
-                    <span>Enregistrer</span>
-                </div>
+                <router-link to="/me" class="bottomButton">Enregistrer</router-link>
             </div>
         </main>
     </div>
@@ -55,8 +53,17 @@
 
 
 <script>
+import Search from '@/components/search'
 export default {
     name: 'createProfile',
+    data () {
+        return {
+
+        }
+    },
+    components: {
+        Search
+    }
 }    
 </script>
 
@@ -221,21 +228,20 @@ export default {
         }
 
         .bottomButton {
-            width: 80%;
-            height: 3em;
-            border: 1px solid white;
-            border-radius: 0.8em;
+            display: block;
+            width: 150px;
+            height: 2em;
+            
             margin: auto;
-            margin-top: 10%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            margin-top: 20px;
 
-            span {
-                height: 1.5em;
-                font-size: 1.5em;
-                font-weight: 400;
-            }
+            border: 1px solid white;
+            border-radius: 100px;
+
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: 400;
+            line-height: 2em;
         }
     }
 }

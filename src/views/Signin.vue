@@ -13,23 +13,25 @@
                 <div class="names">
                     <input
                         type="text"
-                        id="name"
+                        id="firstName"
                         name="name"
                         required
                         minlength="4"
                         maxlength="28"
                         size="10"
                         placeholder="Prénom"
+                        v-model="firstName"
                     >
                     <input
                         type="text"
-                        id="name"
+                        id="lastName"
                         name="name"
                         required
                         minlength="4"
                         maxlength="28"
                         size="10"
                         placeholder="Nom"
+                        v-model="lastName"
                     >
                 </div>
                 <div class="genders">
@@ -45,31 +47,17 @@
                 <div class="birth">
                     <p>Date de naissance</p>
                     <div class="birthInputs">
-                        <input class="birthDate" type="text" maxlength="2" placeholder="JJ">
-                        <input class="birthDate" type="text" maxlength="2" placeholder="MM">
-                        <input class="birthDate" type="text" maxlength="4" placeholder="AAAA">
+                        <input class="birthDate" type="text" maxlength="2" placeholder="JJ" v-model="birth.day">
+                        <input class="birthDate" type="text" maxlength="2" placeholder="MM" v-model="birth.month">
+                        <input class="birthDate" type="text" maxlength="4" placeholder="AAAA" v-model="birth.year">
                     </div>
                 </div>
 
                 <div class="logins">
-                    <input type="text" placeholder="E-mail">
-                    <input type="text" placeholder="Mot de passe">
+                    <input type="email" placeholder="E-mail" v-model="mail">
+                    <input type="password" placeholder="Mot de passe" v-model="password">
                 </div>
-
-                <div class="familyChoice">
-                    <div>
-                        <input type="radio" name id>
-                        <span>Je rejoins une famille</span>
-                    </div>
-                    <div>
-                        <input type="radio" name id>
-                        <span>Je créé ma famille</span>
-                    </div>
-                </div>
-
-                <div class="nextButton">
-                    <span>Suivant</span>
-                </div>
+                <router-link to="/createProfile" class="nextButton">Suivant</router-link>
             </form>
         </main>
     </div>
@@ -77,23 +65,29 @@
 
 <script>
 export default {
-    name: "subscription"
-};
+    name: 'subscription',
+    data () {
+        return {
+            firstName: '',
+            lastName: '',
+            isMale: false,
+            isFemale: false,
+            birth: {
+                day: '',
+                month: '',
+                year: ''
+            },
+            mail: '',
+            password: ''
+        }
+    }
+}
 </script>
 
 <style lang="scss" scoped>
-.page {
+.subscription {
     width: 100vw;
     height: 100vh;
-    margin: 0;
-    background: linear-gradient(
-        180deg,
-        #7abed3 2.19%,
-        #79bdd2 13.36%,
-        #476fb5 100%
-    );
-    font-family: Roboto;
-    color: white;
 }
 
 @media screen and (max-width: 450px) {
@@ -109,7 +103,10 @@ export default {
 
     main {
         width: 90%;
+        height: 75%;
         margin: auto;
+        color: white;
+        position: relative;
     }
 
     form {
@@ -206,20 +203,22 @@ export default {
     }
 
     .nextButton {
-        width: 100%;
-        height: 3em;
-        margin-top: 5%;
-        border: 1px solid white;
-        border-radius: 0.8em;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        display: inline-block;
+        width: 150px;
+        height: 2em;
+        
+        position: absolute;
+        bottom: 2em;
+        left: 50%;
+        transform: translateX(-50%);
 
-        span {
-            height: 1.5em;
-            font-size: 1.5em;
-            font-weight: 400;
-        }
+        border: 1px solid white;
+        border-radius: 100px;
+
+        text-align: center;
+        font-size: 1.5em;
+        font-weight: 400;
+        line-height: 2em;
     }
 }
 </style>

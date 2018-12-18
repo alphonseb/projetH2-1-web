@@ -29,9 +29,22 @@ const router = new Router({
         component: Signin
     },
     {
+        path: '/createProfile',
+        name: 'createProfile',
+        component: CreateProfile
+    },
+    {
         path: '/me',
         name: 'me',
         component: Profile,
+        meta: {
+            auth: true
+        }
+    },
+    {
+        path: '/profileEdit',
+        name: 'editProfile',
+        component: ProfileEdit,
         meta: {
             auth: true
         }
@@ -59,7 +72,7 @@ router.beforeEach(async (_to, _from, _next) => {
 
     const token = window.localStorage.getItem(env.APP_TOKEN_PATH)
     if (token === 'undefined' || token === 'null' || token === null)
-"'"        return _next('/')
+        return _next('/')
 
     const isVerify = await jwt.verify(token, env.APP_SECRET)
 
