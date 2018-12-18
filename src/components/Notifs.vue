@@ -2,7 +2,7 @@
         <div class="notif">
             <div class="notifContent">
                 <div class="profileInfos">
-                    <img class="icon" src="../assets/flagIcon.png" alt="Nouvelle notification !">
+                    <img class="icon" :src="icon" alt="Nouvelle notification !">
                     <div class="imgContainer">
                         <img class="profilePic" :src="profilePicture" alt="nom de la personne en question">
                     </div>
@@ -18,7 +18,7 @@
 <script>
 export default {
     name: 'Notifs',
-    props: ['name', 'profilePicture', 'content', 'date']
+    props: ['name', 'profilePicture','icon', 'content', 'date']
 }
 </script>
 

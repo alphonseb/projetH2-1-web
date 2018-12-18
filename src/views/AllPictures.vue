@@ -6,7 +6,7 @@
                 <img src="../assets/logoIcon.png" alt="Icone votre profil">
             </div>
         </div>
-        <div class="postitList">
+        <div class="postPictureList">
             <div class="textHeader">
             <div class="imgContainer">
                 <img src="../assets/testImages/user_relative.jpg" alt="">
@@ -18,11 +18,10 @@
             
             </div>
             <div class="border"></div>
-            <h2 class="pageTitle">Post-it</h2>
-            <postit name="Jérome Dubois" profilePicture="../assets/testImages/user_relative.jpg" content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, sed inventore. Fugit quia ratione exercitationem suscipit veniam mollitia pariatur provident ut autem earum, aliquam labore dolor nihil incidunt consequatur assumenda." date="09/11/2001" />
-            <postit name="Jérome Dubois" profilePicture="../assets/testImages/user_relative.jpg" content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, sed inventore. Fugit quia ratione exercitationem suscipit veniam mollitia pariatur provident ut autem earum, aliquam labore dolor nihil incidunt consequatur assumenda." date="09/11/2001" />
-            <postit name="Jérome Dubois" profilePicture="../assets/testImages/user_relative.jpg" content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, sed inventore. Fugit quia ratione exercitationem suscipit veniam mollitia pariatur provident ut autem earum, aliquam labore dolor nihil incidunt consequatur assumenda." date="09/11/2001" />
-            <postit name="Jérome Dubois" profilePicture="../assets/testImages/user_relative.jpg" content="Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur, sed inventore. Fugit quia ratione exercitationem suscipit veniam mollitia pariatur provident ut autem earum, aliquam labore dolor nihil incidunt consequatur assumenda." date="09/11/2001" />
+            <h2 class="pageTitle">Images</h2>
+            <postPicture name="" profilePicture="" imageSrc="" content="" date=""/>
+            <postPicture name="" profilePicture="" imageSrc="" content="" date=""/>
+            <postPicture name="" profilePicture="" imageSrc="" content="" date=""/>
             <div class="bottomBar">
                 <div class="arrowRight"></div>
                 <a href="#"><img class="addImage" src="../assets/addImage.png" alt="Ajoutez une image"></a><!-- Ajouter une image -->
@@ -36,12 +35,11 @@
 </template>
 
 <script>
-import Postit from '@/components/Postit'
-
+import PostPicture from '@/components/PostPicture'
 export default {
     name: 'AllPostit',
     components: {
-        Postit
+        PostPicture
     }
 }
 </script>
@@ -57,8 +55,8 @@ export default {
     background: linear-gradient(180deg, #79BDD2 0%, #476FB5 100%);
 
     h2.pageTitle{
-    font-family: roboto;
-    font-size: 1em;
+        font-family: roboto;
+        font-size: 1em;
     }
 
     .postitMenu{
@@ -87,7 +85,7 @@ export default {
         }
     }
 
-    .postitList{
+    .postPictureList{
         position: relative;
         margin: 0 auto;
         width: 88%;

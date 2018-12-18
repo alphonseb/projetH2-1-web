@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import AllPostit from './views/AllPostit.vue'
+import NotifCenter from './views/NotifCenter.vue'
 
 Vue.use(Router)
 
@@ -22,8 +22,8 @@ export default new Router({
     {
       // Pour dev mettez votre composant dans le path / (la racine du site)
       path: '/',
-      name: 'AllPostit',
-      component: AllPostit
+      name: 'NotifCenter',
+      component: NotifCenter
     }
   ]
 })
