@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Landing from './views/Landing.vue'
+import ReadBook from './views/ReadBook.vue'
 
 Vue.use(Router)
 
@@ -22,8 +22,8 @@ export default new Router({
     {
       // Pour dev mettez votre composant dans le path / (la racine du site)
       path: '/',
-      name: 'landing',
-      component: Landing
+      name: 'ReadBook',
+      component: ReadBook
     }
   ]
 })
