@@ -75,7 +75,7 @@
                         <input type="text" placeholder="Quel(s) sport(s) pratiquez vous?">
                     </div>
 
-                    <div class="bottom_button">
+                    <div class="bottomButton">
                         <span>Enregistrer</span>
                     </div>
                 </form>
@@ -240,7 +240,7 @@ export default {
                     }
                 }
 
-                .bottom_button {
+                .bottomButton {
                     width: 100%;
                     height: 3em;
                     margin-top: 5%;
