@@ -1,15 +1,21 @@
 <template>
     <div class="tree-container">
-        <div class="tree" ref="tree">
-            <FamilyMember class="parent-1" :member="user.father"/>
+        <div class="tree current" ref="tree">
+            <FamilyMember class="parent-1" :member="user.father" @click.native="updateParent"/>
             <FamilyMember class="parent-2" :member="user.mother"/>
             <div
                 class="siblings"
                 :class="{'is-oldest': isOldest, 'is-only-child': isOnlyChild, 'no-partner': noPartner }"
                 ref="siblings"
             >
-                <FamilyMember v-for="item in youngerSiblings" :key="item.id" :member="item"/>
+                <FamilyMember
+                    v-for="item in youngerSiblings"
+                    :key="item.id"
+                    :member="item"
+                    @click.native="updateSibling"
+                />
                 <div class="user" ref="user">
+                    <div class="link" ref="link" :style="{height: childrenLinkHeight + 'px'}"></div>
                     <FamilyMember :member="user"/>
                     <FamilyMember
                         v-if="this.user.children.length !== 0"
@@ -21,71 +27,84 @@
                         class="user-children"
                         ref="children"
                     >
-                        <FamilyMember v-for="item in user.children" :key="item.id" :member="item"/>
+                        <FamilyMember
+                            v-for="item in user.children"
+                            :key="item.id"
+                            :member="item"
+                            @click.native="updateChild"
+                        />
                     </div>
                 </div>
-                <FamilyMember v-for="item in olderSiblings" :key="item.id" :member="item"/>
+                <FamilyMember
+                    v-for="item in olderSiblings"
+                    :key="item.id"
+                    :member="item"
+                    @click.native="updateSibling"
+                />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import FamilyMember from "./FamilyMember.vue";
+import FamilyMember from './FamilyMember.vue';
 
 export default {
-    name: "Tree",
+    name: 'Tree',
     components: {
         FamilyMember
     },
     data: () => {
         return {
+            isMounted: false,
+            translateValueX: 0,
             user: {
-                firstName: "User",
+                firstName: 'User',
                 age: 14,
                 father: {
-                    firstName: "Father"
+                    firstName: 'Father'
                 },
                 mother: {
-                    firstName: "Mother"
+                    firstName: 'Mother'
                 },
                 partner: {
-                    firstName: "Partner"
+                    firstName: 'Partner'
                 },
                 siblings: [
-                    // {
-                    //     firstName: "Brother",
-                    //     age: 12
-                    // },
-                    // {
-                    //     firstName: "Little Brother",
-                    //     age: 10
-                    // },
-                    // {
-                    //     firstName: "Older Sister",
-                    //     age: 18
-                    // },
-                    // {
-                    //     firstName: "Sister",
-                    //     age: 15
-                    // }
+                    {
+                        firstName: 'Brother',
+                        age: 12
+                    },
+                    {
+                        firstName: 'Little Brother',
+                        age: 10
+                    },
+                    {
+                        firstName: 'Older Sister',
+                        age: 18
+                    },
+                    {
+                        firstName: 'Sister',
+                        age: 15
+                    }
                 ],
                 children: [
                     {
-                        firstName: "Child 1"
+                        firstName: 'Child1'
                     },
                     {
-                        firstName: "Child 2"
+                        firstName: 'Child 2'
                     },
                     {
-                        firstName: "Child 3"
+                        firstName: 'Child 3'
                     }
                 ]
-            }
+            },
+            oldUser: {}
         };
     },
     computed: {
-        youngerSiblings() {
+        youngerSiblings () {
             const youngerSiblings = [];
 
             for (const sibling of this.user.siblings) {
@@ -96,7 +115,7 @@ export default {
             youngerSiblings.sort((a, b) => a.age - b.age);
             return youngerSiblings;
         },
-        olderSiblings() {
+        olderSiblings () {
             const olderSiblings = [];
 
             for (const sibling of this.user.siblings) {
@@ -107,44 +126,68 @@ export default {
             olderSiblings.sort((a, b) => a.age - b.age);
             return olderSiblings;
         },
-        isOldest() {
+        isOldest () {
             return (
                 this.olderSiblings.length === 0 &&
                 this.user.siblings.length !== 0
             );
         },
-        isOnlyChild() {
+        isOnlyChild () {
             return this.user.siblings.length === 0;
         },
-        noPartner() {
+        noPartner () {
             return !this.user.partner;
+        },
+        childrenLinkHeight () {
+            if (this.isMounted) {
+                return this.$refs.children.offsetTop - this.$refs.link.offsetTop
+            }
         }
     },
     methods: {
-        moveTree() {
+        moveTree () {
             if (this.$refs.children && this.$refs.siblings) {
                 const childrenBoundingRect = this.$refs.children.getBoundingClientRect();
                 const siblingsBoundingRect = this.$refs.siblings.getBoundingClientRect();
-                const translateValueX =
-                    siblingsBoundingRect.left < childrenBoundingRect.left
-                        ? -siblingsBoundingRect.left
-                        : -childrenBoundingRect.left;
-                this.$refs.tree.style.transform = `translateX(${translateValueX}px)`;
+                console.log(siblingsBoundingRect.left);
+                if (
+                    childrenBoundingRect.left < 0 &&
+                    siblingsBoundingRect.left < 0
+                ) {
+                    this.translateValueX =
+                        siblingsBoundingRect.left < childrenBoundingRect.left
+                            ? -siblingsBoundingRect.left
+                            : -childrenBoundingRect.left;
+                } else if (childrenBoundingRect.left < 0) {
+                    this.translateValueX = -childrenBoundingRect.left;
+                } else if (siblingsBoundingRect.left < 0) {
+                    this.translateValueX = -siblingsBoundingRect.left;
+                }
+                console.log(this.translateValueX, 'test');
+                if (this.translateValueX !== 0) {
+                    this.$refs.tree.style.transform = `translateX(${
+                        this.translateValueX
+                        }px)`;
+                }
             } else if (this.$refs.children) {
                 const childrenBoundingRect = this.$refs.children.getBoundingClientRect();
                 if (childrenBoundingRect.left < 0) {
-                    const translateValueX = -childrenBoundingRect.left;
-                    this.$refs.tree.style.transform = `translateX(${translateValueX}px)`;
+                    this.translateValueX = -childrenBoundingRect.left;
+                    this.$refs.tree.style.transform = `translateX(${
+                        this.translateValueX
+                        }px)`;
                 }
             } else if (this.$refs.siblings) {
                 const siblingsBoundingRect = this.$refs.siblings.getBoundingClientRect();
                 if (siblingsBoundingRect.left < 0) {
-                    const translateValueX = -siblingsBoundingRect.left;
-                    this.$refs.tree.style.transform = `translateX(${translateValueX}px)`;
+                    this.translateValueX = -siblingsBoundingRect.left;
+                    this.$refs.tree.style.transform = `translateX(${
+                        this.translateValueX
+                        }px)`;
                 }
             }
         },
-        focusUser() {
+        focusUser () {
             const userBoundingRect = this.$refs.user.getBoundingClientRect();
             const scrollDistanceX =
                 userBoundingRect.left > window.screen.availWidth / 2
@@ -152,12 +195,113 @@ export default {
                     : 0;
             window.setTimeout(() => {
                 window.scrollTo(scrollDistanceX, 0);
+            }, 700);
+        },
+        updateUser () {
+            // this.translateValueX = 0;
+            this.$refs.tree.style.transform = 'translateX(0)';
+
+            this.user = {
+                firstName: 'User',
+                age: 14,
+                father: {
+                    firstName: 'Updated Father'
+                },
+                mother: {
+                    firstName: 'Updated Mother'
+                },
+                partner: {
+                    firstName: 'Updated Partner'
+                },
+                siblings: [
+                    {
+                        firstName: 'Brother',
+                        age: 12
+                    },
+                    // {
+                    //     firstName: "Little Brother",
+                    //     age: 10
+                    // },
+                    // {
+                    //     firstName: "Older Sister",
+                    //     age: 18
+                    // },
+                    {
+                        firstName: 'Sister',
+                        age: 15
+                    }
+                ],
+                children: [
+                    {
+                        firstName: 'Child 1'
+                    }
+                    // {
+                    //     firstName: "Child 2"
+                    // },
+                    // {
+                    //     firstName: "Child 3"
+                    // }
+                ]
+            };
+        },
+        updateParent () {
+            // console.log(this.translateValueX);
+            this.$refs.tree.style.transform = `translateX(${
+                this.translateValueX
+                }px) translateY(175px)`;
+            window.setTimeout(() => {
+                this.$refs.tree.style.opacity = '0';
+            }, 200);
+            window.setTimeout(() => {
+                this.updateUser();
             }, 500);
+            window.setTimeout(() => {
+                this.moveTree();
+                this.$refs.tree.style.opacity = '1';
+            }, 800);
+            // this.updateUser();
+            // window.setTimeout(() => {
+            // }, 300);
+            this.focusUser();
+        },
+        updateChild () {
+            this.$refs.tree.style.transform = `translateX(${
+                this.translateValueX
+                }px) translateY(-200px)`;
+            window.setTimeout(() => {
+                this.$refs.tree.style.opacity = '0';
+            }, 200);
+            window.setTimeout(() => {
+                this.updateUser();
+            }, 500);
+            window.setTimeout(() => {
+                this.moveTree();
+                this.$refs.tree.style.opacity = '1';
+            }, 800);
+            this.focusUser();
+        },
+        updateSibling () {
+            window.setTimeout(() => {
+                this.$refs.tree.style.opacity = '0';
+            }, 200);
+            window.setTimeout(() => {
+                this.updateUser();
+            }, 500);
+            window.setTimeout(() => {
+                this.moveTree();
+                this.$refs.tree.style.opacity = '1';
+            }, 800);
+            this.focusUser();
         }
     },
-    mounted() {
+    mounted () {
         this.moveTree();
         this.focusUser();
+        this.isMounted = true
+    },
+    updated () {
+        // this.moveTree();
+        // this.focusUser();
     }
 };
 </script>
@@ -176,12 +320,13 @@ export default {
     justify-content: center;
     align-items: center;
     position: relative;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease;
     .parent-1 {
         position: absolute;
         top: -200px;
         right: 25px;
         &::after {
-            content: "";
+            content: '';
             position: absolute;
             top: 50px;
             left: 100%;
@@ -195,7 +340,7 @@ export default {
         top: -200px;
         left: 25px;
         &::after {
-            content: "";
+            content: '';
             position: absolute;
             top: 50px;
             right: 100%;
@@ -210,7 +355,7 @@ export default {
         display: flex;
         justify-content: space-between;
         &::before {
-            content: "";
+            content: '';
             position: absolute;
             top: -10px;
             left: 50%;
@@ -240,7 +385,7 @@ export default {
             }
         }
         &::after {
-            content: "";
+            content: '';
             position: absolute;
             top: -125px;
             left: 50%;
@@ -256,7 +401,7 @@ export default {
             }
         }
         .family-member:not(.user-partner)::before {
-            content: "";
+            content: '';
             position: absolute;
             bottom: 100%;
             left: 50%;
@@ -269,12 +414,20 @@ export default {
             position: relative;
             display: flex;
             justify-content: center;
+            .link {
+                position: absolute;
+                top: 50px;
+                left: 104px;
+                width: 2px;
+                height: 40px;
+                background: #000;
+            }
             .family-member {
                 margin-right: 10px;
                 &.user-partner {
                     margin-right: 0;
                     &::before {
-                        content: "";
+                        content: '';
                         position: absolute;
                         top: 50px;
                         right: 100%;
@@ -292,7 +445,7 @@ export default {
                 display: flex;
                 justify-content: space-between;
                 &::before {
-                    content: "";
+                    content: '';
                     position: absolute;
                     top: -10px;
                     left: 50%;
@@ -301,16 +454,16 @@ export default {
                     height: 2px;
                     background: #000;
                 }
-                &::after {
-                    content: "";
-                    position: absolute;
-                    top: -151px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    width: 2px;
-                    height: 142px;
-                    background: #000;
-                }
+                // &::after {
+                //     content: '';
+                //     position: absolute;
+                //     top: -151px;
+                //     left: 50%;
+                //     transform: translateX(-50%);
+                //     width: 2px;
+                //     height: 142px;
+                //     background: #000;
+                // }
                 .family-member {
                     margin-right: 15px;
                     &:last-child {
