@@ -48,8 +48,9 @@ export default {
             height: 7%;
             width: 100%;
             display: flex;
-            position: relative;
             justify-content: center;
+            position: relative;
+            z-index: 20;
 
             input {
                 height: calc(100% - 10px);
