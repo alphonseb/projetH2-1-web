@@ -1,4 +1,4 @@
-<template>
+ <template>
     <div class="subscription">
         <div class="header">
             <img class="logo" src="../assets/logo.png" alt="shelf logo">

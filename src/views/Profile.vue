@@ -71,7 +71,7 @@ export default {
     .profileHeader {
         display: flex;
         position: absolute;
-        top: 20px;
+        top: 2%;
         width: 100%;
         justify-content: space-around;
         align-items: center;
@@ -103,6 +103,8 @@ export default {
                 border: none;
                 width: 200px;
                 height: 22px;
+                color: white;
+                padding-left: 5%;
             }
 
             img {
@@ -115,20 +117,14 @@ export default {
             }
         }
     }
-    .mainProfilePic {
-        position: absolute;
-        width: 100%;
-        z-index: -2;
-        top: 0;
-    }
-    .profileContent {
-        background: linear-gradient(
-            180deg,
-            #7abed300 2.19%,
-            #79bdd2 24.36%,
-            #476fb5 100%
-        );
-        height: 800px;
+    .mainProfilePic{
+            position: fixed;
+            width: 100%;
+            z-index: -2;
+            top:0
+        }
+    .profileContent{
+        background: linear-gradient(180deg, #7ABED300 2.19%, #79BDD2 24.36%, #476FB5 100%);
         width: 100%;
         position: absolute;
         top: 100px;

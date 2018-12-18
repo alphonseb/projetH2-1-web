@@ -1,11 +1,12 @@
 <template>
     <div class="profileEdit">
         <div class="profileHeader">
+            <img class="profilePic" src="../assets/profilePic.jpeg" alt="profilePic">
             <div class="goBack">
                 <div class="arrow"></div>
-                <p>Editez votre profil</p>
+                <span>Retour</span>
             </div>
-            <img class="profilePic" src="../assets/profilePic.jpeg" alt="profilePic">
+            <h2>Editez votre profil</h2>
         </div>
         <div class="profileContent">
             <div class="profileEditable">
@@ -75,7 +76,7 @@
                         <input type="text" placeholder="Quel(s) sport(s) pratiquez vous?">
                     </div>
 
-                    <div class="bottom_button">
+                    <div class="bottomButton">
                         <span>Enregistrer</span>
                     </div>
                 </form>
@@ -98,39 +99,64 @@ export default {
     margin-bottom: 10%;
 }
 
-.profileEdit {
-    width: 100%;
-    height: 150vh;
-    overflow: hidden;
-    margin: 0;
-    font-family: Roboto;
-    box-sizing: border-box;
-    color: white;
+    .flexContainer{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10%;
+    }
 
-    .profileHeader {
-        height: 50vh;
-        position: fixed;
-        .goBack {
-            box-sizing: border-box;
+    .profileEdit{
+        width : 100%;
+        height: 150vh;
+        overflow: hidden;
+        margin : 0;
+        font-family: Roboto;
+        box-sizing: border-box;
+        color: white;
+
+        .profileHeader{
+            height: 50vh;
+            position: fixed;
+            .goBack{
+                position: relative;
+                box-sizing: border-box;
+                position: absolute;
+                width: 80%;
+                align-items: center;
+                justify-content: flex-start;
+                margin: 3% 8%;
+
+                .arrow{
+                    position: absolute;
+                    margin-top: 5.5%;
+                    left: 3%;
+                    width: 15px;
+                    height: 15px;
+                    border-top: solid white 3px;
+                    border-left : solid white 3px;
+                    transform: rotate(-45deg);
+                }
+
+                p{
+                    position: absolute;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    color : white;
+                }
+            }
+        }
+
+        h2 {
+            width: 80vw;
             position: absolute;
-            width: 80%;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            margin: 3% 8%;
-
-            .arrow {
-                width: 15px;
-                height: 15px;
-                border-top: solid white 3px;
-                border-left: solid white 3px;
-                transform: rotate(-45deg);
-            }
-
-            p {
-                color: white;
-                margin-left: 6%;
-            }
+            top: 15%;
+            left: 50%;
+            transform: translate(-50%);
+            margin-top: 7%;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
         }
 
         .profilePic {
@@ -240,7 +266,7 @@ export default {
                     }
                 }
 
-                .bottom_button {
+                .bottomButton {
                     width: 100%;
                     height: 3em;
                     margin-top: 5%;
