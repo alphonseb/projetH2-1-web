@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-<<<<<<< HEAD
 import jwt from 'jsonwebtoken'
 import env from '@/../env.json'
 
@@ -13,75 +12,63 @@ import WriteGallery from './components/WriteGallery'
 import CreateProfile from './views/CreateProfile'
 import NotifCenter from './views/NotifCenter.vue'
 import ProfileEdit from './views/ProfileEdit'
-=======
-import Home from './views/Home.vue'
->>>>>>> family-tree
 
 Vue.use(Router)
 
 const router = new Router({
     mode: 'history',
     base: process.env.BASE_URL,
-<<<<<<< HEAD
-    routes: [{
-        path: '/',
-        name: 'landing',
-        component: Landing
-    },
-    {
-        path: '/signin',
-        name: 'signin',
-        component: Signin
-    },
-    {
-        path: '/createProfile',
-        name: 'createProfile',
-        component: CreateProfile
-    },
-    {
-        path: '/me',
-        name: 'me',
-        component: Profile,
-        meta: {
-            auth: true
-        }
-    },
-    {
-        path: '/profileEdit',
-        name: 'editProfile',
-        component: ProfileEdit,
-        meta: {
-            auth: true
-=======
     routes: [
         {
-            // Pour dev mettez votre composant dans le path / (la racine du site)
             path: '/',
-            name: 'home',
-            component: Home
->>>>>>> family-tree
-        }
-    },
-    {
-        path: '/book',
-        component: Write,
-        children: [
-            {
-                path: 'edit',
-                component: WriteEdition
-            },
-            {
-                path: 'galerie',
-                component: WriteGallery
+            name: 'landing',
+            component: Landing
+        },
+        {
+            path: '/signin',
+            name: 'signin',
+            component: Signin
+        },
+        {
+            path: '/createProfile',
+            name: 'createProfile',
+            component: CreateProfile
+        },
+        {
+            path: '/me',
+            name: 'me',
+            component: Profile,
+            meta: {
+                auth: true
             }
-        ]
-    }
+        },
+        {
+            path: '/profileEdit',
+            name: 'editProfile',
+            component: ProfileEdit,
+            meta: {
+                auth: true
+            }
+        },
+        {
+            path: '/book',
+            component: Write,
+            children: [
+                {
+                    path: 'edit',
+                    component: WriteEdition
+                },
+                {
+                    path: 'galerie',
+                    component: WriteGallery
+                }
+            ]
+        }
     ]
 })
 
 router.beforeEach(async (_to, _from, _next) => {
-    if (!_to.meta.auth)
-        return _next()
+    if (!_to.meta.auth) return _next()
 
     const token = window.localStorage.getItem(env.APP_TOKEN_PATH)
     if (token === 'undefined' || token === 'null' || token === null)
@@ -89,8 +76,7 @@ router.beforeEach(async (_to, _from, _next) => {
 
     const isVerify = await jwt.verify(token, env.APP_SECRET)
 
-    if (!isVerify)
-        return _next('/')
+    if (!isVerify) return _next('/')
 
     _next()
 })
