@@ -58,11 +58,11 @@ export default {
     width : 100%;
     height: 100vh;
     overflow: hidden;
-    margin : 0;
+    margin: 0;
     font-family: Roboto;
     box-sizing: border-box;
 
-    .profileHeader{
+    .profileHeader {
         display: flex;
         position: absolute;
         top: 20px;
@@ -86,88 +86,94 @@ export default {
             }
         }
 
-        .searchBar{
+        .searchBar {
             display: inline;
             position: relative;
             border: 1px white solid;
             border-radius: 200px;
 
-            input{
+            input {
                 background: none;
                 border: none;
                 width: 200px;
                 height: 22px;
             }
 
-            img{
+            img {
                 position: absolute;
                 right: 8px;
                 top: 50%;
                 width: 17px;
                 height: 17px;
-                transform: translateY(-50%)
+                transform: translateY(-50%);
             }
         }
     }
-    .mainProfilePic{
-            position: absolute;
-            width: 100%;
-            z-index: -2;
-            top:0
-        }
-    .profileContent{
-        background: linear-gradient(180deg, #7ABED300 2.19%, #79BDD2 24.36%, #476FB5 100%);
+    .mainProfilePic {
+        position: absolute;
+        width: 100%;
+        z-index: -2;
+        top: 0;
+    }
+    .profileContent {
+        background: linear-gradient(
+            180deg,
+            #7abed300 2.19%,
+            #79bdd2 24.36%,
+            #476fb5 100%
+        );
         height: 800px;
         width: 100%;
         position: absolute;
         top: 100px;
 
-        .container{
+        .container {
             margin: 0 5%;
 
-            h2{
+            h2 {
                 margin-top: 170px;
                 color: white;
                 font-weight: 700;
-                span.firstName{
+                span.firstName {
                     font-weight: 100;
                 }
-                span.age{
+                span.age {
                     font-weight: 100;
-                    font-size: 0.6em
+                    font-size: 0.6em;
                 }
             }
-            .loc, .phone, .mail{
+            .loc,
+            .phone,
+            .mail {
                 display: flex;
                 align-items: center;
-                img{
+                img {
                     width: 30px;
                     height: 30px;
                     margin: 5px 10px 5px 0;
                 }
-                p{
+                p {
                     color: white;
                     margin: 0px;
                 }
             }
 
-            h3{
-                font-family: 'Playfair Display', serif;
+            h3 {
+                font-family: "Playfair Display", serif;
                 color: white;
                 font-size: 1.4em;
                 margin-top: 60px;
             }
 
-            h4{
+            h4 {
                 color: white;
                 margin-bottom: 6px;
-
             }
 
-            .tellStory{
+            .tellStory {
                 font-size: 0.6em;
                 margin-top: 0;
-                color: white
+                color: white;
             }
         }
     }
