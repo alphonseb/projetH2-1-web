@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Tree from './components/Tree.vue'
+import Home from './views/Home.vue'
 
 Vue.use(Router)
 
@@ -22,8 +22,8 @@ export default new Router({
         {
             // Pour dev mettez votre composant dans le path / (la racine du site)
             path: '/',
-            name: 'tree',
-            component: Tree
+            name: 'home',
+            component: Home
         }
     ]
 })
