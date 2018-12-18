@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import EditBook from './views/EditBook.vue'
+import AllPostit from './views/AllPostit.vue'
 
 Vue.use(Router)
 
@@ -22,8 +22,8 @@ export default new Router({
     {
       // Pour dev mettez votre composant dans le path / (la racine du site)
       path: '/',
-      name: 'EditBook',
-      component: EditBook
+      name: 'AllPostit',
+      component: AllPostit
     }
   ]
 })
