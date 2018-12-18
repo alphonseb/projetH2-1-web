@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+<<<<<<< HEAD
 import jwt from 'jsonwebtoken'
 import env from '@/../env.json'
 
@@ -12,12 +13,16 @@ import WriteGallery from './components/WriteGallery'
 import CreateProfile from './views/CreateProfile'
 import NotifCenter from './views/NotifCenter.vue'
 import ProfileEdit from './views/ProfileEdit'
+=======
+import Home from './views/Home.vue'
+>>>>>>> family-tree
 
 Vue.use(Router)
 
 const router = new Router({
     mode: 'history',
     base: process.env.BASE_URL,
+<<<<<<< HEAD
     routes: [{
         path: '/',
         name: 'landing',
@@ -47,6 +52,14 @@ const router = new Router({
         component: ProfileEdit,
         meta: {
             auth: true
+=======
+    routes: [
+        {
+            // Pour dev mettez votre composant dans le path / (la racine du site)
+            path: '/',
+            name: 'home',
+            component: Home
+>>>>>>> family-tree
         }
     },
     {
