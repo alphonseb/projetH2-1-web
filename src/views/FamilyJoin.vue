@@ -8,7 +8,6 @@
             </div>
         </div>
         <main>
-            <input class="familyID" type="text" placeholder="ID de ta famille">
             <p class="fillFieldsLine">Veuillez remplir au moins un champs :</p>
             <div class="familyRelation">
                 <div>
@@ -36,18 +35,18 @@
                     <div></div>
                 </div>
 
-                <input class="familyID" type="text" placeholder="ID de ta famille">
-                <input class="familyID" type="text" placeholder="ID de ta famille">
-                <input class="familyID" type="text" placeholder="ID de ta famille">
-                <input class="familyID" type="text" placeholder="ID de ta famille">
+                <input class="infoInputs" type="text" placeholder="Numero de téléphone">
+                <input class="infoInputs" type="text" placeholder="Lieu de naissance">
+                <input class="infoInputs" type="text" placeholder="Où habitez vous ?">
+                <input class="infoInputs" type="text" placeholder="Où étudiez/travaillez vous?">
 
-                <div>
+                <div class="partnerChoice">
                     <p>Je suis le/la conjoint(e) de :</p>
                     <select name="" id=""></select>
                 </div> 
 
-                <input class="familyID" type="text" placeholder="ID de ta famille">
-                <input class="familyID" type="text" placeholder="ID de ta famille">
+                <input class="infoInputs" type="text" placeholder="Vos hobbies">
+                <input class="infoInputs" type="text" placeholder="Quel(s) sport(s) pratiquez vous ?">
 
                 <div class="bottomButton">
                     <span>Enregistrer</span>
@@ -97,6 +96,15 @@ export default {
 
 
 @media screen and (max-width: 450px) {
+    @mixin listMenuStyle(){
+        width: 50%;
+        height: 1.5em;
+        font-size: 1.2em;
+        border-radius:10px;
+        background: white;
+        border: none;
+    }
+
     .header {
         height: 15%;
         text-align: center;
@@ -107,13 +115,12 @@ export default {
 
         .goBack {
             box-sizing: border-box;
-            position: absolute;
             width: 80%;
             display: flex;
             align-items: center;
             justify-content: flex-start;
             margin: auto;
-            margin: 3% 8%;
+            margin-top: 3%;
 
             .arrow {
                 width: 15px;
@@ -141,9 +148,10 @@ export default {
             opacity: 0.5;
         }
 
-        .familyID{
+        .infoInputs{
             @include input_style;
-            margin-bottom: 5%;
+            margin-bottom: 7%;
+            width: 70vw;
         }
 
         .fillFieldsLine {
@@ -168,17 +176,13 @@ export default {
             }
 
             select {
-                width: 50%;
-                height: 1.5em;
-                font-size: 1.2em;
-                border-radius:10px;
-                background: white;
-                border: none;
+                @include listMenuStyle;
             }
         }
 
         .profilCreation{
-            width: 90%;
+            width: 90vw;
+            margin-top: 50px;
 
             h3 {
                 text-align: center;
@@ -193,6 +197,7 @@ export default {
                 background-color: #fff;
                 margin: auto;
                 margin-top: 5%;
+                margin-bottom: 15%;
                 color: black;
 
                 span {
@@ -220,16 +225,24 @@ export default {
                 }
             }
 
+            .partnerChoice {
+                margin: 5% 0 10% 0;
+
+                select{
+                    @include listMenuStyle;
+                }
+            }
+
             .bottomButton {
-                    width: 100%;
+                    width: 80%;
                     height: 3em;
-                    margin-top: 5%;
                     border: 1px solid white;
                     border-radius: 0.8em;
+                    margin: auto;
+                    margin-top: 10%;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    margin-top: 20%;
 
                     span {
                         height: 1.5em;
