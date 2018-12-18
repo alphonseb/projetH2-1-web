@@ -1,34 +1,38 @@
 <template>
     <div class="profile">
-        <div class="profileHeader">
-            <img  id="profilePic" src="../assets/profilePic.jpeg" alt="profile pic">
-            <div class="searchBar">
-                <input type="text">
-                <img src="../assets/search.svg" alt="search">
-            </div>
-        </div>
-        <img class="mainProfilePic" src="../assets/profilePic.jpeg" alt="profilePicMain">
         <ApolloQuery :query="require('@/graphql/user.graphql')">
             <template slot-scope="{ result: { data, loading }}">
                 <div v-if="loading" >WTF LES AMIS</div>
-                <div class="profileContent" v-else>
-                    <div class="container">
-                        <h2><span class="firstName">{{ data.me.name.split(' ')[0] }}</span> {{ data.me.name.split(' ')[1] }}, <span class="age">{{ age(data.me.birth.date) }}ans</span> </h2>
-                        <div class="loc">
-                            <img src="../assets/locIcon.png" alt="localisation">
-                            <p>{{ 'city' }}</p>
+                <div v-else>
+                    <div class="profileHeader">
+                        <div class="profilePic">
+                            <img class="profilePic" :src="data.me.profilePicture.src" alt="profile pic">
                         </div>
-                        <div class="phone" v-if="data.me.phone !== null">
-                            <img src="../assets/phoneIcon.png" alt="phone number">
-                            <p>{{ data.me.phone }}</p>
+                        <div class="searchBar">
+                            <input type="text">
+                            <img src="../assets/search.svg" alt="search">
                         </div>
-                        <div class="mail">
-                            <img src="../assets/mailIcon.png" alt="localisation">
-                            <p>{{ data.me.mail }}</p>
+                    </div>
+                    <img class="mainProfilePic" :src="data.me.profilePicture.src" alt="profilePicMain">
+                    <div class="profileContent">
+                        <div class="container">
+                            <h2><span class="firstName">{{ data.me.name.split(' ')[0] }}</span> {{ data.me.name.split(' ')[1] }}, <span class="age">{{ age(data.me.birth.date) }}ans</span> </h2>
+                            <div class="loc">
+                                <img src="../assets/locIcon.png" alt="localisation">
+                                <p>{{ 'city' }}</p>
+                            </div>
+                            <div class="phone" v-if="data.me.phone !== null">
+                                <img src="../assets/phoneIcon.png" alt="phone number">
+                                <p>{{ data.me.phone }}</p>
+                            </div>
+                            <div class="mail">
+                                <img src="../assets/mailIcon.png" alt="localisation">
+                                <p>{{ data.me.mail }}</p>
+                            </div>
+                            <h3>Ma bibiothèque</h3>
+                            <h4>Mes livres</h4>
+                            <p class="tellStory">Racontez votre histoire, un événement marquant, un voyage, ou simplement le quotidien...</p>
                         </div>
-                        <h3>Ma bibiothèque</h3>
-                        <h4>Mes livres</h4>
-                        <p class="tellStory">Racontez votre histoire, un événement marquant, un voyage, ou simplement le quotidien...</p>
                     </div>
                 </div>
             </template>
@@ -38,7 +42,7 @@
 
 <script>
 export default {
-    name : 'profile',
+    name: 'profile',
     methods: {
         age (_date) {
             const diff = Date.now() - new Date(_date)
@@ -50,7 +54,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .profile{
     width : 100%;
     height: 100vh;
@@ -67,10 +70,20 @@ export default {
         justify-content: space-around;
         align-items: center;
 
-        #profilePic{
+        .profilePic{
+            display: flex;
+            justify-content: center;
+            align-items: center;
             width: 60px;
             height: 60px;
             border-radius: 50%;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: auto;
+
+            }
         }
 
         .searchBar{
@@ -156,11 +169,7 @@ export default {
                 margin-top: 0;
                 color: white
             }
-        }    
+        }
     }
 }
-
-
 </style>
-
-

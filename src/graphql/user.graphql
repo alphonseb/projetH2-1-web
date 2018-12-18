@@ -3,6 +3,9 @@ query {
     name
     phone
     mail
+    profilePicture {
+        src
+    }
     birth {
       date
     }
