@@ -8,6 +8,7 @@ import Signin from './views/Signin'
 import Profile from './views/Profile'
 import CreateProfile from './views/CreateProfile'
 import NotifCenter from './views/NotifCenter.vue'
+import ProfileEdit from './views/ProfileEdit'
 
 Vue.use(Router)
 
@@ -17,7 +18,7 @@ const router = new Router({
     routes: [{
         path: '/',
         name: 'landing',
-        component: CreateProfile
+        component: Landing
     },
     {
         path: '/signin',
@@ -44,8 +45,8 @@ router.beforeEach(async (_to, _from, _next) => {
         return _next()
 
     const token = window.localStorage.getItem(env.APP_TOKEN_PATH)
-    if (token === 'undefined' || token === 'null')
-        return _next('/')
+    if (token === 'undefined' || token === 'null' || token === null)
+"'"        return _next('/')
 
     const isVerify = await jwt.verify(token, env.APP_SECRET)
 

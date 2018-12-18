@@ -1,11 +1,12 @@
 <template>
     <div class="profileEdit">
         <div class="profileHeader">
+            <img class="profilePic" src="../assets/profilePic.jpeg" alt="profilePic">
             <div class="goBack">
                 <div class="arrow"></div>
+                <span>Retour</span>
             </div>
             <h2>Editez votre profil</h2>
-            <img class="profilePic" src="../assets/profilePic.jpeg" alt="profilePic">
         </div>
         <div class="profileContent">
             <div class="profileEditable">
@@ -144,12 +145,18 @@ export default {
                     color : white;
                 }
             }
+        }
 
         h2 {
-                color: white;
-                margin-left: 6%;
-            }
-
+            width: 80vw;
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translate(-50%);
+            margin-top: 7%;
+            text-align: center;
+            font-size: 2em;
+            font-weight: bold;
         }
 
         .profilePic {

@@ -63,7 +63,7 @@ export default {
 <style lang="scss" scoped>
 .createProfile {
     width: 100vw;
-    height: 200vh;
+    height: 170vh;
     overflow: hidden;
     margin: 0;
     background: linear-gradient(
@@ -95,7 +95,6 @@ export default {
 
 
 @media screen and (max-width: 450px) {
-
 
     .header {
         height: 30vh;
@@ -129,7 +128,7 @@ export default {
         h2 {
             margin-top: 7%;
             text-align: center;
-            font-size: 1.6em;
+            font-size: 2em;
             font-weight: bold;
         }
     }
