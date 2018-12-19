@@ -2,13 +2,14 @@
     <div class="home">
         <img src="../assets/bg-tree.jpg" alt="Image de fond" class="bg-tree">
         <Header/>
-        <Tree/>
+        <Tree :user="me"/>
     </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
 import ME from '@/graphql/user.graphql'
+import USER_FAMILY from "@/graphql/userFamily.graphql"
 import Tree from '../components/Tree.vue'
 import Header from '@/components/Header.vue'
 
@@ -17,6 +18,9 @@ export default {
     components: {
         Tree,
         Header
+    },
+    data: () => {
+        user_id: null
     },
     computed: {
         ...mapState({
@@ -35,9 +39,16 @@ export default {
 
                 console.log(this.currentUser)
             }
+        },
+        user: {
+            query: USER_FAMILY,
+            variables () {
+                return { user_id: this.user_id ? this.user_id : this.currentUser.id }
+            }
         }
     }
 }
+
 </script>
 
 <style lang="scss" scoped>

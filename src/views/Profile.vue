@@ -2,11 +2,7 @@
     <div class="profile">
         <div>
             <Header :profile-img-src="me.profilePicture.src"/>
-            <img
-                class="mainProfilePic"
-                :src="me.profilePicture.src"
-                alt="profilePicMain"
-            >
+            <img class="mainProfilePic" :src="me.profilePicture.src" alt="profilePicMain">
             <div class="profileContent">
                 <div class="container">
                     <h2>
@@ -60,7 +56,7 @@ export default {
         })
     },
     methods: {
-        age(_date) {
+        age (_date) {
             const diff = Date.now() - new Date(_date);
             const ageDate = new Date(diff);
             return Math.abs(ageDate.getUTCFullYear() - 1970);
@@ -123,7 +119,7 @@ export default {
                 }
             }
             h3 {
-                font-family: "Playfair Display", serif;
+                font-family: 'Playfair Display', serif;
                 color: white;
                 font-size: 1.4em;
                 margin-top: 60px;
@@ -132,7 +128,6 @@ export default {
                 color: white;
                 margin-bottom: 6px;
             }
-
             .tellStory {
                 font-size: 0.6em;
                 margin-top: 0;

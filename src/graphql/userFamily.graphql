@@ -1,0 +1,67 @@
+query ($user_id: String!) {
+    user(id: $user_id) {
+        id
+        name
+        birth {
+            date
+        }
+        family {
+            father {
+                isVerified
+                node {
+                    name
+                    id
+                    profilePicture {
+                        src
+                    }
+                }
+            }
+            mother {
+                isVerified
+                node {
+                    name
+                    id
+                    profilePicture {
+                        src
+                    }
+                }
+            }
+            partner {
+                isVerified
+                node {
+                    name
+                    id
+                    profilePicture {
+                        src
+                    }
+                }
+            }
+            children {
+                isVerified
+                node {
+                    name
+                    id
+                    profilePicture {
+                        src
+                    }
+                    birth{
+                        date
+                    }
+                }
+            }
+            fratery {
+                isVerified
+                node {
+                    name
+                    id
+                    profilePicture {
+                        src
+                    }
+                    birth{
+                        date
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,10 +1,10 @@
 <template>
-    <div class="family-member">
+    <div class="family-member" @click="getId">
         <img src="../assets/testImages/pexels-photo-220453.jpeg" alt="Photo de profil">
         <h4>
-            <span class="first-name">{{member.firstName}}</span>
+            <span class="first-name">{{member.name}}</span>
             <br>
-            <span class="last-name">{{member.lastName}}</span>
+            <span class="last-name">{{member.name}}</span>
         </h4>
     </div>
 </template>
@@ -14,6 +14,11 @@ export default {
     name: "FamilyMember",
     props: {
         member: Object
+    },
+    methods: {
+        getId () {
+            this.$parent.nextUserId = this.member.id;
+        }
     }
 };
 </script>
@@ -34,7 +39,7 @@ export default {
     }
     &.has-notifications {
         &::after {
-            content: "";
+            content: '';
             position: absolute;
             top: 0px;
             left: 75px;
