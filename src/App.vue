@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <router-view />
+        <router-view/>
     </div>
 </template>
 
@@ -15,9 +15,11 @@ body {
     );
     font-family: Roboto;
 }
-
 a {
     text-decoration: none;
     color: white;
+}
+input {
+    outline: none;
 }
 </style>

@@ -1,70 +1,79 @@
 <template>
     <div class="notifCenter">
-        <div class="search">
-            <div class="imgContainer">
-                <img class="profilePic" src="../assets/profilePic.jpeg" alt="profile pic">
-            </div>  
-            <div class="searchBar">
-                <input type="text">
-                <img src="../assets/search.svg" alt="search">
-            </div>
-        </div>
+        <Header :profile-img-src="something"/>
         <div class="newNotifs">
             <p class="new">Nouveau</p>
-            <notif name="Gile" profilePicture="../assets/profilePic.jpeg" content="Vous a écrit un livre" date="1er Janvier 2019"/>
+            <notif
+                name="Gile"
+                profilePicture="../assets/profilePic.jpeg"
+                content="Vous a écrit un livre"
+                date="1er Janvier 2019"
+            />
         </div>
         <div class="oldNotifs">
             <p class="new">Plus tôt</p>
-            <notif name="John" profilePicture="../assets/profilePic.jpeg" content="Vous a écrit un livre" date="1er Janvier 2019"/>
-            <notif name="John" profilePicture="../assets/profilePic.jpeg" content="Vous a écrit un livre" date="1er Janvier 2019"/>
+            <notif
+                name="John"
+                profilePicture="../assets/profilePic.jpeg"
+                content="Vous a écrit un livre"
+                date="1er Janvier 2019"
+            />
+            <notif
+                name="John"
+                profilePicture="../assets/profilePic.jpeg"
+                content="Vous a écrit un livre"
+                date="1er Janvier 2019"
+            />
         </div>
     </div>
 </template>
 
 <script>
-import Notif from '@/components/Notifs'
+import Notif from "@/components/Notifs";
+import Header from "@/components/Header";
 
 export default {
-    name: 'NotifCenter',
+    name: "NotifCenter",
     components: {
-        Notif
+        Notif,
+        Header
     }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-.notifCenter{
-    width : 100%;
-    height : 100vh;
-    margin : 0;
+.notifCenter {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
     font-family: Roboto;
     box-sizing: border-box;
-    background: linear-gradient(180deg, #79BDD2 0%, #476FB5 100%);
+    background: linear-gradient(180deg, #79bdd2 0%, #476fb5 100%);
 
-    .search{
+    .search {
         display: flex;
         padding-top: 6%;
         width: 100%;
         justify-content: space-around;
         align-items: center;
 
-        .imgContainer{
+        .imgContainer {
             width: 60px;
             height: 60px;
             overflow: hidden;
             border-radius: 50%;
 
-            .profilePic{
+            .profilePic {
                 width: 100%;
             }
         }
-        .searchBar{
+        .searchBar {
             display: inline;
             position: relative;
             border: 1px white solid;
             border-radius: 200px;
 
-            input{
+            input {
                 background: none;
                 border: none;
                 width: 200px;
@@ -73,31 +82,30 @@ export default {
                 padding-left: 5%;
             }
 
-            img{
+            img {
                 position: absolute;
                 right: 8px;
                 top: 50%;
                 width: 17px;
                 height: 17px;
-                transform: translateY(-50%)
+                transform: translateY(-50%);
             }
         }
     }
 
-    .newNotifs, .oldNotifs{
+    .newNotifs,
+    .oldNotifs {
         display: block;
         margin-top: 10%;
         background-color: white;
         border-bottom: 1px grey solid;
         height: 20vh;
-        
-        p.new{
-            padding: 15px;;
+
+        p.new {
+            padding: 15px;
             border-bottom: solid grey 1px;
             margin: 0;
         }
-
     }
-    
 }
 </style>
