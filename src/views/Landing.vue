@@ -325,12 +325,13 @@ export default {
                 flex-direction: column;
                 background-color: rgba(255, 255, 255, 0.86);
                 position: relative;
+                display: none;
 
                 input {
                     height: 50%;
                     padding-left: 7%;
                     border: none;
-                    display: block;
+                    display: none;
                     background-color: transparent;
                 }
 
@@ -345,7 +346,7 @@ export default {
             }
 
             .signButtons {
-                width: 34%;
+                width: 45%;
                 color: white;
                 font-size: 1.5em;
                 display: flex;
@@ -362,6 +363,7 @@ export default {
 
                     .connect{
                         font-weight: 100;
+                        display: none;
                     }
 
                     .subscription{
