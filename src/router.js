@@ -12,6 +12,7 @@ import WriteGallery from './components/WriteGallery'
 import CreateProfile from './views/CreateProfile'
 import NotifCenter from './views/NotifCenter.vue'
 import ProfileEdit from './views/ProfileEdit'
+import Home from './views/Home.vue'
 
 Vue.use(Router)
 
@@ -33,6 +34,11 @@ const router = new Router({
             path: '/createProfile',
             name: 'createProfile',
             component: CreateProfile
+        },
+        {
+            path: '/home',
+            name: 'home',
+            component: Home
         },
         {
             path: '/me',
