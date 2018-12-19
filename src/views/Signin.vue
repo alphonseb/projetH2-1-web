@@ -61,6 +61,9 @@
                 <a class="nextButton" href="" title="Créer son compte" @click.prevent="createAccount" >Créer mon compte</a>
             </form>
         </main>
+        <div class="imgContainer">
+            <img class="backgroundTree" src="../assets/bg-tree.jpg" alt>
+        </div>
     </div>
 </template>
 
@@ -154,12 +157,14 @@ export default {
         }
     }
 
+
     main {
         width: 90%;
         height: 75%;
         margin: auto;
         color: white;
         position: relative;
+
     }
 
     form {
@@ -278,6 +283,180 @@ export default {
         line-height: 1.5em;
     }
 }
+
+@media screen and(min-width: 450px){
+        .header {
+        height: 15%;
+        text-align: center;
+
+        .logo {
+            position: relative;
+            margin-top: 0.5%;
+            width: 11%;
+            z-index: 2222;
+        }
+    }
+
+    h3{
+        font-size: 1.6em;
+        margin-bottom: 8%;
+    }
+
+    .imgContainer{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 1200px;
+        height: 1200px;
+        overflow: hidden;
+    }
+
+    .backgroundTree {
+        position: absolute;
+        top: 25%;
+        right: 10%;
+        opacity: 0.2;
+        transform: scale(1.5);
+    }
+
+    main {
+        width: 31%;
+        height: 75%;
+        margin: auto 12%;
+        color: white;
+        position: relative;
+
+        .backgroundTree {
+            position: absolute;
+            top: -15%;
+            right: 10%;
+            opacity: 0.2;
+            transform: scaleX(-1);
+        }
+    }
+
+    form {
+        width: 100%;
+    }
+
+    .inscription {
+        width: 100%;
+        text-align: center;
+    }
+
+    ::placeholder {
+        color: white;
+        opacity: 0.5;
+        font-size: 1.3em;
+    }
+
+    @mixin flex_style {
+        width: 100%;
+        height: 10%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 3%;
+    }
+
+    @mixin input_style {
+        color: white;
+        border: 2px solid white;
+        border-width: 0 0 1px 0;
+        background: transparent;
+        font-size: 1.2em;
+    }
+
+    .names {
+        @include flex_style;
+
+        input {
+            width: 45%;
+            @include input_style;
+        }
+    }
+
+    .genders {
+        @include flex_style;
+
+        .checkboxContainer {
+            width: 45%;
+            margin-top: 5%;
+        }
+    }
+
+    .birth {
+        margin-top: 10%;
+
+        .birthInputs {
+            width: 35%;
+            display: flex;
+            align-items: left;
+            justify-content: space-between;
+        }
+
+        input {
+            width: 28%;
+            height: 1.5em;
+            border: none;
+            border-radius: 0.3em;
+            text-align: center;
+        }
+    }
+
+    .logins {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        input {
+            @include input_style;
+            margin-top: 7%;
+            width: 45%;
+        }
+    }
+
+    .familyChoice {
+        width: 100%;
+        height: 10vh;
+        margin-top: 8%;
+
+        div {
+            width: 70%;
+            height: 30%;
+            margin-top: 3%;
+
+            span {
+                margin-left: 7%;
+            }
+        }
+    }
+
+    .error {
+        color: red;
+    }
+
+    .nextButton {
+        display: inline-block;
+        width: 200px;
+        height: 1.5em;
+        
+        position: absolute;
+        bottom: 25%;
+        left: 50%;
+        transform: translateX(-50%);
+
+        border: 1px solid white;
+        border-radius: 100px;
+
+        text-align: center;
+        font-size: 1.2em;
+        font-weight: 400;
+        line-height: 1.5em;
+        padding: 10px 15px;
+    }
+        
+    }
 </style>
 
 
