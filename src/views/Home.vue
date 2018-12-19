@@ -3,18 +3,21 @@
         <img src="../assets/bg-tree.jpg" alt="Image de fond" class="bg-tree">
         <Header/>
         <Tree/>
+        <Navbar class="navbar"/>
     </div>
 </template>
 
 <script>
 import Tree from "../components/Tree.vue";
 import Header from "@/components/Header.vue";
+import Navbar from "@/components/Navbar.vue";
 
 export default {
     name: "Home",
     components: {
         Tree,
-        Header
+        Header,
+        Navbar
     }
 };
 </script>
@@ -36,6 +39,11 @@ export default {
         left: -100px;
         height: 100%;
         opacity: 0.2;
+    }
+    .navbar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
     }
 }
 </style>
