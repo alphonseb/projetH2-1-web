@@ -2,7 +2,7 @@
     <div class="home">
         <img src="../assets/bg-tree.jpg" alt="Image de fond" class="bg-tree">
         <Header/>
-        <Tree :user="me"/>
+        <Tree :user="user"/>
     </div>
 </template>
 
@@ -19,9 +19,9 @@ export default {
         Tree,
         Header
     },
-    data: () => {
+    data: () => ({
         user_id: null
-    },
+    }),
     computed: {
         ...mapState({
             currentUser: state => state.me
@@ -36,14 +36,15 @@ export default {
             result (_res) {
                 if (!this.currentUser.id)
                     this.setMeDatas(_res)
-
-                console.log(this.currentUser)
             }
         },
         user: {
             query: USER_FAMILY,
             variables () {
-                return { user_id: this.user_id ? this.user_id : this.currentUser.id }
+                return { userId: this.user_id ? this.user_id : this.currentUser.id }
+            },
+            skip () {
+                return !this.user_id && !this.currentUser.id
             }
         }
     }

@@ -1,9 +1,12 @@
-query ($user_id: String!) {
-    user(id: $user_id) {
+query ($userId: String!) {
+    user (id: $userId) {
         id
         name
         birth {
             date
+        }
+        profilePicture {
+            src
         }
         family {
             father {
