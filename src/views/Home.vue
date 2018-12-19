@@ -1,17 +1,20 @@
 <template>
     <div class="home">
         <img src="../assets/bg-tree.jpg" alt="Image de fond" class="bg-tree">
+        <Header/>
         <Tree/>
     </div>
 </template>
 
 <script>
 import Tree from "../components/Tree.vue";
+import Header from "@/components/Header.vue";
 
 export default {
     name: "Home",
     components: {
-        Tree
+        Tree,
+        Header
     }
 };
 </script>
