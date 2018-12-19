@@ -53,8 +53,13 @@ export default {
     methods: {
         toggleNotifications () {
             this.showNotifications = !this.showNotifications
-            if (this.hasNotifications)
+
+            if (this.hasNotifications) {
                 this.hasNotifications = false
+                this.$children[0].$children.forEach(_notif => {
+                    _notif.readNotification()
+                })
+            }
         }
     }
 };

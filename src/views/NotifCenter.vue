@@ -11,6 +11,7 @@
                 :content="notification.content"
                 :date="notification.date"
                 :type="notification.type"
+                :id="notification.id"
             />
         </div>
         <div class="oldNotifs">
@@ -24,6 +25,7 @@
                 :content="notification.content"
                 :date="notification.date"
                 :type="notification.type"
+                :id="notification.id"
             />
         </div>
     </div>

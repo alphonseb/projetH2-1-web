@@ -1,0 +1,3 @@
+mutation ($ids: [String!]!) {
+  readNotifications (ids: $ids) {modified}
+}

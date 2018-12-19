@@ -16,9 +16,22 @@
 </template>
 
 <script>
+import READ_NOTIFICATION from '@/graphql/readNotification.graphql'
+
 export default {
     name: 'Notifs',
-    props: ['from', 'id', 'profilePicture','type', 'content', 'date']
+    props: ['from', 'id', 'profilePicture','type', 'content', 'date'],
+    methods: {
+        async readNotification () {
+            const variables = {
+                ids: [this.id]
+            }
+            await this.$apollo.mutate({
+                mutation: READ_NOTIFICATION,
+                variables
+            })
+        }
+    }
 }
 </script>
 
