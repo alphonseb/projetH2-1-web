@@ -3,76 +3,34 @@
         <div class="newNotifs">
             <p class="new">Nouveau</p>
             <notif
-                name="Gile"
-                profilePicture="http://julesguesnon.com:4000/static/default.png"
-                content="Vous a écrit un livre"
-                date="1er Janvier 2019"
-                type="info"
+                v-for="(notification, i) in notifications"
+                :key="i"
+                v-if="!notification.isRead"
+                :from="notification.from.id"
+                :profilePicture="notification.from.profilePicture.src"
+                :content="notification.content"
+                :date="notification.date"
+                :type="notification.type"
             />
         </div>
         <div class="oldNotifs">
             <p class="new">Plus tôt</p>
             <notif
-                name="John"
-                profilePicture="http://julesguesnon.com:4000/static/default.png"
-                content="Vous a écrit un livre"
-                date="1er Janvier 2019"
-                type="info"
-            />
-            <notif
-                name="John"
-                profilePicture="http://julesguesnon.com:4000/static/default.png"
-                content="Vous a écrit un livre"
-                date="1er Janvier 2019"
-                type="info"
-            />
-            <notif
-                name="John"
-                profilePicture="http://julesguesnon.com:4000/static/default.png"
-                content="Vous a écrit un livre"
-                date="1er Janvier 2019"
-                type="info"
-            />
-            <notif
-                name="John"
-                profilePicture="http://julesguesnon.com:4000/static/default.png"
-                content="Vous a écrit un livre"
-                date="1er Janvier 2019"
-                type="info"
-            />
-            <notif
-                name="John"
-                profilePicture="http://julesguesnon.com:4000/static/default.png"
-                content="Vous a écrit un livre"
-                date="1er Janvier 2019"
-                type="info"
-            />
-            <notif
-                name="John"
-                profilePicture="http://julesguesnon.com:4000/static/default.png"
-                content="Vous a écrit un livre"
-                date="1er Janvier 2019"
-                type="info"
-            />
-            <notif
-                name="John"
-                profilePicture="http://julesguesnon.com:4000/static/default.png"
-                content="Vous a écrit un livre"
-                date="1er Janvier 2019"
-                type="info"
-            />
-            <notif
-                name="John"
-                profilePicture="http://julesguesnon.com:4000/static/default.png"
-                content="Vous a écrit un livre"
-                date="1er Janvier 2019"
-                type="info"
+                v-for="(notification, i) in notifications"
+                :key="i"
+                v-if="notification.isRead"
+                :from="notification.from.id"
+                :profilePicture="notification.from.profilePicture.src"
+                :content="notification.content"
+                :date="notification.date"
+                :type="notification.type"
             />
         </div>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Notif from '@/components/Notifs'
 import Header from '@/components/Header'
 
@@ -81,6 +39,11 @@ export default {
     components: {
         Notif,
         Header
+    },
+    computed: {
+        ...mapState({
+            notifications: state => state.me.notifications
+        })
     }
 };
 </script>

@@ -1,16 +1,22 @@
 <template>
     <div id="app">
         <router-view/>
-        <navbar v-if="$route.meta.auth"/>
+        <navbar v-if="$route.meta.auth" :hasNotifications="showNotifications"/>
     </div>
 </template>
 <script>
-import ME from '@/graphql/user.graphql'
 import { mapActions, mapState } from 'vuex'
+import { APP_TOKEN_PATH } from '@/../env.json'
+import ME from '@/graphql/user.graphql'
 import Navbar from '@/components/Navbar'
 
 export default {
     name: 'app',
+    data () {
+        return {
+            showNotifications: false
+        }
+    },
     computed: {
         ...mapState({
             currentUser: state => state.me
@@ -21,6 +27,13 @@ export default {
             query: ME,
             async result (res) {
                 await this.setMeDatas(res.data.me)
+
+                    if (res.data.me.notifications) {
+                    const hasNotifications = res.data.me.notifications.find(v => !v.isRead)
+                    if (hasNotifications)
+                        this.showNotifications = true
+                } 
+
             }
         }
     },

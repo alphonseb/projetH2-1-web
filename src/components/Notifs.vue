@@ -8,7 +8,7 @@
                     </div>
                 </div>
                 <div class="pattern">
-                    <p>{{name}} {{content}}.</p>
+                    <p>{{content}}.</p>
                     <span>{{date}}</span>
                 </div>
             </div>
@@ -18,7 +18,7 @@
 <script>
 export default {
     name: 'Notifs',
-    props: ['name', 'profilePicture','type', 'content', 'date']
+    props: ['from', 'id', 'profilePicture','type', 'content', 'date']
 }
 </script>
 

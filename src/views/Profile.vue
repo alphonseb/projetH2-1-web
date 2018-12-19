@@ -42,11 +42,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import Header from "../components/Header.vue";
+import { mapState, mapActions } from 'vuex'
+import Header from '../components/Header.vue'
+import ME from '@/graphql/user.graphql'
 
 export default {
-    name: "profile",
+    name: 'profile',
     components: {
         Header
     },
@@ -128,6 +129,12 @@ export default {
                 color: white;
                 margin-bottom: 6px;
             }
+p
+
+
+
+
+
             .tellStory {
                 font-size: 0.6em;
                 margin-top: 0;

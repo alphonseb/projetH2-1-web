@@ -101,7 +101,7 @@ export default {
                 name: `${this.datas.firstName} ${this.datas.lastName}`,
                 mail: this.datas.mail,
                 password: this.datas.password,
-                birthDate: `${this.datas.birth.day}/${this.datas.birth.month}/${this.datas.birth.year}`,
+                birthDate: `${this.datas.birth.month}/${this.datas.birth.day}/${this.datas.birth.year}`,
                 gender: this.datas.gender
             }
 

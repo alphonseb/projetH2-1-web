@@ -17,5 +17,17 @@ query {
           src
         }
     }
+    notifications {
+      from {
+        id
+        profilePicture {
+          src
+        }
+      }
+      id
+    	type
+      content
+      isRead
+    }
   }
 }

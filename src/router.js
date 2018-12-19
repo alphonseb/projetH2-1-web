@@ -2,7 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import jwt from 'jsonwebtoken'
 import env from '@/../env.json'
+// import store from './store'
 
+// Components
 import Landing from './views/Landing'
 import Signin from './views/Signin'
 import Profile from './views/Profile'
