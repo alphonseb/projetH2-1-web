@@ -30,7 +30,9 @@
                         ref="link"
                         :style="{height: childrenLinkHeight + 'px'}"
                     ></div>
-                    <FamilyMember class="selected-user" :member="user"/>
+                    <router-link :to="{name: 'user', params: {id: user.id}}">
+                        <FamilyMember class="selected-user" :member="user"/>
+                    </router-link>
                     <FamilyMember
                         v-if="user.family.partner.node"
                         class="user-partner"

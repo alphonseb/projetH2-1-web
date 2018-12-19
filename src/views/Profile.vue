@@ -61,6 +61,10 @@ export default {
             const ageDate = new Date(diff);
             return Math.abs(ageDate.getUTCFullYear() - 1970);
         }
+    },
+    mounted () {
+        console.log(this.$route);
+
     }
 };
 </script>

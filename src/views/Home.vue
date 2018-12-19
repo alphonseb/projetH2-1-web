@@ -1,7 +1,7 @@
 <template>
     <div class="home">
         <img src="../assets/bg-tree.jpg" alt="Image de fond" class="bg-tree">
-        <Header/>
+        <Header :profileImgSrc="currentUser.profilePicture.src"/>
         <Tree :user="user"/>
     </div>
 </template>

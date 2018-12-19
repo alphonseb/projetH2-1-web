@@ -1,0 +1,21 @@
+query ($user_id: String!) {
+  user (id: $user_id) {
+    id
+    name
+    phone
+    mail
+    city
+    profilePicture {
+        src
+    }
+    birth {
+      date
+    }
+    books (order: DATE_ASC){
+        title
+        medias {
+          src
+        }
+    }
+  }
+}
