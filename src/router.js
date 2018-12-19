@@ -38,7 +38,10 @@ const router = new Router({
         {
             path: '/home',
             name: 'home',
-            component: Home
+            component: Home,
+            meta: {
+                auth: true
+            }
         },
         {
             path: '/me',

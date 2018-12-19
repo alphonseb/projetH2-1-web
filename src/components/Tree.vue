@@ -109,7 +109,7 @@ export default {
         };
     },
     computed: {
-        youngerSiblings() {
+        youngerSiblings () {
             const youngerSiblings = [];
 
             for (const sibling of this.user.siblings) {
@@ -120,7 +120,7 @@ export default {
             youngerSiblings.sort((a, b) => a.age - b.age);
             return youngerSiblings;
         },
-        olderSiblings() {
+        olderSiblings () {
             const olderSiblings = [];
 
             for (const sibling of this.user.siblings) {
@@ -131,19 +131,19 @@ export default {
             olderSiblings.sort((a, b) => a.age - b.age);
             return olderSiblings;
         },
-        isOldest() {
+        isOldest () {
             return (
                 this.olderSiblings.length === 0 &&
                 this.user.siblings.length !== 0
             );
         },
-        isOnlyChild() {
+        isOnlyChild () {
             return this.user.siblings.length === 0;
         },
-        noPartner() {
+        noPartner () {
             return !this.user.partner;
         },
-        childrenLinkHeight() {
+        childrenLinkHeight () {
             if (this.isMounted) {
                 return (
                     this.$refs.children.offsetTop -
@@ -154,7 +154,7 @@ export default {
         }
     },
     methods: {
-        moveTree() {
+        moveTree () {
             if (this.$refs.children && this.$refs.siblings) {
                 const childrenBoundingRect = this.$refs.children.getBoundingClientRect();
                 const siblingsBoundingRect = this.$refs.siblings.getBoundingClientRect();
@@ -176,7 +176,7 @@ export default {
                 if (this.translateValueX !== 0) {
                     this.$refs.tree.style.transform = `translateX(${
                         this.translateValueX
-                    }px)`;
+                        }px)`;
                 }
             } else if (this.$refs.children) {
                 const childrenBoundingRect = this.$refs.children.getBoundingClientRect();
@@ -184,7 +184,7 @@ export default {
                     this.translateValueX = -childrenBoundingRect.left;
                     this.$refs.tree.style.transform = `translateX(${
                         this.translateValueX
-                    }px)`;
+                        }px)`;
                 }
             } else if (this.$refs.siblings) {
                 const siblingsBoundingRect = this.$refs.siblings.getBoundingClientRect();
@@ -192,11 +192,11 @@ export default {
                     this.translateValueX = -siblingsBoundingRect.left;
                     this.$refs.tree.style.transform = `translateX(${
                         this.translateValueX
-                    }px)`;
+                        }px)`;
                 }
             }
         },
-        focusUser() {
+        focusUser () {
             const userBoundingRect = this.$refs.user.getBoundingClientRect();
             const scrollDistanceX =
                 userBoundingRect.left > window.screen.availWidth / 2
@@ -206,7 +206,7 @@ export default {
                 window.scrollTo(scrollDistanceX, 0);
             }, 700);
         },
-        updateUser() {
+        updateUser () {
             // this.translateValueX = 0;
             this.$refs.tree.style.transform = "translateX(0)";
 
@@ -254,11 +254,11 @@ export default {
                 ]
             };
         },
-        updateParent() {
+        updateParent () {
             // console.log(this.translateValueX);
             this.$refs.tree.style.transform = `translateX(${
                 this.translateValueX
-            }px) translateY(175px)`;
+                }px) translateY(175px)`;
             window.setTimeout(() => {
                 this.$refs.tree.style.opacity = "0";
             }, 200);
@@ -274,10 +274,10 @@ export default {
             // }, 300);
             this.focusUser();
         },
-        updateChild() {
+        updateChild () {
             this.$refs.tree.style.transform = `translateX(${
                 this.translateValueX
-            }px) translateY(-200px)`;
+                }px) translateY(-200px)`;
             window.setTimeout(() => {
                 this.$refs.tree.style.opacity = "0";
             }, 200);
@@ -290,7 +290,7 @@ export default {
             }, 800);
             this.focusUser();
         },
-        updateSibling() {
+        updateSibling () {
             window.setTimeout(() => {
                 this.$refs.tree.style.opacity = "0";
             }, 200);
@@ -304,12 +304,12 @@ export default {
             this.focusUser();
         }
     },
-    mounted() {
+    mounted () {
         this.moveTree();
         this.focusUser();
         this.isMounted = true;
     },
-    updated() {
+    updated () {
         // this.moveTree();
         // this.focusUser();
     }
@@ -327,7 +327,7 @@ export default {
     align-items: center;
     position: relative;
     &::after {
-        content: "";
+        content: '';
         position: absolute;
         top: 0;
         right: 100%;
@@ -347,7 +347,7 @@ export default {
         top: -220px;
         right: 25px;
         &::after {
-            content: "";
+            content: '';
             position: absolute;
             top: 48px;
             left: 100%;
@@ -361,7 +361,7 @@ export default {
         top: -220px;
         left: 25px;
         &::after {
-            content: "";
+            content: '';
             position: absolute;
             top: 48px;
             right: 100%;
@@ -376,7 +376,7 @@ export default {
         display: flex;
         justify-content: space-between;
         &::before {
-            content: "";
+            content: '';
             position: absolute;
             top: -30px;
             left: 50%;
@@ -406,7 +406,7 @@ export default {
             }
         }
         &::after {
-            content: "";
+            content: '';
             position: absolute;
             top: -145px;
             left: 50%;
@@ -422,7 +422,7 @@ export default {
             }
         }
         .family-member:not(.user-partner)::before {
-            content: "";
+            content: '';
             position: absolute;
             bottom: 100%;
             left: 50%;
@@ -448,7 +448,7 @@ export default {
                 &.user-partner {
                     margin-right: 0;
                     &::before {
-                        content: "";
+                        content: '';
                         position: absolute;
                         top: 48px;
                         right: 100%;
@@ -466,7 +466,7 @@ export default {
                 display: flex;
                 justify-content: space-between;
                 &::before {
-                    content: "";
+                    content: '';
                     position: absolute;
                     top: -30px;
                     left: 50%;
