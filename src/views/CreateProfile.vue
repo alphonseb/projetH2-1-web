@@ -6,33 +6,42 @@
         </div>
         <main>            
             <div class="profilCreation">
-                <div class="addPhoto">
-                    <span>ajouter une photo</span>
-                    <div class="plusVert"></div>
-                    <div></div>
-                </div>
-
+                <label for="profilePicture">
+                    <div class="addPhotoContainer">
+                        <div class="addPhoto">    
+                            <img src="http://julesguesnon.com:4000/static/default.png" alt="image de profil" ref="profilePicture">
+                            <input type="file" id="profilePicture" style="display:none;" ref="pictureFile" @change="updatePicture">
+                        </div>
+                        Changez votre photo de profil
+                    </div>
+                </label>
                 <p class="fillFieldsLine">Veuillez remplir au moins un champs :</p>
                 <div class="familyRelation">
                     <div>
                         <p>Mon père est :</p>
-                        <search familyType="father" @updateFather="''"/>
+                        <search familyType="father" @fatherUpdate="_user => updateFamily(_user, 'father')"/>
                     </div>
                     <div>
                         <p>Ma mère est :</p>
-                        <search familyType="mother" @updateMother="''"/>
+                        <search familyType="mother" @motherUpdate="_user => updateFamily(_user, 'mother')"/>
                     </div>
                     <div>
                         <p>Je suis le/la frère/soeur de :</p>
-                        <search familyType="fratery"/>
+                        <search familyType="fratery" @frateryUpdate="_user => updateFamily(_user, 'fratery')"/>
+                        <ul>
+                            <li v-for="(user, i) in fratery" :key="i" @click.prevent="removeElement(user, 'fratery')"><a href="" title="supprimer" >X</a>{{ `     ${user.name}` }}</li>
+                        </ul>
                     </div>
                     <div>
                         <p>Je suis le/la conjoint(e) de :</p>
-                        <search familyType="partner" @updatePartner="''"/>
+                        <search familyType="partner" @updatePartner="_user => updateFamily(_user, 'partner')"/>
                     </div>
                     <div>
                         <p>Mes enfants sont:</p>
-                        <search familyType="children"/>
+                        <search familyType="children" @updateChildren="_user => updateFamily(_user, 'children')"/>
+                        <ul>
+                            <li v-for="(user, i) in fratery" :key="i" @click.prevent="removeElement(user, 'children')"><a href="" title="supprimer" >X</a>{{ `     ${user.name}` }}</li>
+                        </ul>
                     </div>
                 </div>
 
@@ -41,8 +50,8 @@
                 <input class="infoInputs" type="text" v-model="city" placeholder="Où habitez vous ?">
                 <input class="infoInputs" type="text" v-model="work" placeholder="Où étudiez/travaillez vous?">
 
-
-                <input class="infoInputs" type="text" placeholder="Avez-vous des hobbies ?">
+                <tag-input placeholder="Avez-vous des hobbies ?"/>
+                <!-- <input class="infoInputs" type="text" placeholder="Avez-vous des hobbies ?"> -->
                 <input class="infoInputs" type="text" placeholder="Quel(s) sport(s) pratiquez vous ?">
 
                 <router-link to="/me" class="bottomButton">Enregistrer</router-link>
@@ -53,7 +62,7 @@
 
 
 <script>
-import TagInput from '@johmun/vue-tags-input'
+import TagInput from '@/components/TagInput'
 import Search from '@/components/search'
 
 export default {
@@ -72,14 +81,33 @@ export default {
             partner: {},
             children: {},
             hobbyTag: '',
-            hobbies: []
+            hobbies: [],
+            reader: new FileReader()
         }
     },
     components: {
         Search,
         TagInput
     },
-    mounted () {console.log(this)}
+    methods: {
+        updateFamily ({ id, name }, type) {
+            if (type !== 'fratery' && type !== 'children')
+                return this[type] = { type, id }
+
+            this[type].push({ type, id, name })
+        },
+        removeElement (_user, _type) {
+            this[_type] = this[_type].filter(u => u !== _user)
+        },
+        updatePicture () {
+            this.reader.readAsDataURL(this.$refs.pictureFile.files[0])
+        }
+    },
+    mounted () {
+        this.reader.addEventListener('load', _e => {
+            this.$refs.profilePicture.src = _e.target.result
+        })
+    }
 }    
 </script>
 
@@ -190,45 +218,38 @@ export default {
                 font-size: 1.2em;
             }
 
-            select {
-                @include listMenuStyle;
+            ul {
+                padding: 0;
+                margin: 0;
+
+                li {
+                    list-style: none;
+                    margin-top: 5px;
+                }
             }
         }
-
-        .addPhoto {
-            position: relative;
-            width: 25vw;
-            height: 25vw;
-            border-radius: 50vw;
-            background-color: #fff;
-            margin: auto;
+        .addPhotoContainer {
             margin-top: 5%;
             margin-bottom: 15%;
-            color: black;
-
-            span {
-                position: absolute;
-                transform-origin: center;
-                top: 25%;
-                left: 50%;
-                transform: translateX(-50%);
-                font-size: 0.6em;
-                text-align: center;
-                width: 20vw;
-            }
-
-            div{
-                position: absolute;
-                width: 15%;
-                border: solid black 2px;
-                border: 0 0 2px 0;
-                transform-origin: center;
-                top: 50%;
-                left: 40%;
-            }
-
-            .plusVert {
-                transform: rotate(90deg);
+            text-align: center;
+            .addPhoto {
+                position: relative;
+                width: 25vw;
+                height: 25vw;
+                border-radius: 50vw;
+                background-color: #fff;
+                margin: auto;
+                margin-bottom: 5%;
+                color: black;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+            
+                img {
+                    height: 100%;
+                    width: auto;
+                }
             }
         }
 

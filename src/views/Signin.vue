@@ -95,7 +95,7 @@ export default {
                 return this.error = true
 
             const variables = {
-                name: this.datas.firstName + this.datas.lastName,
+                name: `${this.datas.firstName} ${this.datas.lastName}`,
                 mail: this.datas.mail,
                 password: this.datas.password,
                 birthDate: `${this.datas.birth.day}/${this.datas.birth.month}/${this.datas.birth.year}`,
