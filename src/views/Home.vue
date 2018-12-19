@@ -2,7 +2,7 @@
     <div class="home">
         <img src="../assets/bg-tree.jpg" alt="Image de fond" class="bg-tree">
         <Header/>
-        <Tree/>
+        <Tree :user="me"/>
         <Navbar class="navbar"/>
     </div>
 </template>
@@ -11,14 +11,27 @@
 import Tree from "../components/Tree.vue";
 import Header from "@/components/Header.vue";
 import Navbar from "@/components/Navbar.vue";
+import USER_FAMILY from "@/graphql/userFamily.graphql"
 
 export default {
     name: "Home",
+    data: () => {
+        user_id: null
+    },
     components: {
         Tree,
         Header,
         Navbar
-    }
+    },
+    apollo: {
+        user: {
+            query: USER_FAMILY,
+            variables () {
+                return { user_id: this.user_id ? this.user_id : this }
+            }
+
+        }
+    },
 };
 </script>
 

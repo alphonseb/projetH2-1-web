@@ -5,6 +5,7 @@
                 <div v-if="loading">WTF LES AMIS</div>
                 <div v-else>
                     <Header :profile-img-src="data.me.profilePicture.src"/>
+                    <div>{{data.me}}</div>
                     <img
                         class="mainProfilePic"
                         :src="data.me.profilePicture.src"
@@ -59,7 +60,7 @@ export default {
         Header
     },
     methods: {
-        age(_date) {
+        age (_date) {
             const diff = Date.now() - new Date(_date);
             const ageDate = new Date(diff);
             return Math.abs(ageDate.getUTCFullYear() - 1970);
@@ -122,7 +123,7 @@ export default {
                 }
             }
             h3 {
-                font-family: "Playfair Display", serif;
+                font-family: 'Playfair Display', serif;
                 color: white;
                 font-size: 1.4em;
                 margin-top: 60px;
@@ -131,7 +132,6 @@ export default {
                 color: white;
                 margin-bottom: 6px;
             }
-
             .tellStory {
                 font-size: 0.6em;
                 margin-top: 0;

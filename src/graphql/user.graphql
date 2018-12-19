@@ -3,6 +3,13 @@ query {
     name
     phone
     mail
+    family {
+      father {
+        node {
+          name
+        }
+      }
+    }
     profilePicture {
         src
     }

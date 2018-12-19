@@ -1,36 +1,46 @@
 <template>
     <div class="tree-container">
         <div class="tree current" ref="tree">
-            <FamilyMember class="parent-1" :member="user.father" @click.native="updateParent"/>
-            <FamilyMember class="parent-2" :member="user.mother"/>
+            <FamilyMember
+                v-if="user.family.mother.node"
+                class="parent-1"
+                :member="user.family.father.node"
+                @click.native="updateParent"
+            />
+            <FamilyMember
+                v-if="user.family.mother.node"
+                class="parent-2"
+                :member="user.family.mother.node"
+            />
             <div
                 class="siblings"
-                :class="{'is-oldest': isOldest, 'is-only-child': isOnlyChild, 'no-partner': noPartner }"
+                :class="{'is-oldest': isOldest, 'is-only-child': isOnlyChild, 'no-partner': noPartner, 'no-parents': noParents }"
                 ref="siblings"
             >
                 <FamilyMember
                     v-for="item in youngerSiblings"
                     :key="item.id"
-                    :member="item"
+                    :member="item.node"
                     @click.native="updateSibling"
                 />
                 <div class="user" ref="user">
-                    <div class="link" ref="link" :style="{height: childrenLinkHeight + 'px'}"></div>
+                    <div
+                        v-if="user.family.children.length"
+                        class="link"
+                        ref="link"
+                        :style="{height: childrenLinkHeight + 'px'}"
+                    ></div>
                     <FamilyMember :member="user"/>
                     <FamilyMember
-                        v-if="this.user.children.length !== 0"
+                        v-if="user.family.partner.node"
                         class="user-partner"
-                        :member="user.partner"
+                        :member="user.family.partner.node"
                     />
-                    <div
-                        v-if="this.user.children.length !== 0"
-                        class="user-children"
-                        ref="children"
-                    >
+                    <div v-if="user.family.children.length" class="user-children" ref="children">
                         <FamilyMember
-                            v-for="item in user.children"
+                            v-for="item in user.family.children"
                             :key="item.id"
-                            :member="item"
+                            :member="item.node"
                             @click.native="updateChild"
                         />
                     </div>
@@ -38,7 +48,7 @@
                 <FamilyMember
                     v-for="item in olderSiblings"
                     :key="item.id"
-                    :member="item"
+                    :member="item.node"
                     @click.native="updateSibling"
                 />
             </div>
@@ -54,97 +64,57 @@ export default {
     components: {
         FamilyMember
     },
+    props: {
+        user: Object
+    },
     data: () => {
         return {
             isMounted: false,
+            isUpdated: false,
             translateValueX: 0,
-            user: {
-                firstName: "User",
-                lastName: "Test",
-                age: 14,
-                father: {
-                    firstName: "Father",
-                    lastName: "Father"
-                },
-                mother: {
-                    firstName: "Mother"
-                },
-                partner: {
-                    firstName: "Partner"
-                },
-                siblings: [
-                    {
-                        firstName: "Brother",
-                        age: 12
-                    },
-                    {
-                        firstName: "Little Brother",
-                        age: 10
-                    },
-                    {
-                        firstName: "Older Sister",
-                        age: 18
-                    },
-                    {
-                        firstName: "Sister",
-                        age: 15
-                    }
-                ],
-                children: [
-                    {
-                        firstName: "Child1"
-                    },
-                    {
-                        firstName: "Child 2"
-                    },
-                    {
-                        firstName: "Child 3"
-                    },
-                    {
-                        firstName: "Child 4"
-                    }
-                ]
-            },
-            oldUser: {}
+            nextUserId: null
         };
     },
     computed: {
         youngerSiblings () {
             const youngerSiblings = [];
 
-            for (const sibling of this.user.siblings) {
-                if (sibling.age < this.user.age) {
+            for (const sibling of this.user.family.fratery) {
+                if (sibling.node.birth.date > this.user.birth.date) {
                     youngerSiblings.push(sibling);
                 }
             }
-            youngerSiblings.sort((a, b) => a.age - b.age);
+            youngerSiblings.sort((a, b) => b.node.birth.date - a.node.birth.date);
             return youngerSiblings;
         },
         olderSiblings () {
             const olderSiblings = [];
 
-            for (const sibling of this.user.siblings) {
-                if (sibling.age > this.user.age) {
+            for (const sibling of this.user.family.fratery) {
+                if (sibling.node.birth.date < this.user.birth.date) {
                     olderSiblings.push(sibling);
                 }
             }
-            olderSiblings.sort((a, b) => a.age - b.age);
+            olderSiblings.sort((a, b) => b.node.birth.date - a.node.birth.date);
             return olderSiblings;
         },
         isOldest () {
             return (
                 this.olderSiblings.length === 0 &&
-                this.user.siblings.length !== 0
+                this.user.family.fratery.length !== 0
             );
         },
         isOnlyChild () {
-            return this.user.siblings.length === 0;
+            return this.user.family.fratery.length === 0;
         },
         noPartner () {
-            return !this.user.partner;
+            return !this.user.family.partner.node;
+        },
+        noParents () {
+            return !(this.user.family.father.node && this.user.family.mother.node)
         },
         childrenLinkHeight () {
-            if (this.isMounted) {
+            if (this.isUpdated) {
                 return (
                     this.$refs.children.offsetTop -
                     this.$refs.link.offsetTop -
@@ -197,14 +167,17 @@ export default {
             }
         },
         focusUser () {
-            const userBoundingRect = this.$refs.user.getBoundingClientRect();
-            const scrollDistanceX =
-                userBoundingRect.left > window.screen.availWidth / 2
-                    ? userBoundingRect.left + window.screen.availWidth / 2
-                    : 0;
-            window.setTimeout(() => {
-                window.scrollTo(scrollDistanceX, 0);
-            }, 700);
+            if (this.$refs.user) {
+
+                const userBoundingRect = this.$refs.user.getBoundingClientRect();
+                const scrollDistanceX =
+                    userBoundingRect.left > window.screen.availWidth / 2
+                        ? userBoundingRect.left + window.screen.availWidth / 2
+                        : 0;
+                window.setTimeout(() => {
+                    window.scrollTo(scrollDistanceX, 0);
+                }, 700);
+            }
         },
         updateUser () {
             // this.translateValueX = 0;
@@ -305,13 +278,16 @@ export default {
         }
     },
     mounted () {
-        this.moveTree();
-        this.focusUser();
         this.isMounted = true;
     },
     updated () {
-        // this.moveTree();
-        // this.focusUser();
+        if (this.user) {
+            this.isUpdated = true
+            this.moveTree();
+            this.focusUser();
+            console.log(this.nextUserId);
+
+        }
     }
 };
 </script>
@@ -321,10 +297,10 @@ export default {
 .tree-container {
     overflow: scroll;
     width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    height: 130vh;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
     position: relative;
     &::after {
         content: '';
@@ -339,7 +315,9 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    position: relative;
+    position: absolute;
+    top: 30%;
+    left: 50%;
     transition: transform 0.3s ease-in-out, opacity 0.3s ease;
     color: #fff;
     .parent-1 {
@@ -405,6 +383,17 @@ export default {
                 }
             }
         }
+        &.no-partner {
+            .user {
+                .family-member {
+                    margin-right: 0;
+                }
+                .link {
+                    left: 48px;
+                    opacity: 0.3;
+                }
+            }
+        }
         &::after {
             content: '';
             position: absolute;
@@ -414,6 +403,9 @@ export default {
             width: 4px;
             height: 115px;
             background: #fff;
+        }
+        &.no-parents::after {
+            display: none;
         }
         & > div {
             margin-right: 20px;
