@@ -1,5 +1,5 @@
 <template>
-    <div class="landing">
+    <div class="landing" ref="landing">
         <div class="header">
             <img class="logo" src="../assets/logo.png" alt="shelf logo">
         </div>
@@ -48,6 +48,7 @@ import jwt from 'jsonwebtoken'
 import env from '@/../env.json'
 import LOGIN from '@/graphql/login.graphql'
 
+
 export default {
     name: 'landing',
     data () {
@@ -76,8 +77,17 @@ export default {
                 this.$router.push('/me')
             }).catch(err => this.error = true)
         }
+
     },
     async mounted () {
+        const landing = this.$refs.landing
+        const height = landing.offsetHeight
+
+        window.addEventListener('resize', () => {
+            landing.style.height = height+"px"
+            console.log("height : " ,height)
+        })
+
         const token = window.localStorage.getItem(env.APP_TOKEN_PATH)
 
         if (token === 'undefined' || token === 'null' || token === null)
@@ -130,6 +140,7 @@ export default {
         position: relative;
         color: white;
         height: 80%;
+        
 
         .backgroundTree {
             position: absolute;
