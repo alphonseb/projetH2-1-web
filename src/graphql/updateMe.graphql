@@ -1,0 +1,3 @@
+mutation ($datas: updateUserData!) {
+  updateMe (data: $datas) {name}
+}

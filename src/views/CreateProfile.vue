@@ -29,32 +29,31 @@
                         <p>Je suis le/la frère/soeur de :</p>
                         <search familyType="fratery" @frateryUpdate="_user => updateFamily(_user, 'fratery')"/>
                         <ul>
-                            <li v-for="(user, i) in fratery" :key="i" @click.prevent="removeElement(user, 'fratery')"><a href="" title="supprimer" >X</a>{{ `     ${user.name}` }}</li>
+                            <li v-for="(user, i) in datas.fratery" :key="i" @click.prevent="removeElement(user, 'fratery')"><a href="" title="supprimer" >X</a>{{ `     ${user.name}` }}</li>
                         </ul>
                     </div>
                     <div>
                         <p>Je suis le/la conjoint(e) de :</p>
-                        <search familyType="partner" @updatePartner="_user => updateFamily(_user, 'partner')"/>
+                        <search familyType="partner" @partnerUpdate="_user => updateFamily(_user, 'partner')"/>
                     </div>
                     <div>
                         <p>Mes enfants sont:</p>
-                        <search familyType="children" @updateChildren="_user => updateFamily(_user, 'children')"/>
+                        <search familyType="children" @childrenUpdate="_user => updateFamily(_user, 'children')"/>
                         <ul>
-                            <li v-for="(user, i) in fratery" :key="i" @click.prevent="removeElement(user, 'children')"><a href="" title="supprimer" >X</a>{{ `     ${user.name}` }}</li>
+                            <li v-for="(user, i) in datas.children" :key="i" @click.prevent="removeElement(user, 'children')"><a href="" title="supprimer" >X</a>{{ `     ${user.name}` }}</li>
                         </ul>
                     </div>
                 </div>
 
-                <input class="infoInputs" type="tel" v-model="phone" placeholder="Numero de téléphone">
-                <input class="infoInputs" type="text" v-model="birth.place" placeholder="Lieu de naissance">
-                <input class="infoInputs" type="text" v-model="city" placeholder="Où habitez vous ?">
-                <input class="infoInputs" type="text" v-model="work" placeholder="Où étudiez/travaillez vous?">
+                <input class="infoInputs" type="tel" v-model="datas.phone" placeholder="Numero de téléphone">
+                <input class="infoInputs" type="text" v-model="datas.birth.place" placeholder="Lieu de naissance">
+                <input class="infoInputs" type="text" v-model="datas.city" placeholder="Où habitez vous ?">
+                <input class="infoInputs" type="text" v-model="datas.work" placeholder="Où étudiez/travaillez vous?">
 
-                <tag-input placeholder="Avez-vous des hobbies ?"/>
-                <!-- <input class="infoInputs" type="text" placeholder="Avez-vous des hobbies ?"> -->
-                <input class="infoInputs" type="text" placeholder="Quel(s) sport(s) pratiquez vous ?">
+                <tag-input placeholder="Avez-vous des hobbies ?" @updateTags="_tags => datas.hobbies = _tags"/>
+                <tag-input placeholder="Quel(s) sport(s) pratiquez vous ?" @updateTags="_tags => datas.sports = _tags"/>
 
-                <router-link to="/me" class="bottomButton">Enregistrer</router-link>
+                <a href="" title="Enregistrer" class="bottomButton" @click.prevent="updateMe">Enregistrer</a>
             </div>
         </main>
     </div>
@@ -62,26 +61,34 @@
 
 
 <script>
+import UPDATE_ME from '@/graphql/updateMe.graphql'
+import ADD_FAMILY_MEMBERS from '@/graphql/addFamilyMembers.graphql'
+
 import TagInput from '@/components/TagInput'
 import Search from '@/components/search'
+import { Promise } from 'q';
+import { resolve } from 'path';
 
 export default {
     name: 'createProfile',
     data () {
         return {
-            phone: '',
-            birth: {
-                place: ''
+            datas: {
+                phone: '',
+                birth: {
+                    place: ''
+                },
+                profilePicture: '',
+                city: '',
+                work: '',
+                mother: {},
+                father: {},
+                fratery: [],
+                partner: {},
+                children: [],
+                hobbies: [],
+                sports: [],
             },
-            city: '',
-            work: '',
-            mother: {},
-            father: {},
-            fratery: [],
-            partner: {},
-            children: {},
-            hobbyTag: '',
-            hobbies: [],
             reader: new FileReader()
         }
     },
@@ -92,15 +99,75 @@ export default {
     methods: {
         updateFamily ({ id, name }, type) {
             if (type !== 'fratery' && type !== 'children')
-                return this[type] = { type, id }
+                return this.datas[type] = { type: type.toUpperCase(), id }
 
-            this[type].push({ type, id, name })
+            this.datas[type].push({ type: type.toUpperCase(), id, name })
         },
         removeElement (_user, _type) {
-            this[_type] = this[_type].filter(u => u !== _user)
+            this.datas[_type] = this.datas[_type].filter(u => u !== _user)
         },
         updatePicture () {
+            if (!this.$refs.pictureFile.files[0])
+                return
+
             this.reader.readAsDataURL(this.$refs.pictureFile.files[0])
+            this.datas.profilePicture = this.$refs.pictureFile.files[0]
+        },
+        getVariables () {
+            return new Promise( resolve => {
+                const datas = {}
+                const validKeys = ['phone', 'city', 'work', 'hobbies', 'sports', 'birth', 'profilePicture']
+
+                const keys = Object.keys(this.datas)
+                keys.forEach(_key => {
+                    if (validKeys.includes(_key)) {
+                        if (this.datas[_key] === null || this.datas[_key] === '' || this.datas[_key] === null)
+                            return
+
+                        if (Array.isArray(this.datas[_key]) && this.datas[_key].length === 0)
+                            return
+
+                        if (typeof this.datas[_key] === 'object' && !Array.isArray(this.datas[_key]) && (!this.datas[_key].place && !this.datas[_key].lastModified))
+                            return
+                        
+                        datas[_key] = this.datas[_key]
+                    }
+                })
+
+                resolve(datas)
+            })
+        },
+        async updateMe () {
+            const datas = await this.getVariables()
+
+            await this.$apollo.mutate({
+                mutation: UPDATE_ME,
+                variables: {
+                    datas
+                }
+            })
+
+            const familyMembers = []
+
+            if (this.datas.father.id)
+                familyMembers.push(this.datas.father)
+            if (this.datas.mother.id)
+                familyMembers.push(this.datas.mother)
+            if (this.datas.partner.id)
+                familyMembers.push(this.datas.partner)
+            if (this.datas.fratery.length > 0)
+                this.datas.fratery.forEach(({ id, type}) => familyMembers.push({ id, type}))
+            if (this.datas.children.length > 0)
+                this.datas.children.forEach(({ id, type}) => familyMembers.push({ id, type}))
+
+            await this.$apollo.mutate({
+                mutation: ADD_FAMILY_MEMBERS,
+                variables: {
+                    familyMembers
+                }
+            })
+
+            // this.$router.push('/me')
         }
     },
     mounted () {
@@ -219,8 +286,10 @@ export default {
             }
 
             ul {
+                position: relative;
                 padding: 0;
                 margin: 0;
+                z-index: 1;
 
                 li {
                     list-style: none;

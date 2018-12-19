@@ -66,6 +66,7 @@ export default {
         margin: 0;
         position: absolute;
         top: 100%;
+        z-index: 5;
 
         li {
             height: 25px;

@@ -25,6 +25,7 @@ export default {
 
             this.tags.push(this.tag)
             this.tag = ''
+            this.$emit('updateTags', this.tags)
         },
         deleteTag (_tag) {
             this.tags = this.tags.filter(t => t !== _tag)
