@@ -3,19 +3,19 @@
         <nav>
             <ul>
                 <li>
-                    <a href="#" title="Ajouter un utilisateur">
+                    <router-link to="#" title="Ajouter un utilisateur">
                         <img src="../assets/add_user.png" alt="Icone">
-                    </a>
+                    </router-link>
                 </li>
                 <li>
-                    <a href="#" title="Ma bibliothèque">
+                    <router-link to="/me" title="Ma bibliothèque">
                         <img src="../assets/nav_book.png" alt="Icone">
-                    </a>
+                    </router-link>
                 </li>
                 <li>
-                    <a href="#" title="Mon arbre">
+                    <router-link to="/home" title="Mon arbre">
                         <img src="../assets/logoIconBlack.png" alt="Icone">
-                    </a>
+                    </router-link>
                 </li>
                 <li>
                     <a
