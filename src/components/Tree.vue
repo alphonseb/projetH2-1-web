@@ -2,7 +2,7 @@
     <div class="tree-container">
         <div class="tree current" ref="tree">
             <FamilyMember
-                v-if="user.family.mother.node"
+                v-if="user.family.father.node"
                 class="parent-1"
                 :member="user.family.father.node"
                 @click.native="updateParent"
@@ -30,7 +30,9 @@
                         ref="link"
                         :style="{height: childrenLinkHeight + 'px'}"
                     ></div>
-                    <FamilyMember :member="user"/>
+                    <router-link :to="{name: 'user', params: {id: user.id}}">
+                        <FamilyMember class="selected-user" :member="user"/>
+                    </router-link>
                     <FamilyMember
                         v-if="user.family.partner.node"
                         class="user-partner"
@@ -111,7 +113,7 @@ export default {
             return !this.user.family.partner.node;
         },
         noParents () {
-            return !(this.user.family.father.node && this.user.family.mother.node)
+            return (!this.user.family.father.node && !this.user.family.mother.node)
         },
         childrenLinkHeight () {
             if (this.isUpdated) {
@@ -183,49 +185,6 @@ export default {
             // this.translateValueX = 0;
             this.$refs.tree.style.transform = "translateX(0)";
 
-            this.user = {
-                firstName: "User",
-                age: 14,
-                father: {
-                    firstName: "Updated",
-                    lastName: "father"
-                },
-                mother: {
-                    firstName: "Updated Mother"
-                },
-                partner: {
-                    firstName: "Updated Partner"
-                },
-                siblings: [
-                    {
-                        firstName: "Brother",
-                        age: 12
-                    },
-                    // {
-                    //     firstName: "Little Brother",
-                    //     age: 10
-                    // },
-                    // {
-                    //     firstName: "Older Sister",
-                    //     age: 18
-                    // },
-                    {
-                        firstName: "Sister",
-                        age: 15
-                    }
-                ],
-                children: [
-                    {
-                        firstName: "Child 1"
-                    }
-                    // {
-                    //     firstName: "Child 2"
-                    // },
-                    // {
-                    //     firstName: "Child 3"
-                    // }
-                ]
-            };
         },
         updateParent () {
             // console.log(this.translateValueX);
@@ -404,8 +363,13 @@ export default {
             height: 115px;
             background: #fff;
         }
-        &.no-parents::after {
-            display: none;
+        &.no-parents {
+            &::after {
+                display: none;
+            }
+            & > .user > .family-member:not(.user-partner)::before {
+                display: none;
+            }
         }
         & > div {
             margin-right: 20px;

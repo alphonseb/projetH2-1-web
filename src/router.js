@@ -53,6 +53,14 @@ const router = new Router({
             }
         },
         {
+            path: '/user',
+            name: 'user',
+            component: Profile,
+            meta: {
+                auth: true
+            }
+        },
+        {
             path: '/profileEdit',
             name: 'editProfile',
             component: ProfileEdit,
