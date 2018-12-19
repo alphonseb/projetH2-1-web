@@ -61,6 +61,9 @@
                 <a class="nextButton" href="" title="Créer son compte" @click.prevent="createAccount" >Créer mon compte</a>
             </form>
         </main>
+        <div class="imgContainer">
+            <img class="backgroundTree" src="../assets/bg-tree.jpg" alt>
+        </div>
     </div>
 </template>
 
@@ -154,12 +157,14 @@ export default {
         }
     }
 
+
     main {
         width: 90%;
         height: 75%;
         margin: auto;
         color: white;
         position: relative;
+
     }
 
     form {
@@ -285,17 +290,49 @@ export default {
         text-align: center;
 
         .logo {
+            position: relative;
             margin-top: 0.5%;
             width: 11%;
+            z-index: 2222;
         }
     }
 
+    h3{
+        font-size: 1.6em;
+        margin-bottom: 8%;
+    }
+
+    .imgContainer{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 1200px;
+        height: 1200px;
+        overflow: hidden;
+    }
+
+    .backgroundTree {
+        position: absolute;
+        top: 25%;
+        right: 10%;
+        opacity: 0.2;
+        transform: scale(1.5);
+    }
+
     main {
-        width: 23%;
+        width: 31%;
         height: 75%;
-        margin: auto;
+        margin: auto 12%;
         color: white;
         position: relative;
+
+        .backgroundTree {
+            position: absolute;
+            top: -15%;
+            right: 10%;
+            opacity: 0.2;
+            transform: scaleX(-1);
+        }
     }
 
     form {
@@ -310,6 +347,7 @@ export default {
     ::placeholder {
         color: white;
         opacity: 0.5;
+        font-size: 1.3em;
     }
 
     @mixin flex_style {
@@ -367,11 +405,14 @@ export default {
     }
 
     .logins {
+        display: flex;
+        justify-content: space-between;
         width: 100%;
 
         input {
             @include input_style;
             margin-top: 7%;
+            width: 45%;
         }
     }
 
@@ -401,7 +442,7 @@ export default {
         height: 1.5em;
         
         position: absolute;
-        bottom: 2em;
+        bottom: 25%;
         left: 50%;
         transform: translateX(-50%);
 
@@ -412,6 +453,7 @@ export default {
         font-size: 1.2em;
         font-weight: 400;
         line-height: 1.5em;
+        padding: 10px 15px;
     }
         
     }
