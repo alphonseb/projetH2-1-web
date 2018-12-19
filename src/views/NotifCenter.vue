@@ -1,36 +1,80 @@
 <template>
     <div class="notifCenter">
-        <Header :profile-img-src="something"/>
         <div class="newNotifs">
             <p class="new">Nouveau</p>
             <notif
                 name="Gile"
-                profilePicture="../assets/profilePic.jpeg"
+                profilePicture="http://julesguesnon.com:4000/static/default.png"
                 content="Vous a écrit un livre"
                 date="1er Janvier 2019"
+                type="info"
             />
         </div>
         <div class="oldNotifs">
             <p class="new">Plus tôt</p>
             <notif
                 name="John"
-                profilePicture="../assets/profilePic.jpeg"
+                profilePicture="http://julesguesnon.com:4000/static/default.png"
                 content="Vous a écrit un livre"
                 date="1er Janvier 2019"
+                type="info"
             />
             <notif
                 name="John"
-                profilePicture="../assets/profilePic.jpeg"
+                profilePicture="http://julesguesnon.com:4000/static/default.png"
                 content="Vous a écrit un livre"
                 date="1er Janvier 2019"
+                type="info"
+            />
+            <notif
+                name="John"
+                profilePicture="http://julesguesnon.com:4000/static/default.png"
+                content="Vous a écrit un livre"
+                date="1er Janvier 2019"
+                type="info"
+            />
+            <notif
+                name="John"
+                profilePicture="http://julesguesnon.com:4000/static/default.png"
+                content="Vous a écrit un livre"
+                date="1er Janvier 2019"
+                type="info"
+            />
+            <notif
+                name="John"
+                profilePicture="http://julesguesnon.com:4000/static/default.png"
+                content="Vous a écrit un livre"
+                date="1er Janvier 2019"
+                type="info"
+            />
+            <notif
+                name="John"
+                profilePicture="http://julesguesnon.com:4000/static/default.png"
+                content="Vous a écrit un livre"
+                date="1er Janvier 2019"
+                type="info"
+            />
+            <notif
+                name="John"
+                profilePicture="http://julesguesnon.com:4000/static/default.png"
+                content="Vous a écrit un livre"
+                date="1er Janvier 2019"
+                type="info"
+            />
+            <notif
+                name="John"
+                profilePicture="http://julesguesnon.com:4000/static/default.png"
+                content="Vous a écrit un livre"
+                date="1er Janvier 2019"
+                type="info"
             />
         </div>
     </div>
 </template>
 
 <script>
-import Notif from "@/components/Notifs";
-import Header from "@/components/Header";
+import Notif from '@/components/Notifs'
+import Header from '@/components/Header'
 
 export default {
     name: "NotifCenter",
@@ -45,10 +89,11 @@ export default {
 .notifCenter {
     width: 100%;
     height: 100vh;
+    background: white;
     margin: 0;
     font-family: Roboto;
     box-sizing: border-box;
-    background: linear-gradient(180deg, #79bdd2 0%, #476fb5 100%);
+    overflow: scroll;
 
     .search {
         display: flex;

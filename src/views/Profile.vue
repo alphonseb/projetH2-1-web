@@ -1,62 +1,63 @@
 <template>
     <div class="profile">
-        <ApolloQuery :query="require('@/graphql/user.graphql')">
-            <template slot-scope="{ result: { data, loading }}">
-                <div v-if="loading">WTF LES AMIS</div>
-                <div v-else>
-                    <Header :profile-img-src="data.me.profilePicture.src"/>
-                    <img
-                        class="mainProfilePic"
-                        :src="data.me.profilePicture.src"
-                        alt="profilePicMain"
-                    >
-                    <div class="profileContent">
-                        <div class="container">
-                            <h2>
-                                <span class="firstName">{{ data.me.name.split(' ')[0] }}</span>
-                                {{ data.me.name.split(' ')[1] }},
-                                <span
-                                    class="age"
-                                >{{ age(data.me.birth.date) }}ans</span>
-                            </h2>
-                            <div class="loc">
-                                <img src="../assets/locIcon.png" alt="localisation">
-                                <p>{{ data.me.city }}</p>
-                            </div>
-                            <div class="phone" v-if="data.me.phone !== null">
-                                <img src="../assets/phoneIcon.png" alt="phone number">
-                                <p>{{ data.me.phone }}</p>
-                            </div>
-                            <div class="mail">
-                                <img src="../assets/mailIcon.png" alt="localisation">
-                                <p>{{ data.me.mail }}</p>
-                            </div>
-                            <h3>Ma bibiothèque</h3>
-                            <h4>Mes livres</h4>
-                            <p
-                                class="tellStory"
-                            >Racontez votre histoire, un événement marquant, un voyage, ou simplement le quotidien...</p>
-                            <div class="books">
-                                <div class="book" v-for="(book, i) in data.me.books" :key="i">
-                                    <img src="../assets/book.png" alt="livre">
-                                    <span>{{book.title}}</span>
-                                </div>
-                            </div>
+        <div>
+            <Header :profile-img-src="me.profilePicture.src"/>
+            <img
+                class="mainProfilePic"
+                :src="me.profilePicture.src"
+                alt="profilePicMain"
+            >
+            <div class="profileContent">
+                <div class="container">
+                    <h2>
+                        <span class="firstName">{{ me.name.split(' ')[0] }}</span>
+                        {{ me.name.split(' ')[1] }},
+                        <span
+                            class="age"
+                        >{{ age(me.birth.date) }}ans</span>
+                    </h2>
+                    <div class="loc">
+                        <img src="../assets/locIcon.png" alt="localisation">
+                        <p>{{ me.city }}</p>
+                    </div>
+                    <div class="phone" v-if="me.phone !== null">
+                        <img src="../assets/phoneIcon.png" alt="phone number">
+                        <p>{{ me.phone }}</p>
+                    </div>
+                    <div class="mail">
+                        <img src="../assets/mailIcon.png" alt="localisation">
+                        <p>{{ me.mail }}</p>
+                    </div>
+                    <h3>Ma bibiothèque</h3>
+                    <h4>Mes livres</h4>
+                    <p
+                        class="tellStory"
+                    >Racontez votre histoire, un événement marquant, un voyage, ou simplement le quotidien...</p>
+                    <div class="books">
+                        <div class="book" v-for="(book, i) in me.books" :key="i">
+                            <img src="../assets/book.png" alt="livre">
+                            <span>{{book.title}}</span>
                         </div>
                     </div>
                 </div>
-            </template>
-        </ApolloQuery>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import Header from "../components/Header.vue";
 
 export default {
     name: "profile",
     components: {
         Header
+    },
+    computed: {
+        ...mapState({
+            me: state => state.me
+        })
     },
     methods: {
         age(_date) {

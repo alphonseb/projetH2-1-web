@@ -73,7 +73,7 @@ export default {
                 }
 
                 await window.localStorage.setItem(env.APP_TOKEN_PATH, data.login.token)
-                this.$router.push('/me')
+                this.$router.push('/home')
             }).catch(err => this.error = true)
         }
     },

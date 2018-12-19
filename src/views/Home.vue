@@ -3,23 +3,41 @@
         <img src="../assets/bg-tree.jpg" alt="Image de fond" class="bg-tree">
         <Header/>
         <Tree/>
-        <Navbar class="navbar"/>
     </div>
 </template>
 
 <script>
-import Tree from "../components/Tree.vue";
-import Header from "@/components/Header.vue";
-import Navbar from "@/components/Navbar.vue";
+import { mapActions, mapState } from 'vuex'
+import ME from '@/graphql/user.graphql'
+import Tree from '../components/Tree.vue'
+import Header from '@/components/Header.vue'
 
 export default {
-    name: "Home",
+    name: 'Home',
     components: {
         Tree,
-        Header,
-        Navbar
+        Header
+    },
+    computed: {
+        ...mapState({
+            currentUser: state => state.me
+        })
+    },
+    methods: {
+        ...mapActions(['setMeDatas'])
+    },
+    apollo: {
+        me: {
+            query: ME,
+            result (_res) {
+                if (!this.currentUser.id)
+                    this.setMeDatas(_res)
+
+                console.log(this.currentUser)
+            }
+        }
     }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -39,11 +57,6 @@ export default {
         left: -100px;
         height: 100%;
         opacity: 0.2;
-    }
-    .navbar {
-        position: absolute;
-        bottom: 0;
-        left: 0;
     }
 }
 </style>

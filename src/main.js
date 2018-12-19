@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import store from './store'
 
 import env from '@/../env.json'
 
@@ -48,5 +49,6 @@ new Vue({
     apolloProvider: new VueApollo({
         defaultClient: client
     }),
+    store,
     render: h => h(App)
 }).$mount('#app')

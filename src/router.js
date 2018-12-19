@@ -10,7 +10,6 @@ import Write from './components/WriteBook'
 import WriteEdition from './components/WriteEdition'
 import WriteGallery from './components/WriteGallery'
 import CreateProfile from './views/CreateProfile'
-import NotifCenter from './views/NotifCenter.vue'
 import ProfileEdit from './views/ProfileEdit'
 import Home from './views/Home.vue'
 
