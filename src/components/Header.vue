@@ -40,7 +40,7 @@ export default {
 
         img {
             width: 100%;
-            height: auto;
+            object-fit: cover;
         }
     }
 
