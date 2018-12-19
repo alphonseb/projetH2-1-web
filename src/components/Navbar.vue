@@ -11,13 +11,13 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/me" title="Ma bibliothèque">
-                        <img src="../assets/nav_book.png" alt="Icone">
+                    <router-link to="/home" title="Mon arbre">
+                        <img src="../assets/logoIconBlack.png" alt="Icone">
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/home" title="Mon arbre">
-                        <img src="../assets/logoIconBlack.png" alt="Icone">
+                    <router-link to="/me" title="Ma bibliothèque">
+                        <img src="../assets/nav_book.png" alt="Icone">
                     </router-link>
                 </li>
                 <li>
@@ -36,29 +36,29 @@
 </template>
 
 <script>
-import Notifications from '@/views/NotifCenter'
+import Notifications from "@/views/NotifCenter";
 export default {
     name: "Navbar",
     props: {
         hasNotifications: Boolean
     },
-    data () {
+    data() {
         return {
             showNotifications: false
-        }
+        };
     },
     components: {
         Notifications
     },
     methods: {
-        toggleNotifications () {
-            this.showNotifications = !this.showNotifications
+        toggleNotifications() {
+            this.showNotifications = !this.showNotifications;
 
             if (this.hasNotifications) {
-                this.hasNotifications = false
+                this.hasNotifications = false;
                 this.$children[0].$children.forEach(_notif => {
-                    _notif.readNotification()
-                })
+                    _notif.readNotification();
+                });
             }
         }
     }
@@ -66,12 +66,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-    .slide-enter-active, .slide-leave-active {
-        transition: transform .5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    .slide-enter, .slide-leave-to {
-        transform: translateY(100%);
-    }
+.slide-enter-active,
+.slide-leave-active {
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.slide-enter,
+.slide-leave-to {
+    transform: translateY(100%);
+}
 
 .navbar {
     width: 100vw;
@@ -110,14 +112,14 @@ export default {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-    
+
                 a {
                     display: block;
                     width: 100%;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-    
+
                     &.has-notifications {
                         position: relative;
                         &::after {
@@ -139,7 +141,6 @@ export default {
             }
         }
     }
-    
 }
 </style>
 

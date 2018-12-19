@@ -7,14 +7,14 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
-import ME from '@/graphql/user.graphql'
-import USER_FAMILY from "@/graphql/userFamily.graphql"
-import Tree from '../components/Tree.vue'
-import Header from '@/components/Header.vue'
+import { mapActions, mapState } from "vuex";
+import ME from "@/graphql/user.graphql";
+import USER_FAMILY from "@/graphql/userFamily.graphql";
+import Tree from "../components/Tree.vue";
+import Header from "@/components/Header.vue";
 
 export default {
-    name: 'Home',
+    name: "Home",
     components: {
         Tree,
         Header
@@ -28,28 +28,28 @@ export default {
         })
     },
     methods: {
-        ...mapActions(['setMeDatas'])
+        ...mapActions(["setMeDatas"])
     },
     apollo: {
         me: {
             query: ME,
-            result (_res) {
-                if (!this.currentUser.id)
-                    this.setMeDatas(_res)
+            result(_res) {
+                if (!this.currentUser.id) this.setMeDatas(_res);
             }
         },
         user: {
             query: USER_FAMILY,
-            variables () {
-                return { userId: this.user_id ? this.user_id : this.currentUser.id }
+            variables() {
+                return {
+                    userId: this.user_id ? this.user_id : this.currentUser.id
+                };
             },
-            skip () {
-                return !this.user_id && !this.currentUser.id
+            skip() {
+                return !this.user_id && !this.currentUser.id;
             }
         }
     }
-}
-
+};
 </script>
 
 <style lang="scss" scoped>

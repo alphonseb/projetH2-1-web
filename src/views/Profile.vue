@@ -2,27 +2,27 @@
     <div class="profile">
         <div>
             <Header :profile-img-src="me.profilePicture.src"/>
-            <img class="mainProfilePic" :src="me.profilePicture.src" alt="profilePicMain">
+            <img class="mainProfilePic" :src="user.profilePicture.src" alt="profilePicMain">
             <div class="profileContent">
                 <div class="container">
                     <h2>
-                        <span class="firstName">{{ me.name.split(' ')[0] }}</span>
-                        {{ me.name.split(' ')[1] }},
+                        <span class="firstName">{{ user.name.split(' ')[0] }}</span>
+                        {{ user.name.split(' ')[1] }},
                         <span
                             class="age"
-                        >{{ age(me.birth.date) }}ans</span>
+                        >{{ age(user.birth.date) }}ans</span>
                     </h2>
                     <div class="loc">
                         <img src="../assets/locIcon.png" alt="localisation">
-                        <p>{{ me.city }}</p>
+                        <p>{{ user.city }}</p>
                     </div>
-                    <div class="phone" v-if="me.phone !== null">
+                    <div class="phone" v-if="user.phone !== null">
                         <img src="../assets/phoneIcon.png" alt="phone number">
-                        <p>{{ me.phone }}</p>
+                        <p>{{ user.phone }}</p>
                     </div>
                     <div class="mail">
                         <img src="../assets/mailIcon.png" alt="localisation">
-                        <p>{{ me.mail }}</p>
+                        <p>{{ user.mail }}</p>
                     </div>
                     <h3>Ma bibiothèque</h3>
                     <h4>Mes livres</h4>
@@ -30,7 +30,7 @@
                         class="tellStory"
                     >Racontez votre histoire, un événement marquant, un voyage, ou simplement le quotidien...</p>
                     <div class="books">
-                        <div class="book" v-for="(book, i) in me.books" :key="i">
+                        <div class="book" v-for="(book, i) in user.books" :key="i">
                             <img src="../assets/book.png" alt="livre">
                             <span>{{book.title}}</span>
                         </div>
@@ -42,14 +42,26 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-import Header from '../components/Header.vue'
-import ME from '@/graphql/user.graphql'
+import { mapState } from "vuex";
+import Header from "../components/Header.vue";
+import USER_PROFILE from "@/graphql/userProfile.graphql";
 
 export default {
-    name: 'profile',
+    name: "profile",
     components: {
         Header
+    },
+    apollo: {
+        user: {
+            query: USER_PROFILE,
+            variables() {
+                return {
+                    user_id: this.$route.params.id
+                        ? this.$route.params.id
+                        : this.me.id
+                };
+            }
+        }
     },
     computed: {
         ...mapState({
@@ -57,15 +69,11 @@ export default {
         })
     },
     methods: {
-        age (_date) {
+        age(_date) {
             const diff = Date.now() - new Date(_date);
             const ageDate = new Date(diff);
             return Math.abs(ageDate.getUTCFullYear() - 1970);
         }
-    },
-    mounted () {
-        console.log(this.$route);
-
     }
 };
 </script>
@@ -124,7 +132,7 @@ export default {
                 }
             }
             h3 {
-                font-family: 'Playfair Display', serif;
+                font-family: "Playfair Display", serif;
                 color: white;
                 font-size: 1.4em;
                 margin-top: 60px;
@@ -133,13 +141,7 @@ export default {
                 color: white;
                 margin-bottom: 6px;
             }
-p
-
-
-
-
-
-            .tellStory {
+            p .tellStory {
                 font-size: 0.6em;
                 margin-top: 0;
                 color: white;

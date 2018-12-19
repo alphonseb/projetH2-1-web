@@ -1,6 +1,6 @@
 <template>
     <div class="profileHeader">
-        <div class="profilePic">
+        <div class="profilePic" @click="disconnect">
             <img class="profilePic" :src="profileImgSrc" alt="profile pic">
         </div>
         <div class="searchBar">
@@ -15,6 +15,12 @@ export default {
     name: "Header",
     props: {
         profileImgSrc: String
+    },
+    methods: {
+        disconnect() {
+            window.localStorage.setItem("@Shelf/token", null);
+            location.reload();
+        }
     }
 };
 </script>
@@ -33,8 +39,8 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 60px;
-        height: 60px;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         overflow: hidden;
 
