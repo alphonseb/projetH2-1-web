@@ -19,7 +19,7 @@
                             <h2><span class="firstName">{{ data.me.name.split(' ')[0] }}</span> {{ data.me.name.split(' ')[1] }}, <span class="age">{{ age(data.me.birth.date) }}ans</span> </h2>
                             <div class="loc">
                                 <img src="../assets/locIcon.png" alt="localisation">
-                                <p>{{ 'city' }}</p>
+                                <p>{{ data.me.city }}</p>
                             </div>
                             <div class="phone" v-if="data.me.phone !== null">
                                 <img src="../assets/phoneIcon.png" alt="phone number">
