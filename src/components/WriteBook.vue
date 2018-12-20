@@ -51,7 +51,7 @@ export default {
                 variables: {
                     title: this.title,
                     content: this.content,
-                    to: this.to
+                    id: this.to
                 }
             })
             

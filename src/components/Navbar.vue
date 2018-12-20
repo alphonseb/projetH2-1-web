@@ -6,11 +6,6 @@
         <nav>
             <ul>
                 <li>
-                    <router-link to="#" title="Ajouter un utilisateur">
-                        <img src="../assets/add_user.png" alt="Icone">
-                    </router-link>
-                </li>
-                <li>
                     <router-link to="/home" title="Mon arbre">
                         <img src="../assets/logoIconBlack.png" alt="Icone">
                     </router-link>
