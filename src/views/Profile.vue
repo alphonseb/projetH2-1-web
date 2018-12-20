@@ -2,6 +2,7 @@
     <div class="profile">
         <div>
             <Header :profile-img-src="me.profilePicture.src"/>
+            <Menu/>
             <img class="mainProfilePic" :src="user.profilePicture.src" alt="profilePicMain">
             <div class="profileContent">
                 <div class="container">
@@ -24,15 +25,44 @@
                         <img src="../assets/mailIcon.png" alt="localisation">
                         <p>{{ user.mail }}</p>
                     </div>
-                    <h3>Ma bibiothèque</h3>
-                    <h4>Mes livres</h4>
+                    <h3 v-if="user.id === me.id">Ma bibiothèque</h3>
+                    <h3 v-else>Sa bibliothèque</h3>
+                    <h4 v-if="user.id === me.id">Mes livres</h4>
+                    <h4 v-else>Ses livres</h4>
                     <p
+                        v-if="user.id === me.id"
                         class="tellStory"
                     >Racontez votre histoire, un événement marquant, un voyage, ou simplement le quotidien...</p>
-                    <div class="books">
+                    <p v-else class="tellStory">
+                        Lisez et découvrez l'histoire de
+                        <strong>{{user.name}}</strong>, les événements marquants de sa vie, les voyages, ou simplement son quotidien...
+                    </p>
+                    <div class="shelf">
+                        <div v-if="user.id === me.id" class="book0">
+                            <router-link to="/book/edit">Ajouter un livre</router-link>
+                        </div>
                         <div class="book" v-for="(book, i) in user.books" :key="i">
                             <img src="../assets/book.png" alt="livre">
-                            <span>{{book.title}}</span>
+                            <h5>{{book.title}}</h5>
+                        </div>
+                    </div>
+                    <h4>Livres d'or</h4>
+                    <p
+                        v-if="user.id === me.id"
+                        class="tellStory"
+                    >Tout les livres écrit sur vous sont ici.</p>
+                    <p v-else class="tellStory">
+                        Découvrez toutes les histoires de
+                        <strong>{{user.name}}</strong> racontées par ses proches. Peut-être souhaitez-vous raconter les votres ?
+                    </p>
+                    <div class="goldenBook">
+                        <div v-if="user.id !== me.id" class="book0">
+                            <!-- Il nous faut une police script pour les titres de livres-->
+                            <router-link to="book/edit">Ajouter un livre</router-link>
+                        </div>
+                        <div class="book" v-for="(book, i) in user.goldenBooks" :key="i">
+                            <img src="../assets/greenBook.png" alt="livre">
+                            <h5>{{book.title}}</h5>
                         </div>
                     </div>
                 </div>
@@ -44,12 +74,19 @@
 <script>
 import { mapState } from "vuex";
 import Header from "../components/Header.vue";
+import Menu from "../components/Menu.vue";
 import USER_PROFILE from "@/graphql/userProfile.graphql";
 
 export default {
     name: "profile",
     components: {
-        Header
+        Header,
+        Menu
+    },
+    data: () => {
+        return {
+            menuOpened: false
+        };
     },
     apollo: {
         user: {
@@ -101,9 +138,10 @@ export default {
         );
         width: 100%;
         position: absolute;
-        top: 100px;
+        top: 150px;
         .container {
             margin: 0 5%;
+            margin-bottom: 50px;
             h2 {
                 margin-top: 170px;
                 color: white;
@@ -141,31 +179,52 @@ export default {
                 color: white;
                 margin-bottom: 6px;
             }
-            p .tellStory {
-                font-size: 0.6em;
+            .tellStory {
+                font-size: 0.8em;
                 margin-top: 0;
                 color: white;
             }
-            .books {
-                height: 150px;
-                width: 100%;
+            .shelf,
+            .goldenBook {
                 display: flex;
-                .book {
+                justify-content: space-around;
+                flex-wrap: wrap;
+                .book0 {
+                    // background-color: white;
+                    height: 140px !important;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    position: relative;
-                    height: 100%;
-                    img {
-                        height: 100%;
-                        width: auto;
-                    }
-                    span {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
+                    opacity: 1;
+                    border: white dashed 2px;
+                    border-radius: 3px;
+                    a {
                         color: white;
+                        text-decoration: none;
+                        font-size: 0.75em;
+                        border: solid 1px white;
+                        border-radius: 10px;
+                        padding: 7px;
+                        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5);
+                    }
+                }
+                div[class^="book"] {
+                    position: relative;
+                    width: 35%;
+                    height: 35%;
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                    h5 {
+                        position: absolute;
+                        top: 0%;
+                        left: 50%;
+                        transform: translateX(-40%);
+                        width: 60%;
+                        color: white;
+                        font-family: "Dancing Script", cursive;
+                        font-size: 1.1em;
                     }
                 }
             }
