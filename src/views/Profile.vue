@@ -1,5 +1,5 @@
 <template>
-    <div class="profile"> 
+    <div class="profile">
         <div>
             <Header :profile-img-src="me.profilePicture.src"/>
             <Menu/>
@@ -39,7 +39,11 @@
                     </p>
                     <div class="shelf">
                         <div v-if="user.id === me.id" class="book0">
-                            <a href="" title="Ecrire un livre" @click.prevent="createBook">Ajouter un livre</a>
+                            <a
+                                href
+                                title="Ecrire un livre"
+                                @click.prevent="createBook"
+                            >Ajouter un livre</a>
                         </div>
                         <div
                             class="book"
@@ -63,7 +67,11 @@
                     <div class="goldenBook">
                         <div v-if="user.id !== me.id" class="book0">
                             <!-- Il nous faut une police script pour les titres de livres-->
-                            <a href="" title="Ecrire un livre" @click.prevent="createBook">Ajouter un livre</a>
+                            <a
+                                href
+                                title="Ecrire un livre"
+                                @click.prevent="createBook"
+                            >Ajouter un livre</a>
                         </div>
                         <div
                             class="book"

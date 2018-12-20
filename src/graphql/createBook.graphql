@@ -1,5 +1,5 @@
-mutation ($title: String! $content: String!) {
-  createBook (title: $title content: $content date: 2018) {
+mutation ($title: String! $content: String! $id: String!) {
+  createBook (title: $title content: $content date: 2018 id: $id) {
     id
   }
 }
