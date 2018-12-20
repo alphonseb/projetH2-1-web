@@ -67,10 +67,11 @@ export default {
 <style lang="scss" scoped>
     .editor {
         width: 100%;
-        height: 100vh;
+        height: 90vh;
         border: 1px solid black;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         background: white;
+        position: relative;
 
         header {
             height: 7%;
@@ -103,21 +104,9 @@ export default {
 
         .container {
             width: calc(100% - 20px);
-            height: calc(80% - 20px);
+            height: calc(85% - 20px);
             padding: 10px;
             position: relative;
-
-            &::after {
-                content: '';
-                display: block;
-                width: 95%;
-                height: 1px;
-                background: black;
-                position: absolute;
-                bottom: 0;
-                left: 50%;
-                transform: translateX(-50%);
-            }
         }
 
         footer {
@@ -129,6 +118,21 @@ export default {
             display: flex;
             flex-direction: row-reverse;
             justify-content: space-between;
+            position: absolute;
+            bottom: 0;
+
+
+            &::before {
+                content: '';
+                display: block;
+                width: 95%;
+                height: 1px;
+                background: black;
+                position: absolute;
+                top: -5px;
+                left: 50%;
+                transform: translateX(-50%);
+            }
 
             a {
                 width: 60px;

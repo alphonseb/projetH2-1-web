@@ -26,9 +26,13 @@ export default {
         me: {
             query: ME,
             async result (res) {
+                
+                if (!res.data.me)
+                    return
+
                 await this.setMeDatas(res.data.me)
 
-                    if (res.data.me.notifications) {
+                if (res.data.me.notifications.length > 0) {
                     const hasNotifications = res.data.me.notifications.find(v => !v.isRead)
                     if (hasNotifications)
                         this.showNotifications = true
