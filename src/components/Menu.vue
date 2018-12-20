@@ -3,7 +3,7 @@
         <a href="#" class="close-menu" @click="closeMenu">
             <img src="../assets/close_icon.png" alt="Icone fermer">
         </a>
-        <router-link to="/" title="Edition du profil" @click.prevent>Editer mon profil</router-link>
+        <router-link to="/profileEdit" title="Edition du profil" @click.prevent>Editer mon profil</router-link>
         <a href="#" title="Deconnexion" @click="disconnect">Se déconnecter</a>
     </div>
 </template>

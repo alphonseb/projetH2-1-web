@@ -3,6 +3,10 @@
         <div class="header">
             <img class="logo" src="../assets/logo.png" alt="shelf logo">
         </div>
+
+        <div class="imgContainer">
+            <img class="backgroundTree" src="../assets/bg-tree.jpg" alt>
+        </div>
         <main>
             <div class="inscription">
                 <div class="arrow"></div>
@@ -36,20 +40,50 @@
                 </div>
                 <div class="genders">
                     <div class="checkboxContainer">
-                        <input type="radio" name="gender" value="Homme" id="man" v-model="datas.gender">
+                        <input
+                            type="radio"
+                            name="gender"
+                            value="Homme"
+                            id="man"
+                            v-model="datas.gender"
+                        >
                         <label for="man">Homme</label>
                     </div>
                     <div class="checkboxContainer">
-                        <input type="radio" name="gender" value="Femme" id="woman" v-model="datas.gender">
+                        <input
+                            type="radio"
+                            name="gender"
+                            value="Femme"
+                            id="woman"
+                            v-model="datas.gender"
+                        >
                         <label for="woman">Femme</label>
                     </div>
                 </div>
                 <div class="birth">
                     <p>Date de naissance</p>
                     <div class="birthInputs">
-                        <input class="birthDate" type="text" maxlength="2" placeholder="JJ" v-model="datas.birth.day">
-                        <input class="birthDate" type="text" maxlength="2" placeholder="MM" v-model="datas.birth.month">
-                        <input class="birthDate" type="text" maxlength="4" placeholder="AAAA" v-model="datas.birth.year">
+                        <input
+                            class="birthDate"
+                            type="text"
+                            maxlength="2"
+                            placeholder="JJ"
+                            v-model="datas.birth.day"
+                        >
+                        <input
+                            class="birthDate"
+                            type="text"
+                            maxlength="2"
+                            placeholder="MM"
+                            v-model="datas.birth.month"
+                        >
+                        <input
+                            class="birthDate"
+                            type="text"
+                            maxlength="4"
+                            placeholder="AAAA"
+                            v-model="datas.birth.year"
+                        >
                     </div>
                 </div>
 
@@ -58,86 +92,88 @@
                     <input type="password" placeholder="Mot de passe" v-model="datas.password">
                 </div>
                 <p class="error" v-if="error">Veuillez remplir tous les champs</p>
-                <a class="nextButton" href="" title="Créer son compte" @click.prevent="createAccount" >Créer mon compte</a>
+                <a
+                    class="nextButton"
+                    href
+                    title="Créer son compte"
+                    @click.prevent="createAccount"
+                >Créer mon compte</a>
             </form>
         </main>
-        <div class="imgContainer">
-            <img class="backgroundTree" src="../assets/bg-tree.jpg" alt>
-        </div>
     </div>
 </template>
 
 <script>
-import SIGNIN from '@/graphql/signin.graphql'
-import { APP_TOKEN_PATH } from '../../env.json'
+import SIGNIN from "@/graphql/signin.graphql";
+import { APP_TOKEN_PATH } from "../../env.json";
 
 export default {
-    name: 'subscription',
-    data () {
+    name: "subscription",
+    data() {
         return {
             error: false,
             datas: {
-                firstName: '',
-                lastName: '',
-                gender: '',
+                firstName: "",
+                lastName: "",
+                gender: "",
                 birth: {
-                    day: '',
-                    month: '',
-                    year: ''
+                    day: "",
+                    month: "",
+                    year: ""
                 },
-                mail: '',
-                password: ''
+                mail: "",
+                password: ""
             }
-        }
+        };
     },
     methods: {
-        async createAccount () {
-            const isValid = await this.checkFields()
+        async createAccount() {
+            const isValid = await this.checkFields();
 
-            if (!isValid)
-                return this.error = true
+            if (!isValid) return (this.error = true);
 
             const variables = {
                 name: `${this.datas.firstName} ${this.datas.lastName}`,
                 mail: this.datas.mail,
                 password: this.datas.password,
-                birthDate: `${this.datas.birth.month}/${this.datas.birth.day}/${this.datas.birth.year}`,
+                birthDate: `${this.datas.birth.month}/${this.datas.birth.day}/${
+                    this.datas.birth.year
+                }`,
                 gender: this.datas.gender
-            }
+            };
 
-            const { data: { signup: { token } } } = await this.$apollo.mutate({
+            const {
+                data: {
+                    signup: { token }
+                }
+            } = await this.$apollo.mutate({
                 mutation: SIGNIN,
                 variables
-            })
+            });
 
-            if (!token)
-                return this.error = true
+            if (!token) return (this.error = true);
 
-            window.localStorage.setItem(APP_TOKEN_PATH, token)
-            this.$router.push('/createProfile')
+            window.localStorage.setItem(APP_TOKEN_PATH, token);
+            this.$router.push("/createProfile");
         },
-        async checkFields () {
-            let isValid = true
+        async checkFields() {
+            let isValid = true;
 
-            const keys = Object.keys(this.datas)
+            const keys = Object.keys(this.datas);
             await keys.forEach(_key => {
-                if (typeof this.datas[_key] === 'object') {
-                    if (this.datas[_key].day === '')
-                        isValid = false
-                    else if (this.datas[_key].month === '')
-                        isValid = false
-                    else if (this.datas[_key].year === '')
-                        isValid = false
+                if (typeof this.datas[_key] === "object") {
+                    if (this.datas[_key].day === "") isValid = false;
+                    else if (this.datas[_key].month === "") isValid = false;
+                    else if (this.datas[_key].year === "") isValid = false;
+                } else if (this.datas[_key] === "") {
+                    isValid = false;
                 }
-                else if (this.datas[_key] === '') {
-                    isValid = false
-                }
-            })
+            });
 
-            return isValid
+            return isValid;
         }
     }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -147,6 +183,9 @@ export default {
 }
 
 @media screen and (max-width: 450px) {
+    .subscription {
+        overflow: hidden;
+    }
     .header {
         height: 15%;
         text-align: center;
@@ -157,14 +196,12 @@ export default {
         }
     }
 
-
     main {
         width: 90%;
         height: 75%;
         margin: auto;
         color: white;
         position: relative;
-
     }
 
     form {
@@ -268,7 +305,7 @@ export default {
         display: inline-block;
         width: 200px;
         height: 1.5em;
-        
+
         position: absolute;
         bottom: 2em;
         left: 50%;
@@ -284,8 +321,8 @@ export default {
     }
 }
 
-@media screen and(min-width: 450px){
-        .header {
+@media screen and(min-width: 450px) {
+    .header {
         height: 15%;
         text-align: center;
 
@@ -297,12 +334,12 @@ export default {
         }
     }
 
-    h3{
+    h3 {
         font-size: 1.6em;
         margin-bottom: 8%;
     }
 
-    .imgContainer{
+    .imgContainer {
         position: absolute;
         bottom: 0;
         right: 0;
@@ -440,7 +477,7 @@ export default {
         display: inline-block;
         width: 200px;
         height: 1.5em;
-        
+
         position: absolute;
         bottom: 25%;
         left: 50%;
@@ -454,9 +491,13 @@ export default {
         font-weight: 400;
         line-height: 1.5em;
         padding: 10px 15px;
+        transition: all 0.3s ease;
+        &:hover {
+            background: white;
+            color: rgb(66, 103, 181);
+        }
     }
-        
-    }
+}
 </style>
 
 

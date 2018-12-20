@@ -2,14 +2,19 @@ query {
   me {
     id
     name
+    gender
     phone
     mail
     city
+    work
+    hobbies
+    sports
     profilePicture {
         src
     }
     birth {
       date
+      place
     }
     books (order: DATE_ASC){
         title
