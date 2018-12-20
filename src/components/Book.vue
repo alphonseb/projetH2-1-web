@@ -34,9 +34,7 @@ export default {
                 page += `${splittedContent[i]} `
 
                 splittedContentCopy.splice(0, 1)
-                console.log(this.$refs.hidden.scrollHeight)
                 if (this.$refs.hidden.scrollHeight - (window.innerHeight * 2) > this.$refs.hidden.offsetHeight) {
-                    console.log('pute', this.$refs.hidden.scrollHeight)
                     this.pages.push(page)
                     page = ''
                     this.$refs.hidden.textContent = ''

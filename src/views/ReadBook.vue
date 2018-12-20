@@ -11,11 +11,11 @@
         <div class="addText">
             <div class="textHeader">
                 <div class="imgContainer">
-                    <img src="../assets/testImages/user_relative.jpg" alt="">
+                    <img :src="book.author.profilePicture.src" alt="auteur">
                 </div>
                 <div class="mainInfos">
-                    <h2>Titre du livre</h2>
-                    <div class="date">1 janviers 2019</div>
+                    <h2>{{ book.title }}</h2>
+                    <div class="date">{{ formatDate }}</div>
                 </div>
             </div>
 
@@ -24,7 +24,7 @@
             <div class="bottomBar">
                 <div class="arrowRight" @click="previousPage"></div>
                 <a href="#"><img class="addImage" src="../assets/addImage.png" alt="Ajoutez une image"></a><!-- Ajouter une image -->
-                <span>{{ currentPage + 1 }}/{{ $children[0].pages.length }}</span>
+                <span>{{ currentPage + 1 }}/{{ pagesLength }}</span>
                 <a href="#"><img class="addNote" src="../assets/addNote.png" alt="Ajoutez un post-it"></a><!-- Ajouter un commentaire -->
                 <div class="arrowLeft" @click="nextPage"></div>
             </div>
@@ -43,7 +43,8 @@ export default {
     name : 'ReadBook',
     data () {
         return {
-            currentPage: 0
+            currentPage: 0,
+            pagesLength: '00'
         }
     },
     components: {
@@ -67,6 +68,18 @@ export default {
         previousPage () {
             if (this.currentPage - 1 >= 0)
                 this.currentPage--
+        }
+    },
+    updated () {
+        if (this.$children[0])
+            this.pagesLength = this.$children[0].pages.length
+    },
+    computed: {
+        formatDate () {
+            const date = this.book.createdAt.substr(0, 10)
+            const splittedDate = date.split('-')
+            const month = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
+            return `${splittedDate[2]} ${month[splittedDate[1] - 1]} ${splittedDate[0]}`
         }
     }
 }
