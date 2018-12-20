@@ -43,7 +43,7 @@
                         </div>
                         <div
                             class="book"
-                            v-for="(book, i) in user.books.filter(book => book.author.id === user.id)"
+                            v-for="(book, i) in user.books.filter(book => ((book.author.id === user.id) && (book.to.id === user.id)))"
                             :key="i"
                             @click="readBook(book.id)"
                         >
