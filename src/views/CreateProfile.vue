@@ -146,7 +146,7 @@ import Search from '@/components/Search'
 
 export default {
     name: "createProfile",
-    data() {
+    data () {
         return {
             datas: {
                 phone: "",
@@ -172,22 +172,22 @@ export default {
         TagInput
     },
     methods: {
-        updateFamily({ id, name }, type) {
+        updateFamily ({ id, name }, type) {
             if (type !== "fratery" && type !== "children")
                 return (this.datas[type] = { type: type.toUpperCase(), id });
 
             this.datas[type].push({ type: type.toUpperCase(), id, name });
         },
-        removeElement(_user, _type) {
+        removeElement (_user, _type) {
             this.datas[_type] = this.datas[_type].filter(u => u !== _user);
         },
-        updatePicture() {
+        updatePicture () {
             if (!this.$refs.pictureFile.files[0]) return;
 
             this.reader.readAsDataURL(this.$refs.pictureFile.files[0]);
             this.datas.profilePicture = this.$refs.pictureFile.files[0];
         },
-        getVariables() {
+        getVariables () {
             return new Promise(resolve => {
                 const datas = {};
                 const validKeys = [
@@ -227,7 +227,7 @@ export default {
                 resolve(datas);
             });
         },
-        async updateMe() {
+        async updateMe () {
             const datas = await this.getVariables();
 
             console.log(datas)
@@ -260,10 +260,10 @@ export default {
                 }
             })
 
-            this.$router.push('/home')
+            this.$router.push('/home', () => { location.reload() })
         }
     },
-    mounted() {
+    mounted () {
         this.reader.addEventListener("load", _e => {
             this.$refs.profilePicture.src = _e.target.result;
         });

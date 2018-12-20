@@ -5,6 +5,7 @@
                 class="profilePic"
                 :src="datas.profilePicture.length ? datas.profilePicture.length : currentUser.profilePicture.src"
                 alt="profilePic"
+                ref="previewPicture"
             >
 
             <h2>Editez votre profil</h2>
@@ -48,26 +49,6 @@
                             :value="currentUser.name.split(' ')[1]"
                         >
                     </div>
-                    <div class="genders">
-                        <div class="checkboxContainer">
-                            <input
-                                type="radio"
-                                name="gender"
-                                id="man"
-                                :checked="currentUser.gender ==='Homme'"
-                            >
-                            <label for="man">Homme</label>
-                        </div>
-                        <div class="checkboxContainer">
-                            <input
-                                type="radio"
-                                name="gender"
-                                id="woman"
-                                :checked="currentUser.gender ==='Femme'"
-                            >
-                            <label for="woman">Femme</label>
-                        </div>
-                    </div>
                     <div class="birth">
                         <p>Date de naissance</p>
                         <div class="birthInputs">
@@ -96,13 +77,13 @@
                     </div>
 
                     <div class="informations">
-                        <input type="text" placeholder="Votre E-mail" :value="currentUser.mail">
+                        <input type="text" placeholder="Votre E-mail" v-model="datas.mail">
                     </div>
                     <div class="informations">
                         <input
                             type="text"
                             placeholder="Lieu de naissance"
-                            :value="currentUser.birth.place"
+                            v-model="datas.birth.place"
                         >
                     </div>
                     <div class="informations">
@@ -110,14 +91,14 @@
                             type="text"
                             id="home"
                             placeholder="Où habitez-vous ?"
-                            :value="currentUser.city"
+                            v-model="datas.city"
                         >
                     </div>
                     <div class="informations">
                         <input
                             type="text"
                             placeholder="Où étudiez-vous / Travaillez-vous ?"
-                            :value="currentUser.work"
+                            v-model="datas.work"
                         >
                     </div>
                     <div class="informations">
@@ -138,26 +119,61 @@
                     <div class="familyRelation">
                         <div>
                             <p>Mon père est :</p>
-                            <search familyType="father"/>
+                            <search
+                                familyType="father"
+                                @fatherUpdate="_user => updateFamily(_user, 'father')"
+                            />
                         </div>
                         <div>
                             <p>Ma mère est :</p>
-                            <search familyType="mother"/>
+                            <search
+                                familyType="mother"
+                                @motherUpdate="_user => updateFamily(_user, 'mother')"
+                            />
                         </div>
                         <div>
                             <p>Je suis le/la frère/soeur de :</p>
-                            <search familyType="fratery"/>
+                            <search
+                                familyType="fratery"
+                                @frateryUpdate="_user => updateFamily(_user, 'fratery')"
+                            />
+                            <ul>
+                                <li
+                                    v-for="(user, i) in datas.fratery"
+                                    :key="i"
+                                    @click.prevent="removeElement(user, 'fratery')"
+                                >
+                                    <a href title="supprimer">X</a>
+                                    {{ ` ${user.name}` }}
+                                </li>
+                            </ul>
                         </div>
                         <div>
                             <p>Je suis le/la conjoint(e) de :</p>
-                            <search familyType="partner"/>
+                            <search
+                                familyType="partner"
+                                @partnerUpdate="_user => updateFamily(_user, 'partner')"
+                            />
                         </div>
                         <div>
                             <p>Mes enfants sont:</p>
-                            <search familyType="children"/>
+                            <search
+                                familyType="children"
+                                @childrenUpdate="_user => updateFamily(_user, 'children')"
+                            />
+                            <ul>
+                                <li
+                                    v-for="(user, i) in datas.children"
+                                    :key="i"
+                                    @click.prevent="removeElement(user, 'children')"
+                                >
+                                    <a href title="supprimer">X</a>
+                                    {{ ` ${user.name}` }}
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <div class="bottomButton">
+                    <div class="bottomButton" @click="updateMe">
                         <span>Enregistrer</span>
                     </div>
                 </form>
@@ -168,6 +184,9 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import UPDATE_ME from '@/graphql/updateMe.graphql'
+import ADD_FAMILY_MEMBERS from '@/graphql/addFamilyMembers.graphql'
+
 import Search from '@/components/Search.vue'
 
 export default {
@@ -178,7 +197,20 @@ export default {
     data: () => {
         return {
             datas: {
-                profilePicture: ""
+                phone: "",
+                birth: {
+                    place: ""
+                },
+                profilePicture: "",
+                city: "",
+                work: "",
+                mother: {},
+                father: {},
+                fratery: [],
+                partner: {},
+                children: [],
+                hobbies: [],
+                sports: []
             },
             reader: new FileReader()
         };
@@ -190,11 +222,101 @@ export default {
     },
     methods: {
         updatePicture () {
-            if (!this.$refs.pictureFile.files[0]) return;
+            if (!this.$refs.pictureFile.files[0]) return
 
-            this.reader.readAsDataURL(this.$refs.pictureFile.files[0]);
-            this.datas.profilePicture = this.$refs.pictureFile.files[0];
+            this.reader.readAsDataURL(this.$refs.pictureFile.files[0])
+            this.datas.profilePicture = this.$refs.pictureFile.files[0]
+        },
+        updateFamily ({ id, name }, type) {
+            if (type !== "fratery" && type !== "children")
+                return (this.datas[type] = { type: type.toUpperCase(), id });
+
+            this.datas[type].push({ type: type.toUpperCase(), id, name });
+        },
+        removeElement (_user, _type) {
+            this.datas[_type] = this.datas[_type].filter(u => u !== _user);
+        },
+        getVariables () {
+            return new Promise(resolve => {
+                const datas = {};
+                const validKeys = [
+                    "phone",
+                    "city",
+                    "work",
+                    "hobbies",
+                    "sports",
+                    "birth",
+                    "profilePicture"
+                ];
+
+                const keys = Object.keys(this.datas);
+                keys.forEach(_key => {
+                    if (validKeys.includes(_key)) {
+                        if (
+                            this.datas[_key] === null ||
+                            this.datas[_key] === "" ||
+                            this.datas[_key] === null
+                        )
+                            return;
+
+                        if (
+                            Array.isArray(this.datas[_key]) &&
+                            this.datas[_key].length === 0
+                        )
+                            return;
+
+                        console.log()
+                        if (typeof this.datas[_key] === "object" && !Array.isArray(this.datas[_key]) && (!this.datas[_key].place && !this.datas[_key].lastModified))
+                            return;
+
+                        datas[_key] = this.datas[_key];
+                    }
+                });
+
+                resolve(datas);
+            });
+        },
+        async updateMe () {
+            const datas = await this.getVariables();
+
+            console.log(datas)
+
+            await this.$apollo.mutate({
+                mutation: UPDATE_ME,
+                variables: {
+                    datas
+                }
+            })
+
+            const familyMembers = [];
+
+            if (this.datas.father.id) familyMembers.push(this.datas.father);
+            if (this.datas.mother.id) familyMembers.push(this.datas.mother);
+            if (this.datas.partner.id) familyMembers.push(this.datas.partner);
+            if (this.datas.fratery.length > 0)
+                this.datas.fratery.forEach(({ id, type }) =>
+                    familyMembers.push({ id, type })
+                );
+            if (this.datas.children.length > 0)
+                this.datas.children.forEach(({ id, type }) =>
+                    familyMembers.push({ id, type })
+                )
+
+            await this.$apollo.mutate({
+                mutation: ADD_FAMILY_MEMBERS,
+                variables: {
+                    familyMembers
+                }
+            })
+
+            this.$router.push('/home', () => { location.reload() })
         }
+
+    },
+    mounted () {
+        this.reader.addEventListener('load', _e => {
+            this.$refs.previewPicture.src = _e.target.result
+        })
     }
 };
 </script>
