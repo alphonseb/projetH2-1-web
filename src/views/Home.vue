@@ -74,5 +74,8 @@ export default {
         height: 100%;
         opacity: 0.2;
     }
+    .desktop-disclaimer {
+        display: none;
+    }
 }
 </style>

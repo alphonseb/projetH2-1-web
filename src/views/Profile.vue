@@ -54,7 +54,7 @@
                     <p
                         v-if="user.id === me.id"
                         class="tellStory"
-                    >Tout les livres écrit sur vous sont ici.</p>
+                    >Tous les livres écrits sur vous sont ici.</p>
                     <p v-else class="tellStory">
                         Découvrez toutes les histoires de
                         <strong>{{user.name}}</strong> racontées par ses proches. Peut-être souhaitez-vous raconter les votres ?
