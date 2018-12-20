@@ -1,5 +1,5 @@
 <template>
-    <div class="profile">
+    <div class="profile"> 
         <div>
             <Header :profile-img-src="me.profilePicture.src"/>
             <Menu/>
@@ -39,7 +39,7 @@
                     </p>
                     <div class="shelf">
                         <div v-if="user.id === me.id" class="book0">
-                            <router-link to="/write/edit">Ajouter un livre</router-link>
+                            <a href="" title="Ecrire un livre" @click.prevent="createBook">Ajouter un livre</a>
                         </div>
                         <div
                             class="book"
@@ -63,7 +63,7 @@
                     <div class="goldenBook">
                         <div v-if="user.id !== me.id" class="book0">
                             <!-- Il nous faut une police script pour les titres de livres-->
-                            <router-link to="write/edit">Ajouter un livre</router-link>
+                            <a href="" title="Ecrire un livre" @click.prevent="createBook">Ajouter un livre</a>
                         </div>
                         <div
                             class="book"
@@ -83,14 +83,14 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions } from "vuex"
 
-import ME from "@/graphql/user.graphql";
-import USER_PROFILE from "@/graphql/userProfile.graphql";
+import ME from "@/graphql/user.graphql"
+import USER_PROFILE from "@/graphql/userProfile.graphql"
 
-import Header from "../components/Header.vue";
-import Menu from "../components/Menu.vue";
-import Book from "./ReadBook.vue";
+import Header from "../components/Header.vue"
+import Menu from "../components/Menu.vue"
+import Book from "./ReadBook.vue"
 
 export default {
     name: "profile",
@@ -102,7 +102,7 @@ export default {
     data: () => {
         return {
             menuOpened: false
-        };
+        }
     },
     apollo: {
         user: {
@@ -122,6 +122,7 @@ export default {
         })
     },
     methods: {
+        ...mapActions(['setTo']),
         age (_date) {
             const diff = Date.now() - new Date(_date);
             const ageDate = new Date(diff);
@@ -129,6 +130,10 @@ export default {
         },
         readBook (id) {
             this.$router.push(`/book/${ id }`);
+        },
+        async createBook () {
+            await this.setTo(this.user.id)
+            this.$router.push('/write/edit')
         }
     }
 };

@@ -5,7 +5,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        me: {}
+        me: {},
+        to: ''
     },
     mutations: {
         setMeDatas (_state, _datas) {
@@ -13,11 +14,17 @@ export default new Vuex.Store({
                 ..._state.me,
                 ..._datas
             }
+        },
+        setTo (_state, _id) {
+            _state.to = _id
         }
     },
     actions: {
         setMeDatas (_ctx, _datas) {
             _ctx.commit('setMeDatas', _datas)
+        },
+        setTo (_ctx, _id) {
+            _ctx.commit('setTo', _id)
         }
     }
 })

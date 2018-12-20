@@ -21,6 +21,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 import CREATE_BOOK from '@/graphql/createBook.graphql'
 import ADD_MEDIA from '@/graphql/addMedia.graphql'
 
@@ -35,6 +37,11 @@ export default {
             content: ''
         }
     },
+    computed: {
+        ...mapState({
+            to: state => state.to
+        })
+    },
     methods: {
         async publishBook () {
             if (this.title === '' || this.content === '')
@@ -43,7 +50,8 @@ export default {
                 mutation: CREATE_BOOK,
                 variables: {
                     title: this.title,
-                    content: this.content
+                    content: this.content,
+                    to: this.to
                 }
             })
             
