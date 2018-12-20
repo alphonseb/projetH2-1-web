@@ -3,10 +3,6 @@
         <div class="header">
             <img class="logo" src="../assets/logo.png" alt="shelf logo">
         </div>
-
-        <div class="imgContainer">
-            <img class="backgroundTree" src="../assets/bg-tree.jpg" alt>
-        </div>
         <main>
             <div class="inscription">
                 <div class="arrow"></div>
@@ -104,8 +100,8 @@
 </template>
 
 <script>
-import SIGNIN from "@/graphql/signin.graphql";
-import { APP_TOKEN_PATH } from "../../env.json";
+import SIGNIN from '@/graphql/signin.graphql'
+import { APP_TOKEN_PATH } from '../../env.json'
 
 export default {
     name: "subscription",
@@ -136,9 +132,7 @@ export default {
                 name: `${this.datas.firstName} ${this.datas.lastName}`,
                 mail: this.datas.mail,
                 password: this.datas.password,
-                birthDate: `${this.datas.birth.month}/${this.datas.birth.day}/${
-                    this.datas.birth.year
-                }`,
+                birthDate: `${this.datas.birth.month}/${this.datas.birth.day}/${this.datas.birth.year}`,
                 gender: this.datas.gender
             };
 

@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import Search from './Search'
+
 export default {
     name: "Header",
     props: {
@@ -20,6 +22,9 @@ export default {
         openMenu() {
             this.$parent.menuOpened = true;
         }
+    },
+    components: {
+        Search
     }
 };
 </script>

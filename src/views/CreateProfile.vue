@@ -137,13 +137,12 @@
 
 
 <script>
-import UPDATE_ME from "@/graphql/updateMe.graphql";
-import ADD_FAMILY_MEMBERS from "@/graphql/addFamilyMembers.graphql";
+import UPDATE_ME from '@/graphql/updateMe.graphql'
+import ADD_FAMILY_MEMBERS from '@/graphql/addFamilyMembers.graphql'
 
-import TagInput from "@/components/TagInput";
-import Search from "@/components/search";
-import { Promise } from "q";
-import { resolve } from "path";
+import TagInput from '@/components/TagInput'
+import Search from '@/components/Search'
+
 
 export default {
     name: "createProfile",
@@ -217,12 +216,8 @@ export default {
                         )
                             return;
 
-                        if (
-                            typeof this.datas[_key] === "object" &&
-                            !Array.isArray(this.datas[_key]) &&
-                            (!this.datas[_key].place &&
-                                !this.datas[_key].lastModified)
-                        )
+                        console.log()
+                        if (typeof this.datas[_key] === "object" && !Array.isArray(this.datas[_key]) && (!this.datas[_key].place && !this.datas[_key].lastModified))
                             return;
 
                         datas[_key] = this.datas[_key];
@@ -235,12 +230,14 @@ export default {
         async updateMe() {
             const datas = await this.getVariables();
 
+            console.log(datas)
+
             await this.$apollo.mutate({
                 mutation: UPDATE_ME,
                 variables: {
                     datas
                 }
-            });
+            })
 
             const familyMembers = [];
 
@@ -254,16 +251,16 @@ export default {
             if (this.datas.children.length > 0)
                 this.datas.children.forEach(({ id, type }) =>
                     familyMembers.push({ id, type })
-                );
+                )
 
             await this.$apollo.mutate({
                 mutation: ADD_FAMILY_MEMBERS,
                 variables: {
                     familyMembers
                 }
-            });
+            })
 
-            this.$router.push("/home");
+            this.$router.push('/home')
         }
     },
     mounted() {

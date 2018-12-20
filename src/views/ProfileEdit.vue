@@ -167,8 +167,8 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-import search from "@/components/search.vue";
+import { mapActions, mapState } from 'vuex'
+import search from '@/components/Search.vue'
 
 export default {
     name: "profileEdit",
