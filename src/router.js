@@ -86,6 +86,7 @@ const router = new Router({
                 {
                     path: 'edit',
                     component: WriteEdition,
+                    name: 'editBook',
                     meta: {
                         auth: true
                     }

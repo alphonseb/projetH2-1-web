@@ -2,7 +2,7 @@
     <div class="search">
         <input type="text" v-model="search" @focus="showSuggest">
         <ul v-if="showSuggestion">
-            <li v-for="(user, i) in searchUser" :key="i" @click="updateUser(user)">
+            <li v-for="(user, i) in searchUser" :key="i" v-if="user.id !== me.id" @click="updateUser(user)">
                 <img :src="user.profilePicture.src" alt="image de profil">
                 <span>{{ user.name }}</span>
             </li>
@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import SEARCH_USER from '@/graphql/searchUser.graphql'
 
 export default {
@@ -43,6 +44,11 @@ export default {
         showSuggest () {
             this.showSuggestion = true
         }
+    },
+    computed: {
+        ...mapState({
+            me: state => state.me
+        })
     }
 }
 </script>
