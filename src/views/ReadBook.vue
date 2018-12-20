@@ -18,17 +18,24 @@
                     <div class="date">{{ formatDate }}</div>
                 </div>
             </div>
-
-            <book :content="book.content" :currentPage="currentPage"/>
-
+            <div class="container">
+                <book :content="book.content" :currentPage="currentPage"/>
+                <transition name="slide">
+                    <comments class="comments" v-show="hasComments" :comments="book.comments"/>
+                </transition>
+                <transition name="slide">
+                    <gallery class="gallery" v-show="hasGallery"/>
+                </transition>
+            </div>
             <div class="bottomBar">
                 <div class="arrowRight" @click="previousPage"></div>
-                <a href="#"><img class="addImage" src="../assets/addImage.png" alt="Ajoutez une image"></a><!-- Ajouter une image -->
+                <a href="" title="affcher la gallerie" @click.prevent="toggleGallery"><img class="addImage" src="../assets/addImage.png" alt="Ajoutez une image"></a><!-- Ajouter une image -->
                 <span>{{ currentPage + 1 }}/{{ pagesLength }}</span>
-                <a href="#"><img class="addNote" src="../assets/addNote.png" alt="Ajoutez un post-it"></a><!-- Ajouter un commentaire -->
+                <a href=""  title="afficher les commentaires" @click.prevent="toggleComments"><img class="addNote" src="../assets/addNote.png" alt="Ajoutez un post-it"></a><!-- Ajouter un commentaire -->
                 <div class="arrowLeft" @click="nextPage"></div>
             </div>
         </div>
+        <div style="width:100%;height:1px;margin-top: 50px;"></div>
     </div>
 </template>
 
@@ -44,7 +51,9 @@ export default {
     data () {
         return {
             currentPage: 0,
-            pagesLength: '00'
+            pagesLength: '00',
+            hasComments: false,
+            hasGallery: false
         }
     },
     components: {
@@ -68,6 +77,16 @@ export default {
         previousPage () {
             if (this.currentPage - 1 >= 0)
                 this.currentPage--
+        },
+        toggleGallery () {
+            this.hasGallery = !this.hasGallery
+            if (this.hasComments)
+                this.hasComments = false
+        },
+        toggleComments () {
+            this.hasComments = !this.hasComments
+            if (this.hasGallery)
+                this.hasGallery = false
         }
     },
     updated () {
@@ -86,10 +105,28 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.slide-enter-active, .slide-leave-active {
+    transition: transform .5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.slide-enter, .slide-leave-to {
+    transform: translateY(100%);
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+ 
+    .gallery, .comments {
+       position: absolute;
+        bottom: 0;
+    }
+}
+
 .readBook {
     width: 100%;
     height: 100vh;
-    overflow: hidden;
     margin: 0;
     font-family: Roboto;
     box-sizing: border-box;
@@ -187,8 +224,9 @@ export default {
         justify-content: space-between;
         align-items: center;
         width: 90%;
-        margin-bottom: 2%;
+        height: 50px;
         position: relative;
+        background: white;
 
         &::before {
             content: '';
@@ -196,7 +234,7 @@ export default {
             width: 100%;
             height: 1px;
             position: absolute;
-            top: -5px;
+            top: 0px;
             left: 50%;
             transform: translateX(-50%);
             background: black;

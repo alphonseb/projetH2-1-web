@@ -8,8 +8,8 @@
                         </div>
                     </div>
                     <div class="pattern">
-                        <p>{{name}}</p>
-                        <span>{{date}}</span>
+                        <p>{{ name }}</p>
+                        <span>{{ formatDate }}</span>
                     </div>
                 </div>
             </div>
@@ -26,16 +26,18 @@
 export default {
     name: 'PostIt',
     props: ['name', 'profilePicture', 'content', 'date'],
+    computed: {
+        formatDate () {
+            const date = this.date.substr(0, 10)
+            const splittedDate = date.split('-')
+            const month = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
+            return `${splittedDate[2]} ${month[splittedDate[1] - 1]} ${splittedDate[0]}`
+        }
+    }
 }
 </script>
 
 <style lang="scss" scoped>
-
-.fullPostit{
-    height: 100%;
-    width: 100%;
-    margin-bottom: 10%;
-}
 
     .postit{
         display: flex;
@@ -46,6 +48,7 @@ export default {
         height: 60%;
         background-color: white;
         padding: 8px 0;
+        margin-top: 30px;
         font-family: roboto;
 
         .postitContent{

@@ -1,0 +1,12 @@
+mutation ($bookId: String! $content: String!){
+  addComment (bookId: $bookId content: $content) {
+    content
+    date
+    author {
+      name
+      profilePicture {
+        src
+      }
+    }
+  }
+}
