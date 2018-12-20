@@ -1,9 +1,10 @@
 <template>
     <div class="readBook">
         <div class="readHeader">
-            <a href="#" @click.prevent="$router.back()">
+            <a href="#" @click.prevent="$router.push({ name: 'user', params: { id: book.to.id } })">
                 <div class="arrow"></div>
-            </a> <!-- retour en arrière -->
+            </a>
+            <!-- retour en arrière -->
             <div class="imgContainer">
                 <img src="../assets/logoIcon.png" alt="Icone votre profil">
             </div>
@@ -29,9 +30,15 @@
             </div>
             <div class="bottomBar">
                 <div class="arrowRight" @click="previousPage"></div>
-                <a href="" title="affcher la gallerie" @click.prevent="toggleGallery"><img class="addImage" src="../assets/addImage.png" alt="Ajoutez une image"></a><!-- Ajouter une image -->
+                <a href title="affcher la gallerie" @click.prevent="toggleGallery">
+                    <img class="addImage" src="../assets/addImage.png" alt="Ajoutez une image">
+                </a>
+                <!-- Ajouter une image -->
                 <span>{{ currentPage + 1 }}/{{ pagesLength }}</span>
-                <a href=""  title="afficher les commentaires" @click.prevent="toggleComments"><img class="addNote" src="../assets/addNote.png" alt="Ajoutez un post-it"></a><!-- Ajouter un commentaire -->
+                <a href title="afficher les commentaires" @click.prevent="toggleComments">
+                    <img class="addNote" src="../assets/addNote.png" alt="Ajoutez un post-it">
+                </a>
+                <!-- Ajouter un commentaire -->
                 <div class="arrowLeft" @click="nextPage"></div>
             </div>
         </div>
@@ -47,7 +54,7 @@ import Comments from '@/components/Comments'
 import Gallery from '@/components/Gallery'
 
 export default {
-    name : 'ReadBook',
+    name: 'ReadBook',
     data () {
         return {
             currentPage: 0,
@@ -64,7 +71,7 @@ export default {
     apollo: {
         book: {
             query: BOOK,
-            variables () { 
+            variables () {
                 return { id: this.$route.params.id }
             }
         }
@@ -98,17 +105,19 @@ export default {
             const date = this.book.createdAt.substr(0, 10)
             const splittedDate = date.split('-')
             const month = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
-            return `${splittedDate[2]} ${month[splittedDate[1] - 1]} ${splittedDate[0]}`
+            return `${ splittedDate[2] } ${ month[splittedDate[1] - 1] } ${ splittedDate[0] }`
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.slide-enter-active, .slide-leave-active {
-    transition: transform .5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+.slide-enter-active,
+.slide-leave-active {
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
-.slide-enter, .slide-leave-to {
+.slide-enter,
+.slide-leave-to {
     transform: translateY(100%);
 }
 
@@ -117,9 +126,10 @@ export default {
     height: 100%;
     position: relative;
     overflow: hidden;
- 
-    .gallery, .comments {
-       position: absolute;
+
+    .gallery,
+    .comments {
+        position: absolute;
         bottom: 0;
     }
 }
@@ -130,7 +140,7 @@ export default {
     margin: 0;
     font-family: Roboto;
     box-sizing: border-box;
-    background: linear-gradient(180deg, #79BDD2 0%, #476FB5 100%);
+    background: linear-gradient(180deg, #79bdd2 0%, #476fb5 100%);
 
     .readHeader {
         display: flex;
@@ -175,7 +185,7 @@ export default {
             width: 85%;
             margin-top: 2%;
             position: relative;
-            
+
             &::after {
                 content: '';
                 display: block;
@@ -210,7 +220,6 @@ export default {
                     margin: 3px 0;
                 }
             }
-
         }
     }
 
@@ -265,10 +274,6 @@ export default {
         span {
             font-size: 0.8em;
         }
-
     }
-
-
-
 }
 </style>
