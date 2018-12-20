@@ -41,7 +41,11 @@
                         <div v-if="user.id === me.id" class="book0">
                             <router-link to="/book/edit">Ajouter un livre</router-link>
                         </div>
-                        <div class="book" v-for="(book, i) in user.books" :key="i">
+                        <div
+                            class="book"
+                            v-for="(book, i) in user.books.filter(book => book.author.id === user.id)"
+                            :key="i"
+                        >
                             <img src="../assets/book.png" alt="livre">
                             <h5>{{book.title}}</h5>
                         </div>
@@ -60,7 +64,11 @@
                             <!-- Il nous faut une police script pour les titres de livres-->
                             <router-link to="book/edit">Ajouter un livre</router-link>
                         </div>
-                        <div class="book" v-for="(book, i) in user.goldenBooks" :key="i">
+                        <div
+                            class="book"
+                            v-for="(book, i) in user.books.filter(book => book.to.id === user.id)"
+                            :key="i"
+                        >
                             <img src="../assets/greenBook.png" alt="livre">
                             <h5>{{book.title}}</h5>
                         </div>
