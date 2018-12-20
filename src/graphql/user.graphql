@@ -12,6 +12,7 @@ query {
       date
     }
     books (order: DATE_ASC){
+        id
         title
         medias {
           src

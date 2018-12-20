@@ -1,84 +1,114 @@
 <template>
     <div class="readBook">
         <div class="readHeader">
-            <a href="#"><div class="arrow"></div></a> <!-- retour en arrière -->
+            <a href="#" @click.prevent="$router.back()">
+                <div class="arrow"></div>
+            </a> <!-- retour en arrière -->
             <div class="imgContainer">
                 <img src="../assets/logoIcon.png" alt="Icone votre profil">
             </div>
         </div>
         <div class="addText">
             <div class="textHeader">
-            <div class="imgContainer">
-                <img src="../assets/testImages/user_relative.jpg" alt="">
+                <div class="imgContainer">
+                    <img src="../assets/testImages/user_relative.jpg" alt="">
+                </div>
+                <div class="mainInfos">
+                    <h2>Titre du livre</h2>
+                    <div class="date">1 janviers 2019</div>
+                </div>
             </div>
-            <div class="mainInfos">
-                <h2>Titre du livre</h2>
-                <div class="date">1 janviers 2019</div>
-            </div>
-            
-            </div>
-            <div class="border"></div>
-            <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora, quod rem. Fugit voluptate repellendus, totam a unde ab libero laboriosam, maiores possimus alias hic repudiandae obcaecati. Mollitia et error saepe?
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora, quod rem. Fugit voluptate repellendus, totam a unde ab libero laboriosam, maiores possimus alias hic repudiandae obcaecati. Mollitia et error saepe?
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Tempora, quod rem. Fugit voluptate repellendus, totam a unde ab libero laboriosam, maiores possimus alias hic repudiandae obcaecati. Mollitia et error saepe?
-            </p>
-            <div class="border borderBottom"></div>
+
+            <book :content="book.content" :currentPage="currentPage"/>
+
             <div class="bottomBar">
-                <div class="arrowRight"></div>
+                <div class="arrowRight" @click="previousPage"></div>
                 <a href="#"><img class="addImage" src="../assets/addImage.png" alt="Ajoutez une image"></a><!-- Ajouter une image -->
-                <span>12/16</span>
+                <span>{{ currentPage + 1 }}/{{ $children[0].pages.length }}</span>
                 <a href="#"><img class="addNote" src="../assets/addNote.png" alt="Ajoutez un post-it"></a><!-- Ajouter un commentaire -->
-                <div class="arrowLeft"></div>
+                <div class="arrowLeft" @click="nextPage"></div>
             </div>
-            
         </div>
     </div>
 </template>
 
 <script>
+import BOOK from '@/graphql/book.graphql'
+
+import Book from '@/components/Book'
+import Comments from '@/components/Comments'
+import Gallery from '@/components/Gallery'
+
 export default {
-    name : 'ReadBook'
+    name : 'ReadBook',
+    data () {
+        return {
+            currentPage: 0
+        }
+    },
+    components: {
+        Book,
+        Comments,
+        Gallery
+    },
+    apollo: {
+        book: {
+            query: BOOK,
+            variables () { 
+                return { id: this.$route.params.id }
+            }
+        }
+    },
+    methods: {
+        nextPage () {
+            if (this.currentPage <= this.$children[0].pages.length - 2)
+                this.currentPage++
+        },
+        previousPage () {
+            if (this.currentPage - 1 >= 0)
+                this.currentPage--
+        }
+    }
 }
 </script>
 
 <style lang="scss" scoped>
-.readBook{
-    width : 100%;
+.readBook {
+    width: 100%;
     height: 100vh;
     overflow: hidden;
-    margin : 0;
+    margin: 0;
     font-family: Roboto;
     box-sizing: border-box;
     background: linear-gradient(180deg, #79BDD2 0%, #476FB5 100%);
 
-    .readHeader{
+    .readHeader {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin: 20px 20px;
 
-        .arrow{
+        .arrow {
             width: 15px;
             height: 15px;
             border-top: solid white 3px;
-            border-left : solid white 3px;
+            border-left: solid white 3px;
             transform: rotate(-45deg);
         }
 
-        .imgContainer{
+        .imgContainer {
             width: 35px;
             height: 35px;
             border-radius: 50%;
             overflow: hidden;
 
-            img{
+            img {
                 width: 100%;
             }
         }
     }
 
-    .addText{
+    .addText {
         position: relative;
         margin: 0 auto;
         width: 88%;
@@ -86,95 +116,108 @@ export default {
         display: flex;
         justify-content: center;
         flex-wrap: wrap;
-        box-shadow: 0px 5px 20px rgba(0,0,0,0.3);
+        box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.3);
 
-
-        .textHeader{
+        .textHeader {
             display: flex;
-            margin-top: 2%;
             align-items: center;
             justify-content: space-between;
             width: 85%;
-            .imgContainer{
+            margin-top: 2%;
+            position: relative;
+            
+            &::after {
+                content: '';
+                display: block;
+                width: 100%;
+                height: 1px;
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                background: black;
+            }
+
+            .imgContainer {
                 width: 35px;
                 height: 35px;
                 border-radius: 50%;
                 overflow: hidden;
 
-                img{
+                img {
                     width: 100%;
                 }
             }
-            .mainInfos{
+
+            .mainInfos {
                 display: flex;
                 flex-wrap: wrap;
                 justify-content: flex-start;
                 align-items: center;
                 margin-left: 30px;
 
-                h2{
+                h2 {
                     margin: 3px 0;
                 }
             }
-            
-        }
 
-        .border{
-            width: 90%;
-            height: 1px;
-            background-color: rgba(0,0,0,0.3);
-            margin: 2% 0;
-        }
-
-        p{
-            width: 90%;
-            background-color: white;
-            border: none;
-            height: 60vh;
-            margin-bottom: 2%
         }
     }
 
-    .borderBottom{
+    .borderBottom {
         position: absolute;
         bottom: 8%;
     }
 
-    .bottomBar{
+    .bottomBar {
         display: flex;
         justify-content: space-between;
         align-items: center;
         width: 90%;
-        margin-bottom:2%;
+        margin-bottom: 2%;
+        position: relative;
 
-        .addImage, .addNote{
+        &::before {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 1px;
+            position: absolute;
+            top: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: black;
+        }
+
+        .addImage,
+        .addNote {
             position: relative;
             width: 30px;
         }
 
-        .arrowLeft{
+        .arrowLeft {
             width: 6px;
             height: 6px;
             border-top: solid black 3px;
-            border-left : solid black 3px;
+            border-left: solid black 3px;
             transform: rotate(135deg);
         }
-        
-        .arrowRight{
+
+        .arrowRight {
             width: 6px;
             height: 6px;
             border-top: solid black 3px;
-            border-left : solid black 3px;
+            border-left: solid black 3px;
             transform: rotate(-45deg);
         }
 
-        span{
+        span {
             font-size: 0.8em;
         }
 
     }
 
-    
+
 
 }
 </style>

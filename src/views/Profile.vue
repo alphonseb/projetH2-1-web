@@ -30,11 +30,13 @@
                         class="tellStory"
                     >Racontez votre histoire, un événement marquant, un voyage, ou simplement le quotidien...</p>
                     <div class="books">
-                        <div class="book" v-for="(book, i) in me.books" :key="i">
+                        <!-- <book/> -->
+                        <div class="book" v-for="(book, i) in me.books" :key="i" @click="readBook(book.id)">
                             <img src="../assets/book.png" alt="livre">
                             <span>{{book.title}}</span>
                         </div>
                     </div>
+                    <div class="space"></div>
                 </div>
             </div>
         </div>
@@ -43,13 +45,16 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import Header from '../components/Header.vue'
 import ME from '@/graphql/user.graphql'
+
+import Header from '../components/Header.vue'
+import Book from './ReadBook.vue'
 
 export default {
     name: 'profile',
     components: {
-        Header
+        Header,
+        Book
     },
     computed: {
         ...mapState({
@@ -61,11 +66,10 @@ export default {
             const diff = Date.now() - new Date(_date);
             const ageDate = new Date(diff);
             return Math.abs(ageDate.getUTCFullYear() - 1970);
+        },
+        readBook (id) {
+            this.$router.push(`/book/${id}`)
         }
-    },
-    mounted () {
-        console.log(this.$route);
-
     }
 };
 </script>
@@ -133,10 +137,6 @@ export default {
                 color: white;
                 margin-bottom: 6px;
             }
-p
-
-
-
 
 
             .tellStory {
@@ -166,6 +166,11 @@ p
                         color: white;
                     }
                 }
+            }
+
+            .space {
+                width: 100%;
+                height: 100px;
             }
         }
     }

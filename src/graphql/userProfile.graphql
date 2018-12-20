@@ -12,6 +12,7 @@ query ($user_id: String!) {
       date
     }
     books (order: DATE_ASC){
+        id
         title
         medias {
           src

@@ -7,13 +7,14 @@ import env from '@/../env.json'
 // Components
 import Landing from './views/Landing'
 import Signin from './views/Signin'
+import CreateProfile from './views/CreateProfile'
+import Home from './views/Home.vue'
 import Profile from './views/Profile'
+import ProfileEdit from './views/ProfileEdit'
 import Write from './components/WriteBook'
 import WriteEdition from './components/WriteEdition'
 import WriteGallery from './components/WriteGallery'
-import CreateProfile from './views/CreateProfile'
-import ProfileEdit from './views/ProfileEdit'
-import Home from './views/Home.vue'
+import ReadBook from './views/ReadBook'
 
 Vue.use(Router)
 
@@ -69,7 +70,14 @@ const router = new Router({
             }
         },
         {
-            path: '/book',
+            path: '/book/:id',
+            component: ReadBook,
+            meta: {
+                auth: true
+            }
+        },
+        {
+            path: '/edit',
             component: Write,
             children: [
                 {
@@ -77,7 +85,7 @@ const router = new Router({
                     component: WriteEdition
                 },
                 {
-                    path: 'galerie',
+                    path: 'gallery',
                     component: WriteGallery
                 }
             ]

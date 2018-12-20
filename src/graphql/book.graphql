@@ -1,0 +1,26 @@
+query ($id: String!) {
+  book (id: $id) {
+    title
+    content
+    comments {
+      content
+      date
+      author {
+        name
+        profilePicture {
+          src
+        }
+      }
+    }
+    medias {
+      src
+      description
+      author {
+        name
+        profilePicture {
+          src
+        }
+      }
+    }
+  }
+}
