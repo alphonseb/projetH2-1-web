@@ -246,6 +246,7 @@ export default {
     .profileHeader {
         height: 50vh;
         position: fixed;
+        width: 100%;
         .goBack {
             position: relative;
             box-sizing: border-box;
