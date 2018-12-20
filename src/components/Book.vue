@@ -42,6 +42,9 @@ export default {
                     
             }
         } while (splittedContentCopy.length !== 0)
+
+        if (this.content.length < 1000)
+            this.pages.push(this.content)
     }
 }
 </script>
