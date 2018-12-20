@@ -45,6 +45,7 @@
                             class="book"
                             v-for="(book, i) in user.books.filter(book => book.author.id === user.id)"
                             :key="i"
+                            @click="readBook(book.id)"
                         >
                             <img src="../assets/book.png" alt="livre">
                             <h5>{{book.title}}</h5>
@@ -54,7 +55,7 @@
                     <p
                         v-if="user.id === me.id"
                         class="tellStory"
-                    >Tout les livres écrit sur vous sont ici.</p>
+                    >Tous les livres écrits sur vous sont ici.</p>
                     <p v-else class="tellStory">
                         Découvrez toutes les histoires de
                         <strong>{{user.name}}</strong> racontées par ses proches. Peut-être souhaitez-vous raconter les votres ?
@@ -82,14 +83,14 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from "vuex";
 
-import ME from '@/graphql/user.graphql'
-import USER_PROFILE from '@/graphql/userProfile.graphql'
+import ME from "@/graphql/user.graphql";
+import USER_PROFILE from "@/graphql/userProfile.graphql";
 
-import Header from '../components/Header.vue'
-import Menu from '../components/Menu.vue'
-import Book from './ReadBook.vue'
+import Header from "../components/Header.vue";
+import Menu from "../components/Menu.vue";
+import Book from "./ReadBook.vue";
 
 export default {
     name: "profile",
@@ -126,8 +127,8 @@ export default {
             const ageDate = new Date(diff);
             return Math.abs(ageDate.getUTCFullYear() - 1970);
         },
-        readBook (id) {
-            this.$router.push(`/book/${id}`)
+        readBook(id) {
+            this.$router.push(`/book/${id}`);
         }
     }
 };
@@ -246,7 +247,6 @@ export default {
                     }
                 }
             }
-
             .space {
                 width: 100%;
                 height: 100px;
