@@ -67,7 +67,7 @@
                         </div>
                         <div
                             class="book"
-                            v-for="(book, i) in user.books.filter(book => book.to.id === user.id)"
+                            v-for="(book, i) in user.books.filter(book => ((book.to.id === user.id) && (book.author.id !== user.id)))"
                             :key="i"
                             @click="readBook(book.id)"
                         >
@@ -107,7 +107,7 @@ export default {
     apollo: {
         user: {
             query: USER_PROFILE,
-            variables() {
+            variables () {
                 return {
                     user_id: this.$route.params.id
                         ? this.$route.params.id
@@ -122,13 +122,13 @@ export default {
         })
     },
     methods: {
-        age(_date) {
+        age (_date) {
             const diff = Date.now() - new Date(_date);
             const ageDate = new Date(diff);
             return Math.abs(ageDate.getUTCFullYear() - 1970);
         },
-        readBook(id) {
-            this.$router.push(`/book/${id}`);
+        readBook (id) {
+            this.$router.push(`/book/${ id }`);
         }
     }
 };
@@ -189,7 +189,7 @@ export default {
                 }
             }
             h3 {
-                font-family: "Playfair Display", serif;
+                font-family: 'Playfair Display', serif;
                 color: white;
                 font-size: 1.4em;
                 margin-top: 60px;
@@ -227,7 +227,7 @@ export default {
                         box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5);
                     }
                 }
-                div[class^="book"] {
+                div[class^='book'] {
                     position: relative;
                     width: 35%;
                     height: 35%;
@@ -242,7 +242,7 @@ export default {
                         transform: translateX(-40%);
                         width: 60%;
                         color: white;
-                        font-family: "Dancing Script", cursive;
+                        font-family: 'Dancing Script', cursive;
                         font-size: 1.1em;
                     }
                 }
