@@ -5,6 +5,7 @@ query ($id: String!) {
     content
     createdAt
     author {
+      id
       profilePicture {
         src
       }
@@ -13,6 +14,7 @@ query ($id: String!) {
       content
       date
       author {
+        id
         name
         profilePicture {
           src
@@ -23,6 +25,7 @@ query ($id: String!) {
       src
       description
       author {
+        id
         name
         profilePicture {
           src

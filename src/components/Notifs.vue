@@ -8,8 +8,8 @@
                     </div>
                 </div>
                 <div class="pattern">
-                    <p>{{content}}.</p>
-                    <span>{{date}}</span>
+                    <p>{{ content }}.</p>
+                    <span>{{ date }}</span>
                 </div>
             </div>
         </div>

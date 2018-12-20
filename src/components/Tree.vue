@@ -134,7 +134,6 @@ export default {
             if (this.$refs.children && this.$refs.siblings) {
                 const childrenBoundingRect = this.$refs.children.getBoundingClientRect();
                 const siblingsBoundingRect = this.$refs.siblings.getBoundingClientRect();
-                console.log(siblingsBoundingRect.left);
                 if (
                     childrenBoundingRect.left < 0 &&
                     siblingsBoundingRect.left < 0
@@ -148,7 +147,6 @@ export default {
                 } else if (siblingsBoundingRect.left < 0) {
                     this.translateValueX = -siblingsBoundingRect.left;
                 }
-                console.log(this.translateValueX, "test");
                 if (this.translateValueX !== 0) {
                     this.$refs.tree.style.transform = `translateX(${
                         this.translateValueX
@@ -189,7 +187,6 @@ export default {
             this.$refs.tree.style.transform = "translateX(0)";
         },
         updateParent() {
-            // console.log(this.translateValueX);
             this.$refs.tree.style.transform = `translateX(${
                 this.translateValueX
             }px) translateY(175px)`;
@@ -246,7 +243,6 @@ export default {
             this.isUpdated = true;
             this.moveTree();
             this.focusUser();
-            console.log(this.nextUserId);
         }
     }
 };

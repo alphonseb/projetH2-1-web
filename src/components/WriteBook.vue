@@ -57,6 +57,8 @@ export default {
                     }
                 })
             })
+
+            this.$router.push('/me')
         }
     }
 }
