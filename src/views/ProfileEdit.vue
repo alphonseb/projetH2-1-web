@@ -34,7 +34,7 @@
                             maxlength="28"
                             size="10"
                             placeholder="Prénom"
-                            :value="currentUser.name"
+                            :value="currentUser.name.split(' ')[0]"
                         >
                         <input
                             type="text"
@@ -45,7 +45,7 @@
                             maxlength="28"
                             size="10"
                             placeholder="Nom"
-                            :value="currentUser.name"
+                            :value="currentUser.name.split(' ')[1]"
                         >
                     </div>
                     <div class="genders">

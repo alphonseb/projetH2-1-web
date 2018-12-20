@@ -6,15 +6,15 @@
     >
         <img :src="member.profilePicture.src" alt="Photo de profil">
         <h4>
-            <span class="first-name">{{member.name}}</span>
+            <span class="first-name">{{member.name.split(' ')[0]}}</span>
             <br>
-            <span class="last-name">{{member.name}}</span>
+            <span class="last-name">{{member.name.split(' ')[1]}}</span>
         </h4>
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
     name: "FamilyMember",
@@ -27,11 +27,10 @@ export default {
         })
     },
     methods: {
-        getId () {
+        getId() {
             window.setTimeout(() => {
                 this.$parent.$parent.user_id = this.member.id;
-
-            }, 700)
+            }, 700);
         }
     }
 };
@@ -53,7 +52,7 @@ export default {
     }
     &.has-notifications {
         &::after {
-            content: '';
+            content: "";
             position: absolute;
             top: 0px;
             left: 75px;
