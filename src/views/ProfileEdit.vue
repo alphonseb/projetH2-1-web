@@ -168,12 +168,12 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import search from '@/components/Search.vue'
+import Search from '@/components/Search.vue'
 
 export default {
     name: "profileEdit",
     components: {
-        search
+        Search
     },
     data: () => {
         return {
@@ -189,7 +189,7 @@ export default {
         })
     },
     methods: {
-        updatePicture() {
+        updatePicture () {
             if (!this.$refs.pictureFile.files[0]) return;
 
             this.reader.readAsDataURL(this.$refs.pictureFile.files[0]);

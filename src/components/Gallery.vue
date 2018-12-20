@@ -1,33 +1,33 @@
 <template>
     <div class="PostitPage">
-            <h2 class="pageTitle">Galerie</h2>
-            <div class="container">
-                <post-picture 
-                    v-for="(media, i) in medias" 
-                    :key="i"  
-                    :name="media.author.name" 
-                    :profilePicture="media.author.profilePicture.src" 
-                    :imageSrc="media.src" 
-                    :description="media.description"
-                    :date="media.date"
-                />
-            </div>
-            <div class="toggleAddPicture" @click="toggleUpload">
-                <span>+</span> <br>
-                Partagez une image souvenir
-            </div>
-            <transition name="slide">
-                <div class="addPicture" v-show="showUpload">
-                    <a href="" title="retour arrière" class="back" @click.prevent="toggleUpload"><</a>
-                    <div class="preview">
-                        <img src="../assets/fb-logo.png" alt="image à ajouter" ref="preview">
-                    </div>
-                    <label for="file">Ajouter un fichier</label>
-                    <input type="file" ref="image" @change="updatePreview" class="imageInput" id="file">
-                    <textarea ref="description" placeholder="Description"></textarea>
-                    <input type="submit" @click.prevent="addImage" class="validate">
+        <h2 class="pageTitle">Galerie</h2>
+        <div class="container">
+            <post-picture
+                v-for="(media, i) in medias"
+                :key="i"
+                :name="media.author.name"
+                :profilePicture="media.author.profilePicture.src"
+                :imageSrc="media.src"
+                :description="media.description"
+                :date="media.date"
+            />
+        </div>
+        <div class="toggleAddPicture" @click="toggleUpload">
+            <span>+</span>
+            <br>Partagez une image souvenir
+        </div>
+        <transition name="slide">
+            <div class="addPicture" v-show="showUpload">
+                <a href title="retour arrière" class="back" @click.prevent="toggleUpload"><</a>
+                <div class="preview">
+                    <img src="../assets/fb-logo.png" alt="image à ajouter" ref="preview">
                 </div>
-         </transition>
+                <label for="file">Ajouter un fichier</label>
+                <input type="file" ref="image" @change="updatePreview" class="imageInput" id="file">
+                <textarea ref="description" placeholder="Description"></textarea>
+                <input type="submit" @click.prevent="addImage" class="validate">
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -56,13 +56,14 @@ export default {
                 file: this.$refs.image.files[0],
                 description: this.$refs.description.value
             }
-            
-            const { data: {  addMedia } } = await this.$apollo.mutate({
+
+            const { data: { addMedia } } = await this.$apollo.mutate({
                 mutation: ADD_MEDIA,
                 variables
             })
 
             this.$parent.book.medias.push(addMedia)
+            this.toggleUpload()
         },
         updatePreview () {
             this.previewReader.readAsDataURL(this.$refs.image.files[0])
@@ -96,7 +97,7 @@ export default {
 <style lang="scss" scoped>
 .slide-enter-active,
 .slide-leave-active {
-    transition: transform .5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .slide-enter,
@@ -179,7 +180,7 @@ export default {
             border-radius: 100px;
             margin-top: 20px;
             background: white;
-            font-size: .8rem;
+            font-size: 0.8rem;
         }
 
         .imageInput {
