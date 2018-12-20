@@ -77,7 +77,7 @@ const router = new Router({
             }
         },
         {
-            path: '/edit',
+            path: '/write',
             component: Write,
             children: [
                 {

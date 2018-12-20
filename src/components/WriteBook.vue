@@ -7,10 +7,10 @@
             <router-view/>
         </main>
         <footer>
-            <router-link to="galerie" v-if="$route.path === '/book/edit'">
+            <router-link to="gallery" v-if="$route.path === '/write/edit'">
                 <img src="@/assets/addPicture-logo.png" alt="Ajouter une image">
             </router-link>
-            <router-link to="edit" v-if="$route.path === '/book/galerie'">
+            <router-link to="edit" v-if="$route.path === '/write/gallery'">
                 <img src="@/assets/pen-icon.png" alt="Ajouter une image" >
             </router-link>
             <a href="" title="publish" @click.prevent="publishBook">

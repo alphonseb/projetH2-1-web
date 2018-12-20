@@ -2,38 +2,76 @@
     <div class="profile">
         <div>
             <Header :profile-img-src="me.profilePicture.src"/>
-            <img class="mainProfilePic" :src="me.profilePicture.src" alt="profilePicMain">
+            <Menu/>
+            <img class="mainProfilePic" :src="user.profilePicture.src" alt="profilePicMain">
             <div class="profileContent">
                 <div class="container">
                     <h2>
-                        <span class="firstName">{{ me.name.split(' ')[0] }}</span>
-                        {{ me.name.split(' ')[1] }},
+                        <span class="firstName">{{ user.name.split(' ')[0] }}</span>
+                        {{ user.name.split(' ')[1] }},
                         <span
                             class="age"
-                        >{{ age(me.birth.date) }}ans</span>
+                        >{{ age(user.birth.date) }}ans</span>
                     </h2>
                     <div class="loc">
                         <img src="../assets/locIcon.png" alt="localisation">
-                        <p>{{ me.city }}</p>
+                        <p>{{ user.city }}</p>
                     </div>
-                    <div class="phone" v-if="me.phone !== null">
+                    <div class="phone" v-if="user.phone !== null">
                         <img src="../assets/phoneIcon.png" alt="phone number">
-                        <p>{{ me.phone }}</p>
+                        <p>{{ user.phone }}</p>
                     </div>
                     <div class="mail">
                         <img src="../assets/mailIcon.png" alt="localisation">
-                        <p>{{ me.mail }}</p>
+                        <p>{{ user.mail }}</p>
                     </div>
-                    <h3>Ma bibiothèque</h3>
-                    <h4>Mes livres</h4>
+                    <h3 v-if="user.id === me.id">Ma bibiothèque</h3>
+                    <h3 v-else>Sa bibliothèque</h3>
+                    <h4 v-if="user.id === me.id">Mes livres</h4>
+                    <h4 v-else>Ses livres</h4>
                     <p
+                        v-if="user.id === me.id"
                         class="tellStory"
                     >Racontez votre histoire, un événement marquant, un voyage, ou simplement le quotidien...</p>
-                    <div class="books">
-                        <!-- <book/> -->
-                        <div class="book" v-for="(book, i) in me.books" :key="i" @click="readBook(book.id)">
+                    <p v-else class="tellStory">
+                        Lisez et découvrez l'histoire de
+                        <strong>{{user.name}}</strong>, les événements marquants de sa vie, les voyages, ou simplement son quotidien...
+                    </p>
+                    <div class="shelf">
+                        <div v-if="user.id === me.id" class="book0">
+                            <router-link to="/write/edit">Ajouter un livre</router-link>
+                        </div>
+                        <div
+                            class="book"
+                            v-for="(book, i) in user.books.filter(book => book.author.id === user.id)"
+                            :key="i"
+                        >
                             <img src="../assets/book.png" alt="livre">
-                            <span>{{book.title}}</span>
+                            <h5>{{book.title}}</h5>
+                        </div>
+                    </div>
+                    <h4>Livres d'or</h4>
+                    <p
+                        v-if="user.id === me.id"
+                        class="tellStory"
+                    >Tout les livres écrit sur vous sont ici.</p>
+                    <p v-else class="tellStory">
+                        Découvrez toutes les histoires de
+                        <strong>{{user.name}}</strong> racontées par ses proches. Peut-être souhaitez-vous raconter les votres ?
+                    </p>
+                    <div class="goldenBook">
+                        <div v-if="user.id !== me.id" class="book0">
+                            <!-- Il nous faut une police script pour les titres de livres-->
+                            <router-link to="write/edit">Ajouter un livre</router-link>
+                        </div>
+                        <div
+                            class="book"
+                            v-for="(book, i) in user.books.filter(book => book.to.id === user.id)"
+                            :key="i"
+                            @click="readBook(book.id)"
+                        >
+                            <img src="../assets/greenBook.png" alt="livre">
+                            <h5>{{book.title}}</h5>
                         </div>
                     </div>
                     <div class="space"></div>
@@ -45,16 +83,37 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+
 import ME from '@/graphql/user.graphql'
+import USER_PROFILE from '@/graphql/userProfile.graphql'
 
 import Header from '../components/Header.vue'
+import Menu from '../components/Menu.vue'
 import Book from './ReadBook.vue'
 
 export default {
-    name: 'profile',
+    name: "profile",
     components: {
         Header,
-        Book
+        Book,
+        Menu
+    },
+    data: () => {
+        return {
+            menuOpened: false
+        };
+    },
+    apollo: {
+        user: {
+            query: USER_PROFILE,
+            variables() {
+                return {
+                    user_id: this.$route.params.id
+                        ? this.$route.params.id
+                        : this.me.id
+                };
+            }
+        }
     },
     computed: {
         ...mapState({
@@ -62,7 +121,7 @@ export default {
         })
     },
     methods: {
-        age (_date) {
+        age(_date) {
             const diff = Date.now() - new Date(_date);
             const ageDate = new Date(diff);
             return Math.abs(ageDate.getUTCFullYear() - 1970);
@@ -97,9 +156,10 @@ export default {
         );
         width: 100%;
         position: absolute;
-        top: 100px;
+        top: 150px;
         .container {
             margin: 0 5%;
+            margin-bottom: 50px;
             h2 {
                 margin-top: 170px;
                 color: white;
@@ -128,7 +188,7 @@ export default {
                 }
             }
             h3 {
-                font-family: 'Playfair Display', serif;
+                font-family: "Playfair Display", serif;
                 color: white;
                 font-size: 1.4em;
                 margin-top: 60px;
@@ -137,33 +197,52 @@ export default {
                 color: white;
                 margin-bottom: 6px;
             }
-
-
             .tellStory {
-                font-size: 0.6em;
+                font-size: 0.8em;
                 margin-top: 0;
                 color: white;
             }
-            .books {
-                height: 150px;
-                width: 100%;
+            .shelf,
+            .goldenBook {
                 display: flex;
-                .book {
+                justify-content: space-around;
+                flex-wrap: wrap;
+                .book0 {
+                    // background-color: white;
+                    height: 140px !important;
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    position: relative;
-                    height: 100%;
-                    img {
-                        height: 100%;
-                        width: auto;
-                    }
-                    span {
-                        position: absolute;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
+                    opacity: 1;
+                    border: white dashed 2px;
+                    border-radius: 3px;
+                    a {
                         color: white;
+                        text-decoration: none;
+                        font-size: 0.75em;
+                        border: solid 1px white;
+                        border-radius: 10px;
+                        padding: 7px;
+                        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5);
+                    }
+                }
+                div[class^="book"] {
+                    position: relative;
+                    width: 35%;
+                    height: 35%;
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                    h5 {
+                        position: absolute;
+                        top: 0%;
+                        left: 50%;
+                        transform: translateX(-40%);
+                        width: 60%;
+                        color: white;
+                        font-family: "Dancing Script", cursive;
+                        font-size: 1.1em;
                     }
                 }
             }
