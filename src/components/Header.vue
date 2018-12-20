@@ -1,6 +1,6 @@
 <template>
     <div class="profileHeader">
-        <div class="profilePic" @click="disconnect">
+        <div class="profilePic" @click="openMenu">
             <img class="profilePic" :src="profileImgSrc" alt="profile pic">
         </div>
         <div class="searchBar">
@@ -17,9 +17,8 @@ export default {
         profileImgSrc: String
     },
     methods: {
-        disconnect() {
-            window.localStorage.setItem("@Shelf/token", null);
-            location.reload();
+        openMenu() {
+            this.$parent.menuOpened = true;
         }
     }
 };

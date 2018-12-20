@@ -2,6 +2,7 @@
     <div class="home">
         <img src="../assets/bg-tree.jpg" alt="Image de fond" class="bg-tree">
         <Header :profileImgSrc="currentUser.profilePicture.src"/>
+        <Menu/>
         <Tree :user="user"/>
     </div>
 </template>
@@ -12,15 +13,18 @@ import ME from "@/graphql/user.graphql";
 import USER_FAMILY from "@/graphql/userFamily.graphql";
 import Tree from "../components/Tree.vue";
 import Header from "@/components/Header.vue";
+import Menu from "@/components/Menu.vue";
 
 export default {
     name: "Home",
     components: {
         Tree,
-        Header
+        Header,
+        Menu
     },
     data: () => ({
-        user_id: null
+        user_id: null,
+        menuOpened: false
     }),
     computed: {
         ...mapState({
