@@ -1,5 +1,11 @@
 mutation ($bookId: String! $file: Upload! $description: String!){
   addMedia (bookId: $bookId file: $file description: $description) {
     src
+    author {
+      name
+      profilePicture {
+        src
+      }
+    }
   }
 }

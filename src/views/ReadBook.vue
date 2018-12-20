@@ -24,7 +24,7 @@
                     <comments class="comments" v-show="hasComments" :comments="book.comments"/>
                 </transition>
                 <transition name="slide">
-                    <gallery class="gallery" v-show="hasGallery"/>
+                    <gallery class="gallery" v-show="hasGallery" :medias="book.medias"/>
                 </transition>
             </div>
             <div class="bottomBar">

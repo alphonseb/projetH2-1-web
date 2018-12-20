@@ -1,185 +1,201 @@
 <template>
     <div class="PostitPage">
-        <div class="postitMenu">
-            <a href="#"><div class="arrow"></div></a> <!-- retour en arrière -->
-            <div class="imgContainer">
-                <img src="../assets/logoIcon.png" alt="Icone votre profil">
+            <h2 class="pageTitle">Galerie</h2>
+            <div class="container">
+                <post-picture 
+                    v-for="(media, i) in medias" 
+                    :key="i"  
+                    :name="media.author.name" 
+                    :profilePicture="media.author.profilePicture.src" 
+                    :imageSrc="media.src" 
+                    :description="media.description"
+                    :date="media.date"
+                />
             </div>
-        </div>
-        <div class="postPictureList">
-            <div class="textHeader">
-            <div class="imgContainer">
-                <img src="../assets/testImages/user_relative.jpg" alt="">
+            <div class="toggleAddPicture" @click="toggleUpload">
+                <span>+</span> <br>
+                Partagez une image souvenir
             </div>
-            <div class="mainInfos">
-                <h2>Titre du livre</h2>
-                <div class="date">1 janviers 2019</div>
-            </div>
-            
-            </div>
-            <div class="border"></div>
-            <h2 class="pageTitle">Images</h2>
-            <postPicture name="" profilePicture="" imageSrc="" content="" date=""/>
-            <postPicture name="" profilePicture="" imageSrc="" content="" date=""/>
-            <postPicture name="" profilePicture="" imageSrc="" content="" date=""/>
-            <div class="bottomBar">
-                <div class="arrowRight"></div>
-                <a href="#"><img class="addImage" src="../assets/addImage.png" alt="Ajoutez une image"></a><!-- Ajouter une image -->
-                <span>16/16</span>
-                <a href="#"><img class="addNote" src="../assets/addNote.png" alt="Ajoutez un post-it"></a><!-- Ajouter un commentaire -->
-                <div class="arrowLeft"></div>
-            </div>
-            
-        </div>
+            <transition name="slide">
+                <div class="addPicture" v-show="showUpload">
+                    <a href="" title="retour arrière" class="back" @click.prevent="toggleUpload"><</a>
+                    <div class="preview">
+                        <img src="../assets/fb-logo.png" alt="image à ajouter" ref="preview">
+                    </div>
+                    <label for="file">Ajouter un fichier</label>
+                    <input type="file" ref="image" @change="updatePreview" class="imageInput" id="file">
+                    <textarea ref="description" placeholder="Description"></textarea>
+                    <input type="submit" @click.prevent="addImage" class="validate">
+                </div>
+         </transition>
     </div>
 </template>
 
 <script>
+import ADD_MEDIA from '@/graphql/addMedia.graphql'
+
 import PostPicture from '@/components/PostPicture'
+
 export default {
-    name: 'AllPostit',
+    name: 'Gallery',
+    props: ['medias'],
+    data () {
+        return {
+            showUpload: false,
+            previewReader: new FileReader(),
+            addReader: new FileReader()
+        }
+    },
+    methods: {
+        async addImage () {
+            if (!this.$refs.image.files[0])
+                return
+
+            const variables = {
+                bookId: this.$parent.book.id,
+                file: this.$refs.image.files[0],
+                description: this.$refs.description.value
+            }
+            
+            const { data: {  addMedia } } = await this.$apollo.mutate({
+                mutation: ADD_MEDIA,
+                variables
+            })
+
+            this.$parent.book.medias.push(addMedia)
+        },
+        updatePreview () {
+            this.previewReader.readAsDataURL(this.$refs.image.files[0])
+        },
+        toggleUpload () {
+            this.showUpload = !this.showUpload
+        }
+    },
     components: {
         PostPicture
+    },
+    mounted () {
+        this.previewReader.addEventListener('load', _e => {
+            this.$refs.preview.src = _e.target.result
+        })
+
+        this.addReader.addEventListener('load', _e => {
+            this.$parent.imagesSources.push({
+                src: _e.target.result,
+                description: this.$refs.description.value
+            })
+
+            this.$refs.description.value = ''
+            this.$refs.image.value = ''
+            this.showUpload = false
+        })
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.PostitPage{
-    width : 100%;
-    min-height: 100vh;
+.slide-enter-active,
+.slide-leave-active {
+    transition: transform .5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.slide-enter,
+.slide-leave-to {
+    transform: translateY(100%);
+}
+
+.PostitPage {
+    width: 100%;
+    height: 100%;
     padding: 4% 0 28% 0;
-    margin : 0;
+    margin: 0;
     font-family: Roboto;
     box-sizing: border-box;
-    background: linear-gradient(180deg, #79BDD2 0%, #476FB5 100%);
+    background: white;
 
-    h2.pageTitle{
+    h2.pageTitle {
         font-family: roboto;
         font-size: 1em;
+        margin-left: 4%;
     }
 
-    .postitMenu{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: 20px 20px;
-
-        .arrow{
-            width: 15px;
-            height: 15px;
-            border-top: solid white 3px;
-            border-left : solid white 3px;
-            transform: rotate(-45deg);
-        }
-
-        .imgContainer{
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            overflow: hidden;
-
-            img{
-                width: 100%;
-            }
-        }
+    .container {
+        width: 100%;
+        height: 100%;
+        overflow-y: scroll;
+        overflow-x: hidden;
     }
 
-    .postPictureList{
-        position: relative;
-        margin: 0 auto;
-        width: 88%;
+    .toggleAddPicture {
+        width: 100%;
+        height: 50px;
         background: white;
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        box-shadow: 0px 5px 20px rgba(0,0,0,0.3);
-
-
-        .textHeader{
-            display: flex;
-            margin-top: 2%;
-            align-items: center;
-            justify-content: space-between;
-            width: 85%;
-            .imgContainer{
-                width: 35px;
-                height: 35px;
-                border-radius: 50%;
-                overflow: hidden;
-
-                img{
-                    width: 100%;
-                }
-            }
-            .mainInfos{
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: flex-start;
-                align-items: center;
-                margin-left: 30px;
-
-                h2{
-                    margin: 3px 0;
-                }
-            }
-            
-        }
-
-        .border{
-            width: 90%;
-            height: 1px;
-            background-color: rgba(0,0,0,0.3);
-            margin: 2% 0;
-        }
-
-        p{
-            width: 90%;
-            background-color: white;
-            border: none;
-            height: 60vh;
-            margin-bottom: 2%
-        }
-    }
-
-    .bottomBar{
-        position: fixed;
+        position: absolute;
         bottom: 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 90%;
-        background-color: rgba(255, 255, 255, 0.8);
-        padding: 20px;
+        left: 0;
+        font-size: 12px;
+        text-align: center;
 
-        .addImage, .addNote{
-            position: relative;
-            width: 30px;
+        span {
+            font-size: 20px;
         }
-
-        .arrowLeft{
-            width: 6px;
-            height: 6px;
-            border-top: solid black 3px;
-            border-left : solid black 3px;
-            transform: rotate(135deg);
-        }
-        
-        .arrowRight{
-            width: 6px;
-            height: 6px;
-            border-top: solid black 3px;
-            border-left : solid black 3px;
-            transform: rotate(-45deg);
-        }
-
-        span{
-            font-size: 0.8em;
-        }
-
     }
 
-    
+    .addPicture {
+        position: absolute;
+        bottom: 0px;
+        left: 0;
+        width: 100%;
+        height: 105%;
+        text-align: center;
+        border-top: 1px solid black;
+        background: white;
+        z-index: 2;
+        overflow: scroll;
 
+        .back {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 2rem;
+            color: black;
+        }
+
+        .preview {
+            height: 200px;
+            width: 100%;
+
+            img {
+                height: 200px;
+                width: auto;
+            }
+        }
+
+        label,
+        .validate {
+            display: inline-block;
+            padding: 8px;
+            border: 1px solid black;
+            border-radius: 100px;
+            margin-top: 20px;
+            background: white;
+            font-size: .8rem;
+        }
+
+        .imageInput {
+            display: none;
+        }
+
+        textarea {
+            display: block;
+            width: calc(100% - 30px);
+            padding: 5px;
+            height: 60px;
+            margin: auto;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            border: 1px solid black;
+        }
+    }
 }
 </style>

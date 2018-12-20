@@ -8,17 +8,17 @@
                         </div>
                     </div>
                     <div class="pattern">
-                        <p>{{name}}</p>
-                        <span>{{date}}</span>
+                        <p>{{ name }}</p>
+                        <span>{{ formatDate }}</span>
                     </div>
                 </div>
             </div>
             <div class="postitTxt">
                 <div class="imgContainer">
-                    <img :src="imageSrc" alt="oui">
+                    <img :src="imageSrc" alt="image">
                 </div>
                 <p>
-                    {{content}}
+                    {{ description }}
                 </p>
             </div>
         </div>
@@ -28,7 +28,15 @@
 <script>
 export default {
     name: 'PostPicture',
-    props: ['name', 'profilePicture', 'imageSrc', 'content', 'date'],
+    props: ['name', 'profilePicture', 'imageSrc', 'description', 'date'],
+    computed: {
+        formatDate () {
+            const date = this.date ? this.date.substr(0, 10) : '2018-12-20'
+            const splittedDate = date.split('-')
+            const month = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Aout', 'Septembre', 'Octobre', 'Novembre', 'Décembre']
+            return `${splittedDate[2]} ${month[splittedDate[1] - 1]} ${splittedDate[0]}`
+        }
+    }
 }
 </script>
 
