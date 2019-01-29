@@ -17,6 +17,7 @@
                 <img src="@/assets/publish-icon.png" alt="Publier le livre">
             </a>
         </footer>
+        <div style="height: 1px; width: 100%; margin-top: 50px;"></div>
     </div>
 </template>
 

@@ -1,3 +1,5 @@
+/dist
+dist.zip
 env.json
 .DS_Store
 node_modules

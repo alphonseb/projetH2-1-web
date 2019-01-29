@@ -79,24 +79,15 @@ const router = new Router({
         {
             path: '/write',
             component: Write,
-            meta: {
-                auth: true
-            },
             children: [
                 {
                     path: 'edit',
                     component: WriteEdition,
                     name: 'editBook',
-                    meta: {
-                        auth: true
-                    }
                 },
                 {
                     path: 'gallery',
-                    component: WriteGallery,
-                    meta: {
-                        auth: true
-                    }
+                    component: WriteGallery
                 }
             ]
         }
