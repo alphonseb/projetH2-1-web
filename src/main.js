@@ -26,11 +26,13 @@ const link = ApolloLink.from([
     createUploadLink({
         uri: process.env.API_URL,
         headers: {
-            authorization: window.localStorage.getItem(env.APP_TOKEN_PATH)
+            authorization: window.localStorage.getItem(
+                process.env.APP_TOKEN_PATH
+            )
         },
         async fetch (input, init) {
             init.headers.authorization = await window.localStorage.getItem(
-                env.APP_TOKEN_PATH
+                process.env.APP_TOKEN_PATH
             )
             const res = await fetch(input, init)
             return res
