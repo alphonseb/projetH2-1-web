@@ -2,7 +2,12 @@
     <div class="search">
         <input type="text" v-model="search" @focus="showSuggest">
         <ul v-if="showSuggestion">
-            <li v-for="(user, i) in searchUser" :key="i" v-if="user.id !== me.id" @click="updateUser(user)">
+            <li
+                v-for="(user, i) in searchUser"
+                :key="i"
+                v-if="user.id !== me.id"
+                @click="updateUser(user)"
+            >
                 <img :src="user.profilePicture.src" alt="image de profil">
                 <span>{{ user.name }}</span>
             </li>
@@ -17,7 +22,7 @@ import SEARCH_USER from '@/graphql/searchUser.graphql'
 
 export default {
     props: ['familyType'],
-    data() {
+    data () {
         return {
             search: '',
             showSuggestion: false
@@ -39,7 +44,7 @@ export default {
                 this.search = _user.name
 
             this.showSuggestion = false
-            this.$emit(`${this.familyType}Update`, _user)
+            this.$emit(`${ this.familyType }Update`, _user)
         },
         showSuggest () {
             this.showSuggestion = true
