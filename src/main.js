@@ -12,8 +12,6 @@ import { onError } from 'apollo-link-error'
 import { ApolloLink } from 'apollo-link'
 import { createUploadLink } from 'apollo-upload-client'
 
-console.log(process.env)
-
 const link = ApolloLink.from([
     onError(({ graphQLErrors, networkError }) => {
         if (graphQLErrors)
@@ -26,15 +24,15 @@ const link = ApolloLink.from([
         if (networkError) console.log(`[Network error]: ${networkError}`)
     }),
     createUploadLink({
-        uri: process.env.API_URL,
+        uri: process.env.VUE_APP_API_URL,
         headers: {
             authorization: window.localStorage.getItem(
-                process.env.APP_TOKEN_PATH
+                process.env.VUE_APP_APP_TOKEN_PATH
             )
         },
         async fetch (input, init) {
             init.headers.authorization = await window.localStorage.getItem(
-                process.env.APP_TOKEN_PATH
+                process.env.VUE_APP_APP_TOKEN_PATH
             )
             const res = await fetch(input, init)
             return res

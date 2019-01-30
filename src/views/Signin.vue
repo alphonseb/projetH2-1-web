@@ -147,7 +147,7 @@ export default {
 
             if (!token) return (this.error = true);
 
-            window.localStorage.setItem(process.env.APP_TOKEN_PATH, token);
+            window.localStorage.setItem(process.env.VUE_APP_APP_TOKEN_PATH, token);
             this.$router.push("/createProfile");
         },
         async checkFields () {

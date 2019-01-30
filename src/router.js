@@ -20,7 +20,7 @@ Vue.use(Router)
 
 const router = new Router({
     mode: 'history',
-    base: process.env.BASE_URL,
+    base: process.env.VUE_APP_BASE_URL,
     routes: [
         {
             path: '/',
@@ -97,14 +97,16 @@ const router = new Router({
 router.beforeEach(async (_to, _from, _next) => {
     if (!_to.meta.auth) return _next()
 
-    const token = window.localStorage.getItem(process.env.APP_TOKEN_PATH)
+    const token = window.localStorage.getItem(
+        process.env.VUE_APP_APP_TOKEN_PATH
+    )
     if (token === 'undefined' || token === 'null' || token === null)
         return _next('/')
 
-    const isVerify = await jwt.verify(token, process.env.APP_SECRET)
+    const isVerify = await jwt.verify(token, process.env.VUE_APP_APP_SECRET)
 
     if (!isVerify) {
-        window.localStorage.setItem(process.env.APP_TOKEN_PATH, null)
+        window.localStorage.setItem(process.env.VUE_APP_APP_TOKEN_PATH, null)
         return _next('/')
     }
 

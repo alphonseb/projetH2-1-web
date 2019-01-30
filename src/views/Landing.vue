@@ -79,7 +79,7 @@ export default {
                     }
 
                     await window.localStorage.setItem(
-                        process.env.APP_TOKEN_PATH,
+                        process.env.VUE_APP_APP_TOKEN_PATH,
                         data.login.token
                     );
                     this.$router.push("/home", () => {
@@ -97,10 +97,10 @@ export default {
             console.log("height : ", height);
         });
 
-        const token = window.localStorage.getItem(process.env.APP_TOKEN_PATH);
+        const token = window.localStorage.getItem(process.env.VUE_APP_APP_TOKEN_PATH);
 
         if (token === "undefined" || token === "null" || token === null) return;
-        const isVerify = await jwt.verify(token, process.env.APP_SECRET);
+        const isVerify = await jwt.verify(token, process.env.VUE_APP_APP_SECRET);
         if (!isVerify) return;
 
         this.$router.push("/home");
