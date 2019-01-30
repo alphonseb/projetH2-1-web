@@ -12,6 +12,8 @@ import { onError } from 'apollo-link-error'
 import { ApolloLink } from 'apollo-link'
 import { createUploadLink } from 'apollo-upload-client'
 
+console.log(process.env)
+
 const link = ApolloLink.from([
     onError(({ graphQLErrors, networkError }) => {
         if (graphQLErrors)
