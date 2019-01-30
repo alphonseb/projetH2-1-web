@@ -17,7 +17,7 @@
                     <div class="addPhotoContainer">
                         <div class="addPhoto">
                             <img
-                                :src="defaultImgUrl"
+                                src="https://shelf-hetic.herokuapp.com/static/default.png"
                                 alt="image de profil"
                                 ref="profilePicture"
                             >
@@ -149,7 +149,6 @@ export default {
     data () {
         return {
             datas: {
-                defaultImgUrl: process.env.VUE_APP_DEFAULT_PIC_URL,
                 phone: "",
                 birth: {
                     place: ""
