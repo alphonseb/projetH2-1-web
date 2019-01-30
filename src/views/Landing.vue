@@ -46,18 +46,18 @@
 
 <script>
 import jwt from "jsonwebtoken";
-import env from "@/../env.json";
+// import env from "@/../env.json";
 import LOGIN from "@/graphql/login.graphql";
 
 export default {
     name: "landing",
-    data() {
+    data () {
         return {
             error: false
         };
     },
     methods: {
-        async login() {
+        async login () {
             if (
                 this.$refs.mail.value === "" ||
                 this.$refs.password.value === ""
@@ -89,7 +89,7 @@ export default {
                 .catch(err => (this.error = true));
         }
     },
-    async mounted() {
+    async mounted () {
         const landing = this.$refs.landing;
         const height = landing.offsetHeight;
         window.addEventListener("resize", () => {
@@ -349,7 +349,7 @@ export default {
                         padding: 10px 20px;
                         border: solid white 1px;
                         border-radius: 50px;
-                        font-family: "Playfair Display", serif;
+                        font-family: 'Playfair Display', serif;
                         font-weight: 900;
                     }
                 }
