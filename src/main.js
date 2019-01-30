@@ -24,7 +24,7 @@ const link = ApolloLink.from([
         if (networkError) console.log(`[Network error]: ${networkError}`)
     }),
     createUploadLink({
-        uri: 'https://julesguesnon.com:4000/graphql',
+        uri: process.env.API_URL,
         headers: {
             authorization: window.localStorage.getItem(env.APP_TOKEN_PATH)
         },

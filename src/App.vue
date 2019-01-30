@@ -6,7 +6,7 @@
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
-import { APP_TOKEN_PATH } from '@/../env.json'
+// import { APP_TOKEN_PATH } from '@/../env.json'
 import ME from '@/graphql/user.graphql'
 import Navbar from '@/components/Navbar'
 
@@ -26,7 +26,7 @@ export default {
         me: {
             query: ME,
             async result (res) {
-                
+
                 if (!res.data.me)
                     return
 
@@ -36,7 +36,7 @@ export default {
                     const hasNotifications = res.data.me.notifications.find(v => !v.isRead)
                     if (hasNotifications)
                         this.showNotifications = true
-                } 
+                }
 
             }
         }

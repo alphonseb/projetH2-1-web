@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import jwt from 'jsonwebtoken'
-import { APP_SECRET, APP_TOKEN_PATH } from '@/../env.json'
+// import { APP_SECRET, APP_TOKEN_PATH } from '@/../env.json'
 // import store from './store'
 
 // Components
@@ -83,7 +83,7 @@ const router = new Router({
                 {
                     path: 'edit',
                     component: WriteEdition,
-                    name: 'editBook',
+                    name: 'editBook'
                 },
                 {
                     path: 'gallery',
@@ -97,14 +97,14 @@ const router = new Router({
 router.beforeEach(async (_to, _from, _next) => {
     if (!_to.meta.auth) return _next()
 
-    const token = window.localStorage.getItem(APP_TOKEN_PATH)
+    const token = window.localStorage.getItem(process.env.APP_TOKEN_PATH)
     if (token === 'undefined' || token === 'null' || token === null)
         return _next('/')
 
-    const isVerify = await jwt.verify(token, APP_SECRET)
+    const isVerify = await jwt.verify(token, process.env.APP_SECRET)
 
     if (!isVerify) {
-        window.localStorage.setItem(APP_TOKEN_PATH, null)
+        window.localStorage.setItem(process.env.APP_TOKEN_PATH, null)
         return _next('/')
     }
 

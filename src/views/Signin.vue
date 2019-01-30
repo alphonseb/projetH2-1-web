@@ -101,11 +101,11 @@
 
 <script>
 import SIGNIN from '@/graphql/signin.graphql'
-import { APP_TOKEN_PATH } from '../../env.json'
+// import { APP_TOKEN_PATH } from '../../env.json'
 
 export default {
     name: "subscription",
-    data() {
+    data () {
         return {
             error: false,
             datas: {
@@ -123,16 +123,16 @@ export default {
         };
     },
     methods: {
-        async createAccount() {
+        async createAccount () {
             const isValid = await this.checkFields();
 
             if (!isValid) return (this.error = true);
 
             const variables = {
-                name: `${this.datas.firstName} ${this.datas.lastName}`,
+                name: `${ this.datas.firstName } ${ this.datas.lastName }`,
                 mail: this.datas.mail,
                 password: this.datas.password,
-                birthDate: `${this.datas.birth.month}/${this.datas.birth.day}/${this.datas.birth.year}`,
+                birthDate: `${ this.datas.birth.month }/${ this.datas.birth.day }/${ this.datas.birth.year }`,
                 gender: this.datas.gender
             };
 
@@ -147,10 +147,10 @@ export default {
 
             if (!token) return (this.error = true);
 
-            window.localStorage.setItem(APP_TOKEN_PATH, token);
+            window.localStorage.setItem(process.env.APP_TOKEN_PATH, token);
             this.$router.push("/createProfile");
         },
-        async checkFields() {
+        async checkFields () {
             let isValid = true;
 
             const keys = Object.keys(this.datas);
