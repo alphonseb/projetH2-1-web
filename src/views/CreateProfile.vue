@@ -17,7 +17,7 @@
                     <div class="addPhotoContainer">
                         <div class="addPhoto">
                             <img
-                                src="http://julesguesnon.com:4000/static/default.png"
+                                :src="defaultImgUrl"
                                 alt="image de profil"
                                 ref="profilePicture"
                             >
@@ -149,6 +149,7 @@ export default {
     data () {
         return {
             datas: {
+                defaultImgUrl: process.env.VUE_APP_DEFAULT_PIC_URL,
                 phone: "",
                 birth: {
                     place: ""
